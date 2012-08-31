@@ -1,0 +1,54 @@
+<application>
+    <name>Efficient graph-based segmentation </name>
+
+    <dependencies>
+     <port>/icub/camcalib/left/out</port>
+    </dependencies>
+
+     <module>
+        <name>graphBasedSegmentation</name>
+        <node>node1</node>
+        <parameters>--name GBSeg</parameters>
+        <tag>GBSeg</tag>
+    </module>
+
+    <!--Optional modules-->  
+
+
+    <module>
+        <name>yarpview</name>
+        <node>node2</node>
+        <parameters>--name /segView --x 0 --y 0 --RefreshTime 33</parameters>
+        <tag>segmentView</tag>
+    </module>
+
+    
+    <module>
+        <name>yarpview</name>
+        <node>node2</node>
+        <parameters>--name /original --x 330 --y 0 --out /desiredTrack --RefreshTime 33</parameters>
+        <tag>originalView</tag>
+    </module>
+
+	<!--Connections--> 
+    <connection>
+        <from>/icub/camcalib/left/out</from>
+        <to>/GBSeg/rawImg:i</to>
+        <protocol>udp</protocol>
+    </connection>
+
+    <connection>
+        <from>/edisonSeg/viewImg:o</from>
+        <to>/segView</to>
+        <protocol>udp</protocol>
+    </connection>
+
+
+    <connection>
+        <from>/icub/camcalib/left/out</from>
+        <to>/original</to>
+        <protocol>tcp</protocol>
+    </connection>
+
+
+</application>
