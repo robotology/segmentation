@@ -98,6 +98,10 @@ GBSegmModule::GBSegmModule() : _stamp(0,0)
 {
     input = NULL;
     seg = NULL;
+    // parameters default values
+    sigma = 0.8;
+    k= 700;
+    min_size = 700;
 }
 
 GBSegmModule::~GBSegmModule()
@@ -120,11 +124,10 @@ bool GBSegmModule::configure (yarp::os::ResourceFinder &rf)
         setName(rf.find("name").asString().c_str());
     else setName("GBSeg");
 
-    //defaults for the parameters - as the ones in the EDISON GUI application
 
     //override defaults if specified - TODO: range checking
-    if(rf.check("sigma")) sigma = rf.find("sigma").asInt();		
-    if(rf.check("sigmaR")) k = rf.find("k").asDouble();		
+    if(rf.check("sigma")) sigma = rf.find("sigma").asDouble();		
+    if(rf.check("k")) k = rf.find("k").asDouble();		
     if(rf.check("minRegion")) min_size = rf.find("minRegion").asInt();  
 
     std::string slash="/";

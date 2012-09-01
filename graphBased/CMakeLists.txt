@@ -41,4 +41,7 @@ TARGET_LINK_LIBRARIES(${PROJECTNAME}  ${YARP_LIBRARIES})
 
 install(TARGETS ${PROJECTNAME} DESTINATION bin)
 
+# Adding test client executable - WARNING: it is not added as install target, only built locally!
+ADD_EXECUTABLE(testClient testClient.cpp ${sources} ${headers})
+TARGET_LINK_LIBRARIES(testClient  ${YARP_LIBRARIES})
 
