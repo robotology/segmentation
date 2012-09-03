@@ -30,13 +30,13 @@ rgb random_rgb(){
   rgb c;
   double r;
   
-  c.r = (uchar)random();
-  c.g = (uchar)random();
-  c.b = (uchar)random();
+  c.r = (uchar)rand();
+  c.g = (uchar)rand();
+  c.b = (uchar)rand();
 
   return c;
 }
-
+RAND_MAX
 // dissimilarity measure between pixels
 static inline float diff(image<float> *r, image<float> *g, image<float> *b,
 			 int x1, int y1, int x2, int y2) {

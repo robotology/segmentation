@@ -24,6 +24,8 @@ SOURCE_GROUP("Thrift Header Files" FILES ${headers})
 # Source code listing
 set(segment_headers segment/convolve.h segment/disjoint-set.h segment/filter.h segment/image.h segment/imconv.h segment/imutil.h segment/misc.h segment/pnmfile.h segment/segment-graph.h segment/segment-image.h)
 
+SOURCE_GROUP("Segmentation Source Files" FILES ${segment_headers})
+
 SET(module_source SegmModule.cpp main.cpp)
 SET(module_header SegmModule.h)
 
@@ -34,9 +36,9 @@ SOURCE_GROUP("Header Files" FILES ${module_header})
 add_subdirectory(app)
 
 # Set up the executable.
-INCLUDE_DIRECTORIES(${YARP_INCLUDES}  ${generated_libs_dir}/include ${CMAKE_CURRENT_SOURCE_DIR}/segment)
+INCLUDE_DIRECTORIES(${YARP_INCLUDE_DIRS}  ${generated_libs_dir}/include ${CMAKE_CURRENT_SOURCE_DIR}/segment)
 
-ADD_EXECUTABLE(${PROJECTNAME} ${module_source} ${module_header} ${sources} ${headers})
+ADD_EXECUTABLE(${PROJECTNAME} ${module_source} ${module_header} ${sources} ${headers} ${segment_headers})
 TARGET_LINK_LIBRARIES(${PROJECTNAME}  ${YARP_LIBRARIES})
 
 install(TARGETS ${PROJECTNAME} DESTINATION bin)
