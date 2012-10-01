@@ -36,7 +36,7 @@ rgb random_rgb(){
 
   return c;
 }
-RAND_MAX
+
 // dissimilarity measure between pixels
 static inline float diff(image<float> *r, image<float> *g, image<float> *b,
 			 int x1, int y1, int x2, int y2) {

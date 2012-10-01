@@ -30,7 +30,7 @@ SOURCE_GROUP("Header Files" FILES ${module_header})
 
 
 # Set up the executable.
-INCLUDE_DIRECTORIES(${edisonlib_INCLUDE_DIR} ${YARP_INCLUDES} ${OpenCV_INCLUDE_DIRS} ${generated_libs_dir}/include )
+INCLUDE_DIRECTORIES(${edisonlib_INCLUDE_DIR} ${YARP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} ${generated_libs_dir}/include )
 
 ADD_EXECUTABLE(${PROJECTNAME} ${module_source} ${module_header} ${sources} ${headers})
 TARGET_LINK_LIBRARIES(${PROJECTNAME}  edisonlib ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})

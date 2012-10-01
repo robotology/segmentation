@@ -10,9 +10,18 @@
 class Pixel;
 
 
+/**
+ * Pixel position in the image frame
+ */
 class Pixel : public yarp::os::idl::WirePortable {
 public:
+/**
+ * Index of pixel along horizontal axis
+ */
   int32_t x;
+/**
+ * Index of pixel along vertical axis
+ */
   int32_t y;
   Pixel() : x(0), y(0) {
   }
