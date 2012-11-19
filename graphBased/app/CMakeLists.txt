@@ -1,7 +1,6 @@
 # Author: Elena Ceseracciu, RBCS - Istituto Italiano di Tecnologia
 find_package(ICUB)
 set(CMAKE_MODULE_PATH ${ICUB_MODULE_PATH} ${CMAKE_MODULE_PATH})
-include(iCubOptions)
 include(iCubHelpers)
 
 set(appname graphBasedSegm)
