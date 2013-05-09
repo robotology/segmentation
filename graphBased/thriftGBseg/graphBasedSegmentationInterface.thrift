@@ -1,5 +1,5 @@
 //Elena Ceseracciu - RBCS, Istituto Italiano di Tecnologia, 2012
-
+namespace yarp yarp.sig
 /**
 *  graphBasedSegmentationInterface
 *

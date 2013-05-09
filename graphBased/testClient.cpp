@@ -6,9 +6,11 @@
 #include <yarp/os/Module.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Port.h>
-using namespace yarp::os;
 
 #include "SegmModule.h"
+
+using namespace yarp::os;
+using namespace yarp::sig;
 
 int main(int argc, char *argv[]) {
    

@@ -4,6 +4,7 @@
 #include <SegmentationModuleInterface.h>
 #include <yarp/os/idl/WireTypes.h>
 
+namespace yarp { namespace sig {
 
 
 class SegmentationModuleInterface_set_sigma : public yarp::os::Portable {
@@ -342,5 +343,6 @@ bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
   }
   return false;
 }
+}} // namespace
 
 

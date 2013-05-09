@@ -34,7 +34,7 @@
 #include "misc.h"
 #include "SegmentationModuleInterface.h" //Thrift interface
 
-class GBSegmModule : public yarp::os::RFModule, public SegmentationModuleInterface {
+class GBSegmModule : public yarp::os::RFModule, public yarp::sig::SegmentationModuleInterface {
 
 private:
     double _timestart;
@@ -82,7 +82,7 @@ public:
     virtual double get_k();
     virtual double get_minRegion();
     virtual int32_t get_num_components();
-    virtual std::vector<Pixel>  get_component_around(const Pixel& objCenter);
+    virtual std::vector<yarp::sig::Pixel>  get_component_around(const yarp::sig::Pixel& objCenter);
 };
 
 

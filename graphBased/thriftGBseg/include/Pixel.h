@@ -7,13 +7,17 @@
 #include <yarp/os/Wire.h>
 #include <yarp/os/idl/WireTypes.h>
 
-class Pixel;
+namespace yarp {
+  namespace sig {
+    class Pixel;
+  }
+}
 
 
 /**
  * Pixel position in the image frame
  */
-class Pixel : public yarp::os::idl::WirePortable {
+class yarp::sig::Pixel : public yarp::os::idl::WirePortable {
 public:
 /**
  * Index of pixel along horizontal axis

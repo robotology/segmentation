@@ -8,13 +8,17 @@
 #include <yarp/os/idl/WireTypes.h>
 #include <Pixel.h>
 
-class SegmentationModuleInterface;
+namespace yarp {
+  namespace sig {
+    class SegmentationModuleInterface;
+  }
+}
 
 
 /**
  * Interface for module that performs graph-based segmentation
  */
-class SegmentationModuleInterface : public yarp::os::Wire {
+class yarp::sig::SegmentationModuleInterface : public yarp::os::Wire {
 public:
   SegmentationModuleInterface() { yarp().setOwner(*this); }
 /**
