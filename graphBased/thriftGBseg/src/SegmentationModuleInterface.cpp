@@ -69,7 +69,10 @@ public:
   virtual bool read(yarp::os::ConnectionReader& connection) {
     yarp::os::idl::WireReader reader(connection);
     if (!reader.readListReturn()) return false;
-    if (!reader.readDouble(_return)) return false;
+    if (!reader.readDouble(_return)) {
+      reader.fail();
+      return false;
+    }
     return true;
   }
 };
@@ -86,7 +89,10 @@ public:
   virtual bool read(yarp::os::ConnectionReader& connection) {
     yarp::os::idl::WireReader reader(connection);
     if (!reader.readListReturn()) return false;
-    if (!reader.readDouble(_return)) return false;
+    if (!reader.readDouble(_return)) {
+      reader.fail();
+      return false;
+    }
     return true;
   }
 };
@@ -103,7 +109,10 @@ public:
   virtual bool read(yarp::os::ConnectionReader& connection) {
     yarp::os::idl::WireReader reader(connection);
     if (!reader.readListReturn()) return false;
-    if (!reader.readDouble(_return)) return false;
+    if (!reader.readDouble(_return)) {
+      reader.fail();
+      return false;
+    }
     return true;
   }
 };
@@ -120,7 +129,10 @@ public:
   virtual bool read(yarp::os::ConnectionReader& connection) {
     yarp::os::idl::WireReader reader(connection);
     if (!reader.readListReturn()) return false;
-    if (!reader.readI32(_return)) return false;
+    if (!reader.readI32(_return)) {
+      reader.fail();
+      return false;
+    }
     return true;
   }
 };
@@ -148,7 +160,10 @@ public:
       uint32_t _i4;
       for (_i4 = 0; _i4 < _size0; ++_i4)
       {
-        if (!reader.readNested(_return[_i4])) return false;
+        if (!reader.readNested(_return[_i4])) {
+          reader.fail();
+          return false;
+        }
       }
       reader.readListEnd();
     }
@@ -206,12 +221,16 @@ std::vector<Pixel>  SegmentationModuleInterface::get_component_around(const Pixe
 bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
   yarp::os::idl::WireReader reader(connection);
   reader.expectAccept();
-  if (!reader.readListHeader()) return false;
+  if (!reader.readListHeader()) { reader.fail(); return false; }
   yarp::os::ConstString tag = reader.readTag();
-  while (!reader.isError()) {    // TODO: use quick lookup, this is just a test
+  while (!reader.isError()) {
+    // TODO: use quick lookup, this is just a test
     if (tag == "set_sigma") {
       double newValue;
-      if (!reader.readDouble(newValue)) return false;
+      if (!reader.readDouble(newValue)) {
+        reader.fail();
+        return false;
+      }
       set_sigma(newValue);
       yarp::os::idl::WireWriter writer(reader);
       if (!writer.isNull()) {
@@ -222,7 +241,10 @@ bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
     }
     if (tag == "set_k") {
       double newValue;
-      if (!reader.readDouble(newValue)) return false;
+      if (!reader.readDouble(newValue)) {
+        reader.fail();
+        return false;
+      }
       set_k(newValue);
       yarp::os::idl::WireWriter writer(reader);
       if (!writer.isNull()) {
@@ -233,7 +255,10 @@ bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
     }
     if (tag == "set_minRegion") {
       double newValue;
-      if (!reader.readDouble(newValue)) return false;
+      if (!reader.readDouble(newValue)) {
+        reader.fail();
+        return false;
+      }
       set_minRegion(newValue);
       yarp::os::idl::WireWriter writer(reader);
       if (!writer.isNull()) {
@@ -288,7 +313,10 @@ bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
     }
     if (tag == "get_component_around") {
       Pixel objCenter;
-      if (!reader.read(objCenter)) return false;
+      if (!reader.read(objCenter)) {
+        reader.fail();
+        return false;
+      }
       std::vector<Pixel>  _return;
       _return = get_component_around(objCenter);
       yarp::os::idl::WireWriter writer(reader);
@@ -307,6 +335,7 @@ bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
       reader.accept();
       return true;
     }
+    if (reader.noMore()) { reader.fail(); return false; }
     yarp::os::ConstString next_tag = reader.readTag();
     if (next_tag=="") break;
     tag = tag + "_" + next_tag;

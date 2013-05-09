@@ -1,0 +1,18 @@
+# - Config file for @PROJECTNAME@ package
+# It defines the following variables
+#  @PROJECTNAME@_INCLUDE_DIRS - include directories 
+#  @PROJECTNAME@_LIBRARIES    - libraries to link against
+ 
+# Compute path
+get_filename_component(project_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+# Compute path
+set(@PROJECTNAME@_INCLUDE_DIRS @inc_dirs@)
+# Our library dependencies (contains definitions for IMPORTED targets)
+include("${project_CMAKE_DIR}/@PROJECTNAME@.cmake")
+# These are IMPORTED targets created by FooBarTargets.cmake
+set(@PROJECTNAME@_LIBRARIES @PROJECTNAME@)
+ 
+
+
+
+

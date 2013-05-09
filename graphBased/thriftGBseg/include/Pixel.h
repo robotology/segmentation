@@ -28,8 +28,14 @@ public:
   Pixel(const int32_t x,const int32_t y) : x(x), y(y) {
   }
   bool read(yarp::os::idl::WireReader& reader) {
-    if (!reader.readI32(x)) return false;
-    if (!reader.readI32(y)) return false;
+    if (!reader.readI32(x)) {
+      reader.fail();
+      return false;
+    }
+    if (!reader.readI32(y)) {
+      reader.fail();
+      return false;
+    }
     return !reader.isError();
   }
   bool read(yarp::os::ConnectionReader& connection) {
