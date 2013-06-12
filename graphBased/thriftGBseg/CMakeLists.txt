@@ -4,7 +4,7 @@ project(${PROJECTNAME})
 #thrift file generation -- remember to compile YARP with CREATE_IDLS and ENABLE_yarpidl_thrift options, and to define ALLOW_IDL_GENERATION=ON when configuring this project
 INCLUDE(${YARP_MODULE_PATH}/YarpIDL.cmake)
 SET(generated_libs_dir "${CMAKE_CURRENT_SOURCE_DIR}")
-yarp_idl_to_dir(graphBasedSegmentationInterface.thrift ${generated_libs_dir})
+#yarp_idl_to_dir(graphBasedSegmentationInterface.thrift ${generated_libs_dir})
 
 
 set(THRIFT_HEADERS)
@@ -28,8 +28,8 @@ set_target_properties(${PROJECTNAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 export(TARGETS ${PROJECTNAME} FILE ${CMAKE_BINARY_DIR}/${PROJECTNAME}.cmake)
 
-install(TARGETS ${PROJECTNAME} EXPORT ${PROJECTNAME} DESTINATION lib)
-install(EXPORT ${PROJECTNAME} DESTINATION lib/${PROJECTNAME})
+install(TARGETS ${PROJECTNAME} EXPORT ${PROJECTNAME} DESTINATION ${ICUB_DIR}/lib)
+install(EXPORT ${PROJECTNAME} DESTINATION ${ICUB_DIR}/lib/${PROJECTNAME})
 
 export(PACKAGE ${PROJECTNAME})
 get_property(inc_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)

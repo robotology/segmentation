@@ -31,7 +31,7 @@ INCLUDE_DIRECTORIES(${YARP_INCLUDE_DIRS}  ${thriftGBseg_INCLUDE_DIRS} ${CMAKE_CU
 ADD_EXECUTABLE(${PROJECTNAME} ${module_source} ${module_header} ${segment_headers})
 TARGET_LINK_LIBRARIES(${PROJECTNAME} thriftGBseg ${YARP_LIBRARIES})
 
-install(TARGETS ${PROJECTNAME} DESTINATION bin)
+install(TARGETS ${PROJECTNAME} DESTINATION ${ICUB_DIR}/bin)
 
 # Adding test client executable - WARNING: it is not added as install target, only built locally!
 ADD_EXECUTABLE(testClient testClient.cpp)
