@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         fixIn.clear();
         fixationPort.read(fixIn);
 
-        if (fixIn!=NULL)
+        if (fixIn.size()>1)
         {
             double fix_x = fixIn.get(0).asDouble();
             double fix_y = fixIn.get(1).asDouble();
