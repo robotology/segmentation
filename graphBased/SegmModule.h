@@ -32,7 +32,7 @@
  */
 #include "image.h"
 #include "misc.h"
-#include "SegmentationModuleInterface.h" //Thrift interface
+#include "iCub/segmentation/SegmentationModuleInterface.h" //Thrift interface
 
 class GBSegmModule : public yarp::os::RFModule, public yarp::sig::SegmentationModuleInterface {
 

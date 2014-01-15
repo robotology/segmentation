@@ -1,24 +1,16 @@
 # Author: Elena Ceseracciu, RBCS - Istituto Italiano di Tecnologia
-find_package(ICUB)
-set(CMAKE_MODULE_PATH ${ICUB_MODULE_PATH} ${CMAKE_MODULE_PATH})
-include(iCubHelpers)
 
 set(appname graphBasedSegm)
-icub_app(${appname})
+
 
 file(GLOB conf ${CMAKE_CURRENT_SOURCE_DIR}/conf/*.ini)
 file(GLOB scripts ${CMAKE_CURRENT_SOURCE_DIR}/scripts/*.template)
 
-set(ICUB_APPLICATIONS_PREFIX "$ENV{ICUB_ROOT}" CACHE PATH "Application path prefix")
 
-icub_app_install(${appname} 
-                 FILES ${conf}
-                 DESTINATION conf/)
+yarp_install(FILES ${conf}
+            DESTINATION ${ICUBCONTRIB_CONTEXTS_INSTALL_DIR}/${appname})
 
-icub_app_install(${appname} 
-                FILES ${scripts}
-                DESTINATION scripts/)
+yarp_install(FILES ${scripts}
+             DESTINATION ${ICUBCONTRIB_APPLICATIONS_TEMPLATES_INSTALL_DIR})
 
-### create a single target that installs all applications at once
-icub_app_all()
 

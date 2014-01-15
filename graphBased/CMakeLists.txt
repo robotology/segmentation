@@ -7,7 +7,7 @@ project(graphBasedSegmentation)
 
 find_package(YARP REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
-
+include(YarpInstallationHelpers)
 find_package(ICUBcontrib)
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 include(ICUBcontribHelpers)
@@ -40,3 +40,4 @@ install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 add_executable(testClient testClient.cpp)
 target_link_libraries(testClient thriftGBseg ${YARP_LIBRARIES})
 
+icubcontrib_add_uninstall_target()

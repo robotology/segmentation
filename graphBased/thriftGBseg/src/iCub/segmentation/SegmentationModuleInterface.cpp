@@ -1,7 +1,7 @@
 // This is an automatically-generated file.
 // It could get re-generated if the ALLOW_IDL_GENERATION flag is on.
 
-#include <SegmentationModuleInterface.h>
+#include <iCub/segmentation/SegmentationModuleInterface.h>
 #include <yarp/os/idl/WireTypes.h>
 
 namespace yarp { namespace sig {
@@ -175,39 +175,60 @@ public:
 void SegmentationModuleInterface::set_sigma(const double newValue) {
   SegmentationModuleInterface_set_sigma helper;
   helper.newValue = newValue;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","void SegmentationModuleInterface::set_sigma(const double newValue)");
+  }
   yarp().write(helper,helper);
 }
 void SegmentationModuleInterface::set_k(const double newValue) {
   SegmentationModuleInterface_set_k helper;
   helper.newValue = newValue;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","void SegmentationModuleInterface::set_k(const double newValue)");
+  }
   yarp().write(helper,helper);
 }
 void SegmentationModuleInterface::set_minRegion(const double newValue) {
   SegmentationModuleInterface_set_minRegion helper;
   helper.newValue = newValue;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","void SegmentationModuleInterface::set_minRegion(const double newValue)");
+  }
   yarp().write(helper,helper);
 }
 double SegmentationModuleInterface::get_sigma() {
   double _return = (double)0;
   SegmentationModuleInterface_get_sigma helper;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","double SegmentationModuleInterface::get_sigma()");
+  }
   bool ok = yarp().write(helper,helper);
   return ok?helper._return:_return;
 }
 double SegmentationModuleInterface::get_k() {
   double _return = (double)0;
   SegmentationModuleInterface_get_k helper;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","double SegmentationModuleInterface::get_k()");
+  }
   bool ok = yarp().write(helper,helper);
   return ok?helper._return:_return;
 }
 double SegmentationModuleInterface::get_minRegion() {
   double _return = (double)0;
   SegmentationModuleInterface_get_minRegion helper;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","double SegmentationModuleInterface::get_minRegion()");
+  }
   bool ok = yarp().write(helper,helper);
   return ok?helper._return:_return;
 }
 int32_t SegmentationModuleInterface::get_num_components() {
   int32_t _return = 0;
   SegmentationModuleInterface_get_num_components helper;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","int32_t SegmentationModuleInterface::get_num_components()");
+  }
   bool ok = yarp().write(helper,helper);
   return ok?helper._return:_return;
 }
@@ -215,6 +236,9 @@ std::vector<Pixel>  SegmentationModuleInterface::get_component_around(const Pixe
   std::vector<Pixel>  _return;
   SegmentationModuleInterface_get_component_around helper;
   helper.objCenter = objCenter;
+  if (!yarp().canWrite()) {
+    fprintf(stderr,"Missing server method '%s'?\n","std::vector<Pixel>  SegmentationModuleInterface::get_component_around(const Pixel& objCenter)");
+  }
   bool ok = yarp().write(helper,helper);
   return ok?helper._return:_return;
 }
