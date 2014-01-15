@@ -11,6 +11,7 @@ include(YarpInstallationHelpers)
 find_package(ICUBcontrib)
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 include(ICUBcontribHelpers)
+include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()
 #create Thrift-generated library first 
 add_subdirectory (thriftGBseg)
