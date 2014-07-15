@@ -1,0 +1,77 @@
+
+  /**
+  *
+  * @ingroup 
+  * \defgroup seg2cloud seg2cloud
+  * Enables 3D object reconstruction in a series of ways
+  * Version:1.0
+  * \author  Ugo Pattacini ugo.pattacini@iit.it,
+                  Tanis Mar tanis.mar@iit.it
+  * \n
+  * \copyright Released under the terms of the GNU GPL v2.0
+  * \section intro_sec Description
+  *
+  
+    seg2cloud applies disparity information to retrieve 3D clouds of desired objects. The objects can be chosen from a user defined polygon, from a segmentation algorithm, or from 2D (in color) or 3D (in depth) flood filling. When using other segmentatoin modules (2D or 3D), seeding can be performed automatically.
+    
+  * \section parameters_sec Parameters
+  
+  *- -- name: Name of the module
+  *- -- savename: Default file savename
+  *- -- savingClouds: Toggle save clouds as file
+  *- -- format: Default file format
+  *- -- seedAuto: Automatic seed computation
+  *- -- downsampling: Downsampling ratio pixel to pint for reconstruction
+  *- -- spatial_distance: Blob distance threshold for 3D flood (m)
+  *- -- color_distance: Blob distance threshold for 2D flood (RGB intensity)
+  * \section inputports_sec Input Ports
+  * 
+  *- /seg2cloud/rpc:i [rpc]  [default carrier:tcp]:  Takes the following RPC commands
+                -# <b>help</b>:  produces this help.
+                -# <b>clear</b>:  Clears displays and saved points.
+                -# <b>saving</b> <i>(bool) save </i>:  Activates/deactivated saving each reconstructed cloud in file.
+                -# <b>setFormat </b> <i>(string) fileformat</i>: Sets the format in which the points will be saved. 'fileformat' can be  'ply', 'off' or 'none'.
+                -# <b>setFileName </b> <i> (string) filename</i>: Sets the base name given to the files where the 3D points will be saved.
+                -# <b>polygon</b>: Gets pointcloud from the selected polygon on the disp image.
+                -# <b>flood</b>: <i> (int) color_distance [(int) u (int) v] </i>: Gets pointcloud from 2D color flood. Seed (u, v) coords optional.
+                -# <b>flood3D </b> <i> (double) spatial_distance [u (int) v (int)]</i>: gets pointcloud from 3D color flood. Seed (u, v) coords optional.
+                -# <b>seg</b> <i> [(int) u (int) v] </i>: gets pointcloud from an externally segmented blob. Seed (u, v) coords optional.
+                -# <b>seedAuto</b> <i>(bool) auto </i>: Toggles from manual (click) seed to 'automatic' for segmentation modes.
+            
+  *
+  
+  *- /seg2cloud/disp:i [ImageOfPixelMono]  [default carrier:udp]:  Receives the disparity image.
+  *
+  
+  *- /seg2cloud/img:i [ImageOfPixelRgb]  [default carrier:udp]:  Receives the camera image.
+  *
+  
+  *- /seg2cloud/seed:i [Bottle]  [default carrier:udp]:  Receives the seed coordinates either from tracker or click. 
+  *
+  
+  * \section outputports_sec Output Ports
+  * 
+  *- /seg2cloud/pnt:o [Bottle]  [default carrier:tcp]: Sends out the reconstructed 3D object as a bottle of points, where each point is itself a list of 3 values x, y, z, and optionally other 3 r, g, b. 
+  *
+  
+  *- /seg2cloud/pnt2D:o [Bottle]  [default carrier:tcp]: Sends out the 2D coordinates of the segmented points used to retrieve the pointcloud. 
+  *
+  
+  *- /seg2cloud/disp:o [ImageOfPixelRgb]  [default carrier:udp]: Sends out the processed disparity, with segmented data or bounding box, for visualization.
+  *
+  
+  *- /seg2cloud/SFM:rpc [rpc]  [default carrier:tcp]: rpc port to communicate with the SFM module, to receive disp data and the 3D points. 
+  *
+  
+  *- /seg2cloud/seg:rpc [rpc]  [default carrier:tcp]: rpc port to communicate with the segmentation module, to receive the segmented blob points. 
+  *
+  
+  *
+  * \section services_sec Services
+  * 
+  *
+  * 
+  *
+  *
+  **/
+

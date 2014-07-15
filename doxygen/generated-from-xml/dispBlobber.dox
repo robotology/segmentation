@@ -1,0 +1,79 @@
+
+  /**
+  *
+  * @ingroup 
+  * \defgroup dispBlobber dispBlobber
+  *  Extracts brightest blob in a gray image
+  * Version:1.1
+  * \author  Tanis Martanis.mar@iit.it,
+                  Giulia Pasqualegiulia.pasquale@iit.it
+  * \n
+  * \copyright Released under the terms of the GNU GPL v2.0
+  * \section intro_sec Description
+  *
+  
+    This module takes as input a grayscale image and outputs the brightest blob both as a
+    binary image and as an extracted rectangular crop around it, plus the blob centroid's coordinates and approximated area.
+    
+  * \section parameters_sec Parameters
+  
+  *- -- name: Name of the module
+  *- -- robot: Robot used
+  *- -- imH: Image height
+  *- -- imW: Image width
+  *- -- cropSize: [auto|int] side of the extracted crop. If it is an int the crop is a square region around the blob's centroid. If it is set to 'auto' the crop encloses the blob's shape.
+  *- -- margin: Margin (border) to be left around the blob in the extracted crop (used only if cropSize='auto')
+  *- -- backgroundThresh: Background Threshold
+  *- -- minBlobSize: Minimum blob size
+  *- -- gaussSize: Gaussian blur size
+  *- -- imageThreshRatioLow: Max luminance ratio within blob, below avg lum.
+  *- -- imageThreshRatioHigh: Max luminance ratio within blob, over avg lum. 
+  * \section inputports_sec Input Ports
+  * 
+  *- /dispBlobber/rpc:i [rpc]  [default carrier:tcp]:  Takes the following RPC commands from Human or stateMachine
+
+                -# <b>margin</b> <i>(int) margin</i>: sets the margin (in pixels) that the ROI keeps around the closest blob.")
+                -# <b>thresh</b> <i>(int) high (int) low </i>: sets higher and lower luminosity bounds (0-255) that are considered: blobs with luminosity outside this range are not considered.
+                -# <b>help</b> - produces this help.;
+                -# <b>quit</b> - closes the module.;
+            
+  *
+  
+  *- /dispBlobber/img:i [ImageOfPixelBgr]  [default carrier:udp]: Input image
+  *
+  
+  * \section outputports_sec Output Ports
+  * 
+  *- /dispBlobber/blobs/left:o [Bottle]  [default carrier:tcp]: Coordinates of the blob's centroid on the left image and approximated area.
+  *
+  
+  *- /dispBlobber/blobs/right:o [Bottle]  [default carrier:tcp]: Coordinates of the blob's centroid on the right image and approximated area.
+  *
+  
+  *- /dispBlobber/opt:o [ImageOfPixelMono]  [default carrier:udp]:  Binary image of selected blob.
+  *
+  
+  *- /dispBlobber/crop:o [ImageOfPixelBgr]  [default carrier:udp]:  Cropped region around the selected blob.
+  *
+  
+  *- /dispBlobber/points3d:o [Bottle]  [default carrier:tcp]: 3D Coordinates of the blob's centroid in the root RF.
+  *
+  
+  *- /dispBlobber/roi/left:o [Bottle]  [default carrier:tcp]: Coordinates of the TL and BR points of the ROI around the blob on the left image.
+  *
+  
+  *- /dispBlobber/roi/right:o [Bottle]  [default carrier:tcp]: Coordinates of the TL and BR points of the ROI around the blob on the right image.
+  *
+  
+  *- /dispBlobber/sfm/rpc [Bottle]  [default carrier:tcp]: RPC port communicating with the SFM module RPC port.
+  *
+  
+  *
+  * \section services_sec Services
+  * 
+  *
+  * 
+  *
+  *
+  **/
+
