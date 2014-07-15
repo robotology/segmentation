@@ -1,8 +1,6 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 /** 
-@ingroup icub_module
-
 \defgroup icub_graphbasedSegmentation graphbasedSegmentation
 
 Wrapper module that performs graph-based image segmentation exploiting the algorithm developed by Felzenszwalb and Huttenlocher (Brown University).

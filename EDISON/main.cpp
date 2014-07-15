@@ -1,8 +1,6 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 /** 
-@ingroup icub_module
-
 \defgroup icub_edisonSegmentation edisonSegmentation
 
 Wrapper to the The EDISON system: a low-level vision tool that performs confidence 
