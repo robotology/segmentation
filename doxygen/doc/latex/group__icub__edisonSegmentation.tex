@@ -1,0 +1,89 @@
+\doxysection{edison\+Segmentation}
+\label{group__icub__edisonSegmentation}\index{edisonSegmentation@{edisonSegmentation}}
+
+
+Wrapper to the The E\+D\+I\+S\+ON system\+: a low-\/level vision tool that performs confidence based edge detection and synergistic image segmentation.  
+
+
+Wrapper to the The E\+D\+I\+S\+ON system\+: a low-\/level vision tool that performs confidence based edge detection and synergistic image segmentation. 
+
+\hypertarget{group__seg2cloud_intro_sec}{}\doxysubsection{Description}\label{group__seg2cloud_intro_sec}
+This module wraps around some functions of the E\+D\+I\+S\+ON system from the robust image understanding laboratory at Rutgers University.
+
+The purpose of the module is to obtain good segmentation of color images. The image is split into regions corresponding to uniformly colored patches.
+
+Details on the employed algorithms is provided in the following paper\+: \mbox{[}1\mbox{]} D. Comaniciu, P. Meer\+: \char`\"{}\+Mean shift\+: A robust approach toward feature space analysis\char`\"{}. I\+E\+EE Trans. Pattern Anal. Machine Intell., May 2002.
+
+\mbox{[}2\mbox{]} P. Meer, B. Georgescu\+: \char`\"{}\+Edge detection with embedded confidence\char`\"{}. I\+E\+EE Trans. Pattern Anal. Machine Intell., 28, 2001.
+
+\mbox{[}3\mbox{]} C. Christoudias, B. Georgescu, P. Meer\+: \char`\"{}\+Synergism in low level vision\char`\"{}. 16th International Conference of Pattern Recognition, Track 1 -\/ Computer Vision and Robotics, Quebec City, Canada, August 2001.
+
+The edison source files are provided as a library in the edisonlib folder.
+
+Some changes to these files had to be made in order to obtain the desired functionality. These include changes in function Get\+Regions in \mbox{\hyperlink{msImageProcessor_8cpp_source}{ms\+Image\+Processor.\+cpp}}\hypertarget{group__blobExtractor_lib_sec}{}\doxysubsection{Libraries}\label{group__blobExtractor_lib_sec}
+Y\+A\+RP library Open\+CV library\hypertarget{group__seg2cloud_parameters_sec}{}\doxysubsection{Parameters}\label{group__seg2cloud_parameters_sec}
+width, height -\/ Dimension of the images to be processed. This may differ from the dimension of the input images. Forcing a smaller dimension will save computation power at the cost of resolution. Values larger that the input image dimension will be discarded. These parameters do no influence the dimension of the output. This is always the same as the input dimension. Default\+: the size of the original image.
+
+sigmaS -\/ The spatial bandwidth (neighborhood in the pixel domain). Default\+: 7
+
+sigmaR -\/ The color bandwidth (neighborhood in the color color domain). Default\+: 6.\+5
+
+minregion -\/ The minimal area for segmented regions (in pixels) Default\+: 20.\+0
+
+grad\+Win\+Rad -\/ The radius of the window used for the computation of the gradient and confidence map (positive integer). Default\+: 2.\+0
+
+threshold -\/ edge strength threshold (must be in the interval \mbox{[}0,1\mbox{]}) Default\+: 0.\+3
+
+mixture -\/ mixture parameter (must be in the interval \mbox{[}0,1\mbox{]}) Default\+: 0.\+2
+
+speedup -\/ accelerate computation by doing some approximations. Possible values 0 (N\+O\+\_\+\+S\+P\+E\+E\+D\+UP), 1 (M\+E\+D\+\_\+\+S\+P\+E\+E\+D\+UP), 2 (H\+I\+G\+H\+\_\+\+S\+P\+E\+E\+D\+UP) Default\+: M\+E\+D\+\_\+\+S\+P\+E\+E\+D\+UP
+
+The best results have been obtained with M\+E\+D\+\_\+\+S\+P\+E\+E\+D\+UP\hypertarget{group__lumaChroma_portsa_sec}{}\doxysubsection{Ports Accessed}\label{group__lumaChroma_portsa_sec}
+Port with raw R\+GB image.\hypertarget{group__blobExtractor_portsc_sec}{}\doxysubsection{Ports Created}\label{group__blobExtractor_portsc_sec}
+/conf for module configuration, according to E\+D\+I\+S\+O\+Nsegmentation.\+thrift definition file
+
+/raw\+Img\+:i receive the original R\+GB image to segment
+
+/raw\+Img\+:o output the original R\+GB image
+
+/labeled\+Img\+:o segmented image with the labels (Pixel\+Int)
+
+/view\+Img\+:o segmented image with the colors models for each region (good to visualize)\hypertarget{group__lumaChroma_in_files_sec}{}\doxysubsection{Input Data Files}\label{group__lumaChroma_in_files_sec}
+None\hypertarget{group__lumaChroma_out_data_sec}{}\doxysubsection{Output Data Files}\label{group__lumaChroma_out_data_sec}
+None\hypertarget{group__lumaChroma_conf_file_sec}{}\doxysubsection{Configuration Files}\label{group__lumaChroma_conf_file_sec}
+Parameters can be put in a configuration file. Default configuration file name is edison\+Config.\+ini An example configuration file is provided in the source folder (config\+File.\+ini), containing the following\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{height 120}
+\DoxyCodeLine{width 160}
+\DoxyCodeLine{dim 3}
+\DoxyCodeLine{sigmaS 10       }
+\DoxyCodeLine{sigmaR 18       }
+\DoxyCodeLine{minRegion 50  }
+\DoxyCodeLine{gradWindRad  2 }
+\DoxyCodeLine{threshold  1 }
+\DoxyCodeLine{mixture  1  }
+\DoxyCodeLine{speedup 1}
+\end{DoxyCode}
+\hypertarget{group__blobExtractor_tested_os_sec}{}\doxysubsection{Tested OS}\label{group__blobExtractor_tested_os_sec}
+Linux and Windows.\hypertarget{group__lumaChroma_example_sec}{}\doxysubsection{Example Instantiation of the Module}\label{group__lumaChroma_example_sec}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{yarp server}
+\DoxyCodeLine{edisonSegmentation.exe -\/-\/from configFile.ini}
+\DoxyCodeLine{yarpdev -\/-\/device opencv\_grabber -\/-\/movie H:\(\backslash\)DataSets\(\backslash\)testImages2009\_07\_21\(\backslash\)segm\_test\_icub.avi -\/-\/loop -\/-\/framerate 0.1}
+\DoxyCodeLine{yarpview /raw}
+\DoxyCodeLine{yarpview /view}
+\DoxyCodeLine{yarp connect /grabber /edisonSegm/rawImg:i}
+\DoxyCodeLine{yarp connect /edisonSegm/rawImg:o /raw}
+\DoxyCodeLine{yarp connect /edisonSegm/viewImg:o /view}
+\end{DoxyCode}
+
+
+\begin{DoxyAuthor}{Author}
+Alexandre Bernardino, Elena Ceseracciu (improved module version)
+\end{DoxyAuthor}
+Copyright (C) 2008 Robot\+Cub Consortium
+
+Copy\+Policy\+: Released under the terms of the G\+NU G\+PL v2.\+0.
+
+This file can be edited at src/edison\+Segmentation/main.\+cpp. 

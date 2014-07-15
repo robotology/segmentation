@@ -1,0 +1,330 @@
+\doxysection{yarp\+::sig\+::Segmentation\+Module\+Interface Class Reference}
+\label{classyarp_1_1sig_1_1SegmentationModuleInterface}\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+
+
+Interface for module that performs graph-\/based segmentation.  
+
+
+
+
+{\ttfamily \#include $<$Segmentation\+Module\+Interface.\+h$>$}
+
+Inheritance diagram for yarp\+::sig\+::Segmentation\+Module\+Interface\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classyarp_1_1sig_1_1SegmentationModuleInterface}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a68f28930df5e930934c0ee56ad1f680c}{set\+\_\+sigma}} (const double new\+Value)
+\begin{DoxyCompactList}\small\item\em Set sigma (smoothing) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a2851eae0226ad68f41cd8b61d8bb1456}{set\+\_\+k}} (const double new\+Value)
+\begin{DoxyCompactList}\small\item\em Set k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_ad9d90ed7e362ae83e2145445a9c4301e}{set\+\_\+min\+Region}} (const double new\+Value)
+\begin{DoxyCompactList}\small\item\em Set min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a38431f2c63d7da8ebf20adf0ed1da4fe}{get\+\_\+sigma}} ()
+\begin{DoxyCompactList}\small\item\em Get sigma (smoothing) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a91f3d872a48599337d1d2f365ac4c31e}{get\+\_\+k}} ()
+\begin{DoxyCompactList}\small\item\em Get k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a6c184aeea894f6afcc342c5aa748429d}{get\+\_\+min\+Region}} ()
+\begin{DoxyCompactList}\small\item\em Get min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. \end{DoxyCompactList}\item 
+virtual std\+::int32\+\_\+t \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a253cb5a4d4250b97842537b664a93064}{get\+\_\+num\+\_\+components}} ()
+\begin{DoxyCompactList}\small\item\em Get the number of segmented components that have been detected in the last provided image. \end{DoxyCompactList}\item 
+virtual std\+::vector$<$ \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{Pixel}} $>$ \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a9bf0b95fbab216b2284122b0b8a36820}{get\+\_\+component\+\_\+around}} (const \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{Pixel}} \&obj\+Center)
+\begin{DoxyCompactList}\small\item\em Get the list of pixels corresponding to the component to which a given pixel belongs. \end{DoxyCompactList}\item 
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a14ea1dff9efc91a5099633740b3e45f9}} 
+virtual std\+::vector$<$ std\+::string $>$ {\bfseries help} (const std\+::string \&function\+Name=\char`\"{}-\/-\/all\char`\"{})
+\item 
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a31d3ce62c3ad4ab669216a19cde4e769}} 
+bool {\bfseries read} (yarp\+::os\+::\+Connection\+Reader \&connection) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interface for module that performs graph-\/based segmentation. 
+
+Definition at line 27 of file Segmentation\+Module\+Interface.\+h.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a9bf0b95fbab216b2284122b0b8a36820}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!get\_component\_around@{get\_component\_around}}
+\index{get\_component\_around@{get\_component\_around}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{get\_component\_around()}{get\_component\_around()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{Pixel}} $>$ yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::get\+\_\+component\+\_\+around (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{Pixel}} \&}]{obj\+Center }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the list of pixels corresponding to the component to which a given pixel belongs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj\+Center} & a pixel belonging to the region of interest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of pixels belonging to the same component as the input pixels 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_a0b63c53513e67c4f126e29cf7f28ad53}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 442 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{443 \{}
+\DoxyCodeLine{444     SegmentationModuleInterface\_get\_component\_around\_helper helper\{objCenter\};}
+\DoxyCodeLine{445     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{446         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"std::vector<Pixel> SegmentationModuleInterface::get\_component\_around(const Pixel\& objCenter)"});}
+\DoxyCodeLine{447     \}}
+\DoxyCodeLine{448     \textcolor{keywordtype}{bool} ok = yarp().write(helper, helper);}
+\DoxyCodeLine{449     \textcolor{keywordflow}{return} ok ? SegmentationModuleInterface\_get\_component\_around\_helper::s\_return\_helper : std::vector<Pixel>\{\};}
+\DoxyCodeLine{450 \}}
+
+\end{DoxyCode}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a91f3d872a48599337d1d2f365ac4c31e}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!get\_k@{get\_k}}
+\index{get\_k@{get\_k}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{get\_k()}{get\_k()}}
+{\footnotesize\ttfamily double yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::get\+\_\+k (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. 
+
+\begin{DoxyReturn}{Returns}
+current value for k parameter 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_a44bab99aa7a035e57a185673c040d2f6}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 412 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{413 \{}
+\DoxyCodeLine{414     SegmentationModuleInterface\_get\_k\_helper helper\{\};}
+\DoxyCodeLine{415     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{416         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"double SegmentationModuleInterface::get\_k()"});}
+\DoxyCodeLine{417     \}}
+\DoxyCodeLine{418     \textcolor{keywordtype}{bool} ok = yarp().write(helper, helper);}
+\DoxyCodeLine{419     \textcolor{keywordflow}{return} ok ? SegmentationModuleInterface\_get\_k\_helper::s\_return\_helper : \textcolor{keywordtype}{double}\{\};}
+\DoxyCodeLine{420 \}}
+
+\end{DoxyCode}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a6c184aeea894f6afcc342c5aa748429d}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!get\_minRegion@{get\_minRegion}}
+\index{get\_minRegion@{get\_minRegion}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{get\_minRegion()}{get\_minRegion()}}
+{\footnotesize\ttfamily double yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::get\+\_\+min\+Region (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. 
+
+\begin{DoxyReturn}{Returns}
+current value for min\+Region parameter 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_a2378b95e60b406a119947aa86b5bb9c4}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 422 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{423 \{}
+\DoxyCodeLine{424     SegmentationModuleInterface\_get\_minRegion\_helper helper\{\};}
+\DoxyCodeLine{425     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{426         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"double SegmentationModuleInterface::get\_minRegion()"});}
+\DoxyCodeLine{427     \}}
+\DoxyCodeLine{428     \textcolor{keywordtype}{bool} ok = yarp().write(helper, helper);}
+\DoxyCodeLine{429     \textcolor{keywordflow}{return} ok ? SegmentationModuleInterface\_get\_minRegion\_helper::s\_return\_helper : \textcolor{keywordtype}{double}\{\};}
+\DoxyCodeLine{430 \}}
+
+\end{DoxyCode}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a253cb5a4d4250b97842537b664a93064}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!get\_num\_components@{get\_num\_components}}
+\index{get\_num\_components@{get\_num\_components}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{get\_num\_components()}{get\_num\_components()}}
+{\footnotesize\ttfamily std\+::int32\+\_\+t yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::get\+\_\+num\+\_\+components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the number of segmented components that have been detected in the last provided image. 
+
+\begin{DoxyReturn}{Returns}
+number of segmented components 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_a655ee7c895eed07b07099133b9d8ce68}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 432 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{433 \{}
+\DoxyCodeLine{434     SegmentationModuleInterface\_get\_num\_components\_helper helper\{\};}
+\DoxyCodeLine{435     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{436         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"std::int32\_t SegmentationModuleInterface::get\_num\_components()"});}
+\DoxyCodeLine{437     \}}
+\DoxyCodeLine{438     \textcolor{keywordtype}{bool} ok = yarp().write(helper, helper);}
+\DoxyCodeLine{439     \textcolor{keywordflow}{return} ok ? SegmentationModuleInterface\_get\_num\_components\_helper::s\_return\_helper : std::int32\_t\{\};}
+\DoxyCodeLine{440 \}}
+
+\end{DoxyCode}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a38431f2c63d7da8ebf20adf0ed1da4fe}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!get\_sigma@{get\_sigma}}
+\index{get\_sigma@{get\_sigma}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{get\_sigma()}{get\_sigma()}}
+{\footnotesize\ttfamily double yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::get\+\_\+sigma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get sigma (smoothing) parameter for the algorithm. 
+
+\begin{DoxyReturn}{Returns}
+current value for sigma parameter 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_ae32ae1b1461e19c3a1b2f429c729ed03}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 402 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{403 \{}
+\DoxyCodeLine{404     SegmentationModuleInterface\_get\_sigma\_helper helper\{\};}
+\DoxyCodeLine{405     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{406         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"double SegmentationModuleInterface::get\_sigma()"});}
+\DoxyCodeLine{407     \}}
+\DoxyCodeLine{408     \textcolor{keywordtype}{bool} ok = yarp().write(helper, helper);}
+\DoxyCodeLine{409     \textcolor{keywordflow}{return} ok ? SegmentationModuleInterface\_get\_sigma\_helper::s\_return\_helper : \textcolor{keywordtype}{double}\{\};}
+\DoxyCodeLine{410 \}}
+
+\end{DoxyCode}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a2851eae0226ad68f41cd8b61d8bb1456}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!set\_k@{set\_k}}
+\index{set\_k@{set\_k}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{set\_k()}{set\_k()}}
+{\footnotesize\ttfamily void yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::set\+\_\+k (\begin{DoxyParamCaption}\item[{const double}]{new\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Value} & new value for k parameter \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_a15129913273e221a46c428f697e40575}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 384 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{385 \{}
+\DoxyCodeLine{386     SegmentationModuleInterface\_set\_k\_helper helper\{newValue\};}
+\DoxyCodeLine{387     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{388         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"void SegmentationModuleInterface::set\_k(const double newValue)"});}
+\DoxyCodeLine{389     \}}
+\DoxyCodeLine{390     yarp().write(helper, helper);}
+\DoxyCodeLine{391 \}}
+
+\end{DoxyCode}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_ad9d90ed7e362ae83e2145445a9c4301e}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!set\_minRegion@{set\_minRegion}}
+\index{set\_minRegion@{set\_minRegion}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{set\_minRegion()}{set\_minRegion()}}
+{\footnotesize\ttfamily void yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::set\+\_\+min\+Region (\begin{DoxyParamCaption}\item[{const double}]{new\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Value} & new value for min\+Region parameter \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_ae1c722c9c774cbde4f6bfada3f0826ba}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 393 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{394 \{}
+\DoxyCodeLine{395     SegmentationModuleInterface\_set\_minRegion\_helper helper\{newValue\};}
+\DoxyCodeLine{396     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{397         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"void SegmentationModuleInterface::set\_minRegion(const double newValue)"});}
+\DoxyCodeLine{398     \}}
+\DoxyCodeLine{399     yarp().write(helper, helper);}
+\DoxyCodeLine{400 \}}
+
+\end{DoxyCode}
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a68f28930df5e930934c0ee56ad1f680c}} 
+\index{yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}!set\_sigma@{set\_sigma}}
+\index{set\_sigma@{set\_sigma}!yarp::sig::SegmentationModuleInterface@{yarp::sig::SegmentationModuleInterface}}
+\doxysubsubsection{\texorpdfstring{set\_sigma()}{set\_sigma()}}
+{\footnotesize\ttfamily void yarp\+::sig\+::\+Segmentation\+Module\+Interface\+::set\+\_\+sigma (\begin{DoxyParamCaption}\item[{const double}]{new\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set sigma (smoothing) parameter for the algorithm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Value} & new value for sigma parameter \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classGBSegmModule_a27ffe08d394d321d9f9441423d36ef5e}{G\+B\+Segm\+Module}}.
+
+
+
+Definition at line 375 of file Segmentation\+Module\+Interface.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{376 \{}
+\DoxyCodeLine{377     SegmentationModuleInterface\_set\_sigma\_helper helper\{newValue\};}
+\DoxyCodeLine{378     \textcolor{keywordflow}{if} (!yarp().canWrite()) \{}
+\DoxyCodeLine{379         yError(\textcolor{stringliteral}{"Missing server method '\%s'?"}, \textcolor{stringliteral}{"void SegmentationModuleInterface::set\_sigma(const double newValue)"});}
+\DoxyCodeLine{380     \}}
+\DoxyCodeLine{381     yarp().write(helper, helper);}
+\DoxyCodeLine{382 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/segmentation/segmentation/gh-\/pages/graph\+Based/thrift\+G\+Bseg/include/Segmentation\+Module\+Interface.\+h\item 
+/home/runner/work/segmentation/segmentation/gh-\/pages/graph\+Based/thrift\+G\+Bseg/src/Segmentation\+Module\+Interface.\+cpp\end{DoxyCompactItemize}

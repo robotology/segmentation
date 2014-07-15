@@ -1,0 +1,53 @@
+\doxysection{disp\+Blobber}
+\label{group__dispBlobber}\index{dispBlobber@{dispBlobber}}
+
+
+Extracts brightest blob in a gray image Version\+:1.\+1.  
+
+
+Extracts brightest blob in a gray image Version\+:1.\+1. 
+
+\begin{DoxyAuthor}{Author}
+Tanis \href{mailto:Martanis.mar@iit.it}{\texttt{ Martanis.\+mar@iit.\+it}}, Giulia \href{mailto:Pasqualegiulia.pasquale@iit.it}{\texttt{ Pasqualegiulia.\+pasquale@iit.\+it}} ~\newline
+ 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Released under the terms of the G\+NU G\+PL v2.\+0 
+\end{DoxyCopyright}
+\hypertarget{group__seg2cloud_intro_sec}{}\doxysubsection{Description}\label{group__seg2cloud_intro_sec}
+This module takes as input a grayscale image and outputs the brightest blob both as a binary image and as an extracted rectangular crop around it, plus the blob centroid\textquotesingle{}s coordinates and approximated area.\hypertarget{group__seg2cloud_parameters_sec}{}\doxysubsection{Parameters}\label{group__seg2cloud_parameters_sec}
+
+\begin{DoxyItemize}
+\item -- name\+: Name of the module
+\item -- robot\+: Robot used
+\item -- imH\+: Image height
+\item -- imW\+: Image width
+\item -- crop\+Size\+: \mbox{[}auto$\vert$int\mbox{]} side of the extracted crop. If it is an int the crop is a square region around the blob\textquotesingle{}s centroid. If it is set to \textquotesingle{}auto\textquotesingle{} the crop encloses the blob\textquotesingle{}s shape.
+\item -- margin\+: Margin (border) to be left around the blob in the extracted crop (used only if crop\+Size=\textquotesingle{}auto\textquotesingle{})
+\item -- background\+Thresh\+: Background Threshold
+\item -- min\+Blob\+Size\+: Minimum blob size
+\item -- gauss\+Size\+: Gaussian blur size
+\item -- image\+Thresh\+Ratio\+Low\+: Max luminance ratio within blob, below avg lum.
+\item -- image\+Thresh\+Ratio\+High\+: Max luminance ratio within blob, over avg lum. 
+\end{DoxyItemize}\hypertarget{group__seg2cloud_inputports_sec}{}\doxysubsection{Input Ports}\label{group__seg2cloud_inputports_sec}
+
+\begin{DoxyItemize}
+\item /disp\+Blobber/rpc\+:i \mbox{[}rpc\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Takes the following R\+PC commands from Human or state\+Machine \begin{DoxyVerb}       -# <b>margin</b> <i>(int) margin</i>: sets the margin (in pixels) that the ROI keeps around the closest blob.")
+       -# <b>thresh</b> <i>(int) high (int) low </i>: sets higher and lower luminosity bounds (0-255) that are considered: blobs with luminosity outside this range are not considered.
+       -# <b>help</b> - produces this help.;
+       -# <b>quit</b> - closes the module.;
+\end{DoxyVerb}
+
+\item /disp\+Blobber/img\+:i \mbox{[}Image\+Of\+Pixel\+Bgr\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: Input image
+\end{DoxyItemize}\hypertarget{group__seg2cloud_outputports_sec}{}\doxysubsection{Output Ports}\label{group__seg2cloud_outputports_sec}
+
+\begin{DoxyItemize}
+\item /disp\+Blobber/blobs/left\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Coordinates of the blob\textquotesingle{}s centroid on the left image and approximated area.
+\item /disp\+Blobber/blobs/right\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Coordinates of the blob\textquotesingle{}s centroid on the right image and approximated area.
+\item /disp\+Blobber/opt\+:o \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: Binary image of selected blob.
+\item /disp\+Blobber/crop\+:o \mbox{[}Image\+Of\+Pixel\+Bgr\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: Cropped region around the selected blob.
+\item /disp\+Blobber/points3d\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: 3D Coordinates of the blob\textquotesingle{}s centroid in the root RF.
+\item /disp\+Blobber/roi/left\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Coordinates of the TL and BR points of the R\+OI around the blob on the left image.
+\item /disp\+Blobber/roi/right\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Coordinates of the TL and BR points of the R\+OI around the blob on the right image.
+\item /disp\+Blobber/sfm/rpc \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: R\+PC port communicating with the S\+FM module R\+PC port.
+\end{DoxyItemize}\hypertarget{group__seg2cloud_services_sec}{}\doxysubsection{Services}\label{group__seg2cloud_services_sec}

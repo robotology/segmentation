@@ -1,0 +1,43 @@
+Module to capture pointclouds from segmented regions in 2D or 2.\+5D (depth) images\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md2}{}\doxysection{Description}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md2}
+This module combines disparity and segmentation information in order to retrieve 3D clouds of desired 2D regions. These regions can be chosen from a user defined polygon, from a segmentation algorithm, or from 2D (in color) or 3D (in depth) flood filling. When using segmentation modules (2D or 3D), seeding can be performed automatically.\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md3}{}\doxysection{Dependencies}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md3}
+
+\begin{DoxyItemize}
+\item \href{https://github.com/robotology/yarp}{\texttt{ Y\+A\+RP}}
+\item \href{https://github.com/robotology/icub-main}{\texttt{ i\+Cub}}
+\item \href{https://github.com/robotology/icub-contrib-common}{\texttt{ icub-\/contrib-\/common}}
+\item \href{http://opencv.org/}{\texttt{ Open\+CV}}
+\item \href{https://github.com/robotology/stereo-vision}{\texttt{ S\+FM}}
+\end{DoxyItemize}\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md4}{}\doxysection{Reconstruction Options}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md4}
+This modules interfaces between segmentation modules and S\+FM in order to provide the 3D reconstruction of an object delimited by a contour in the image. In order to obtain this contour, 4 modes are provided\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{seg\+:}} 2D segmentation (requires external segmentation module). When this option is called, the contour is provided by an external segmentation module.
+\item {\bfseries{flood\+:}} 2D color flood. The object\textquotesingle{}s contour is obtained by performing a 2D color flood, based on the thresholding parameter {\itshape color\+\_\+distance}.
+\item {\bfseries{flood3D}} 3D depth flood. The contour is determined by a flood operation performed on the depth image, controlled by the thresholding parameter {\itshape space\+\_\+distance}.
+\item {\bfseries{polygon}} User selected polygon contour. The contour is provided by the user as a contour by selecting the vertices on a connected yarpview window.
+\end{DoxyItemize}\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md5}{}\doxysection{Seed feeding options}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md5}
+In order to select which of the possible regions of the image is segmented, a seed usually needs to be provided. In this module, the seed can be provided in several different ways\+:
+\begin{DoxyItemize}
+\item In the three first options above ({\ttfamily seg}, {\ttfamily flood} and {\ttfamily flood3d}) the initial seed to perform segmentation can be provided in 3 different ways\+:
+\item If parameter {\ttfamily seed\+Auto} is set to {\itshape true}, the seed will be obtained automatically.
+\begin{DoxyItemize}
+\item In segmentations options {\ttfamily seg} and {\ttfamily flood}, seed has to be provided by a tracker whose ooutput (u v coordinates) is connected to the {\ttfamily /seg2cloud/seed\+:i} port.
+\item If the segmentation option is {\ttfamily flood3d}, the seed is computed automatically as the center of the closest blob (as in the disb\+Blobber module).
+\end{DoxyItemize}
+\item If parameter {\ttfamily seed\+Auto} is set to {\itshape false}, the seed can be coveyed in 2 further ways\+:
+\begin{DoxyItemize}
+\item By clicking on a connected yarpview window whose output is connected to the {\ttfamily /seg2cloud/seed\+:i}port.
+\item As {\itshape explicit u v coordinates} given after the segmentation command. For example {\ttfamily  seg 102 175 }.
+\end{DoxyItemize}
+\item In the case where the segmentation option is set to {\ttfamily polygon}, no seed is needed, as the region is fully provided by the user.
+\end{DoxyItemize}
+
+The results obtained with each of these options can be observed below.\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md6}{}\doxysection{Images of reconstruction results\+:}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md6}
+\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md7}{}\doxysubsection{seg (2\+D segmentation provided by $<$a href=\char`\"{}https\+://github.\+com/robotology/segmentation/tree/master/lbp\+Extract\char`\"{}$>$lbp\+Exptract$<$/a$>$)}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md7}
+\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md8}{}\doxysubsection{flood (2\+D color flood)}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md8}
+\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md9}{}\doxysubsection{flood3\+D (3\+D spatial flood)}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md9}
+\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md10}{}\doxysubsection{polygon (\+Selected polygon segmentation)}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md10}
+\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md11}{}\doxysection{Documentation}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md11}
+Online documentation is available here\+: \href{http://robotology.github.com/segmentation-to-pointcloud}{\texttt{ http\+://robotology.\+github.\+com/segmentation-\/to-\/pointcloud}}.\hypertarget{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md12}{}\doxysection{License}\label{md__home_runner_work_segmentation_segmentation_gh-pages_seg2cloud_README_autotoc_md12}
+Material included here is Copyright of {\itshape i\+Cub Facility -\/ Istituto Italiano di Tecnologia} and is released under the terms of the G\+PL v2.\+0 or later. See the file L\+I\+C\+E\+N\+SE for details. 

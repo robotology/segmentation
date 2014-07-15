@@ -1,0 +1,316 @@
+\doxysection{G\+B\+Segm\+Module Class Reference}
+\label{classGBSegmModule}\index{GBSegmModule@{GBSegmModule}}
+
+
+Segmentation Module.  
+
+
+
+
+{\ttfamily \#include $<$Segm\+Module.\+h$>$}
+
+Inheritance diagram for G\+B\+Segm\+Module\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classGBSegmModule}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{classGBSegmModule_ada22cbfc66dd9b75a7a824e1ce642639}} 
+virtual bool {\bfseries configure} (yarp\+::os\+::\+Resource\+Finder \&rf)
+\item 
+\mbox{\label{classGBSegmModule_ac3259b29883674bf47aa962f54806913}} 
+virtual bool {\bfseries close} ()
+\item 
+\mbox{\label{classGBSegmModule_a99b9908ade3135dd5ee491b799d5e171}} 
+virtual bool {\bfseries interrupt\+Module} ()
+\item 
+\mbox{\label{classGBSegmModule_a66f40b6ae480a039a2c10f6b91c59dde}} 
+virtual bool {\bfseries update\+Module} ()
+\item 
+\mbox{\label{classGBSegmModule_a4ae8d5fee391d799299a10e09a5ea8c4}} 
+bool {\bfseries attach} (yarp\+::os\+::\+Port \&source)
+\item 
+virtual void \mbox{\hyperlink{classGBSegmModule_a27ffe08d394d321d9f9441423d36ef5e}{set\+\_\+sigma}} (const double new\+Value)
+\begin{DoxyCompactList}\small\item\em Set sigma (smoothing) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classGBSegmModule_a15129913273e221a46c428f697e40575}{set\+\_\+k}} (const double new\+Value)
+\begin{DoxyCompactList}\small\item\em Set k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classGBSegmModule_ae1c722c9c774cbde4f6bfada3f0826ba}{set\+\_\+min\+Region}} (const double new\+Value)
+\begin{DoxyCompactList}\small\item\em Set min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classGBSegmModule_ae32ae1b1461e19c3a1b2f429c729ed03}{get\+\_\+sigma}} ()
+\begin{DoxyCompactList}\small\item\em Get sigma (smoothing) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classGBSegmModule_a44bab99aa7a035e57a185673c040d2f6}{get\+\_\+k}} ()
+\begin{DoxyCompactList}\small\item\em Get k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classGBSegmModule_a2378b95e60b406a119947aa86b5bb9c4}{get\+\_\+min\+Region}} ()
+\begin{DoxyCompactList}\small\item\em Get min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. \end{DoxyCompactList}\item 
+virtual int32\+\_\+t \mbox{\hyperlink{classGBSegmModule_a655ee7c895eed07b07099133b9d8ce68}{get\+\_\+num\+\_\+components}} ()
+\begin{DoxyCompactList}\small\item\em Get the number of segmented components that have been detected in the last provided image. \end{DoxyCompactList}\item 
+virtual std\+::vector$<$ \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{yarp\+::sig\+::\+Pixel}} $>$ \mbox{\hyperlink{classGBSegmModule_a0b63c53513e67c4f126e29cf7f28ad53}{get\+\_\+component\+\_\+around}} (const \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{yarp\+::sig\+::\+Pixel}} \&obj\+Center)
+\begin{DoxyCompactList}\small\item\em Get the list of pixels corresponding to the component to which a given pixel belongs. \end{DoxyCompactList}\item 
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a14ea1dff9efc91a5099633740b3e45f9}} 
+virtual std\+::vector$<$ std\+::string $>$ {\bfseries help} (const std\+::string \&function\+Name=\char`\"{}-\/-\/all\char`\"{})
+\item 
+\mbox{\label{classyarp_1_1sig_1_1SegmentationModuleInterface_a31d3ce62c3ad4ab669216a19cde4e769}} 
+bool {\bfseries read} (yarp\+::os\+::\+Connection\+Reader \&connection) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Segmentation Module. 
+
+
+
+Definition at line 31 of file Segm\+Module.\+h.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\label{classGBSegmModule_a0b63c53513e67c4f126e29cf7f28ad53}} 
+\index{GBSegmModule@{GBSegmModule}!get\_component\_around@{get\_component\_around}}
+\index{get\_component\_around@{get\_component\_around}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{get\_component\_around()}{get\_component\_around()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{Pixel}} $>$ G\+B\+Segm\+Module\+::get\+\_\+component\+\_\+around (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classyarp_1_1sig_1_1Pixel}{yarp\+::sig\+::\+Pixel}} \&}]{obj\+Center }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the list of pixels corresponding to the component to which a given pixel belongs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj\+Center} & a pixel belonging to the region of interest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of pixels belonging to the same component as the input pixels 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a9bf0b95fbab216b2284122b0b8a36820}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 71 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{72 \{}
+\DoxyCodeLine{73     vector<Pixel> result;}
+\DoxyCodeLine{74     result.clear();}
+\DoxyCodeLine{75     lock\_guard<mutex> lg(segMutex);}
+\DoxyCodeLine{76     rgb componentColor = imRef(seg, objCenter.x, objCenter.y);}
+\DoxyCodeLine{77     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < seg-\/>height(); y++) \{}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < seg-\/>width(); x++) \{}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81               \textcolor{keywordflow}{if} (imRef(seg, x, y) == componentColor)}
+\DoxyCodeLine{82                 result.push\_back(Pixel(x, y));}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85             \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87         \}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{90 \}}
+
+\end{DoxyCode}
+
+
+References yarp\+::sig\+::\+Pixel\+::x, and yarp\+::sig\+::\+Pixel\+::y.
+
+\mbox{\label{classGBSegmModule_a44bab99aa7a035e57a185673c040d2f6}} 
+\index{GBSegmModule@{GBSegmModule}!get\_k@{get\_k}}
+\index{get\_k@{get\_k}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{get\_k()}{get\_k()}}
+{\footnotesize\ttfamily double G\+B\+Segm\+Module\+::get\+\_\+k (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. 
+
+\begin{DoxyReturn}{Returns}
+current value for k parameter 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a91f3d872a48599337d1d2f365ac4c31e}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 68 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{68 \{\textcolor{keywordflow}{return} k;\}}
+
+\end{DoxyCode}
+\mbox{\label{classGBSegmModule_a2378b95e60b406a119947aa86b5bb9c4}} 
+\index{GBSegmModule@{GBSegmModule}!get\_minRegion@{get\_minRegion}}
+\index{get\_minRegion@{get\_minRegion}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{get\_minRegion()}{get\_minRegion()}}
+{\footnotesize\ttfamily double G\+B\+Segm\+Module\+::get\+\_\+min\+Region (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. 
+
+\begin{DoxyReturn}{Returns}
+current value for min\+Region parameter 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a6c184aeea894f6afcc342c5aa748429d}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 69 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{69 \{\textcolor{keywordflow}{return} min\_size;\}}
+
+\end{DoxyCode}
+\mbox{\label{classGBSegmModule_a655ee7c895eed07b07099133b9d8ce68}} 
+\index{GBSegmModule@{GBSegmModule}!get\_num\_components@{get\_num\_components}}
+\index{get\_num\_components@{get\_num\_components}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{get\_num\_components()}{get\_num\_components()}}
+{\footnotesize\ttfamily int32\+\_\+t G\+B\+Segm\+Module\+::get\+\_\+num\+\_\+components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the number of segmented components that have been detected in the last provided image. 
+
+\begin{DoxyReturn}{Returns}
+number of segmented components 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a253cb5a4d4250b97842537b664a93064}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 70 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{70 \{\textcolor{keywordflow}{return} num\_components;\}}
+
+\end{DoxyCode}
+\mbox{\label{classGBSegmModule_ae32ae1b1461e19c3a1b2f429c729ed03}} 
+\index{GBSegmModule@{GBSegmModule}!get\_sigma@{get\_sigma}}
+\index{get\_sigma@{get\_sigma}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{get\_sigma()}{get\_sigma()}}
+{\footnotesize\ttfamily double G\+B\+Segm\+Module\+::get\+\_\+sigma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get sigma (smoothing) parameter for the algorithm. 
+
+\begin{DoxyReturn}{Returns}
+current value for sigma parameter 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a38431f2c63d7da8ebf20adf0ed1da4fe}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 67 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{67 \{\textcolor{keywordflow}{return} sigma;\}}
+
+\end{DoxyCode}
+\mbox{\label{classGBSegmModule_a15129913273e221a46c428f697e40575}} 
+\index{GBSegmModule@{GBSegmModule}!set\_k@{set\_k}}
+\index{set\_k@{set\_k}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{set\_k()}{set\_k()}}
+{\footnotesize\ttfamily void G\+B\+Segm\+Module\+::set\+\_\+k (\begin{DoxyParamCaption}\item[{const double}]{new\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set k (scale factor for boundary-\/detection threshold function) parameter for the algorithm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Value} & new value for k parameter \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a2851eae0226ad68f41cd8b61d8bb1456}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 65 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{65 \{k=(float)newValue;\}}
+
+\end{DoxyCode}
+\mbox{\label{classGBSegmModule_ae1c722c9c774cbde4f6bfada3f0826ba}} 
+\index{GBSegmModule@{GBSegmModule}!set\_minRegion@{set\_minRegion}}
+\index{set\_minRegion@{set\_minRegion}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{set\_minRegion()}{set\_minRegion()}}
+{\footnotesize\ttfamily void G\+B\+Segm\+Module\+::set\+\_\+min\+Region (\begin{DoxyParamCaption}\item[{const double}]{new\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set min\+Region parameter for the algorithm, i.\+e., the minimum size of any segmented component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Value} & new value for min\+Region parameter \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_ad9d90ed7e362ae83e2145445a9c4301e}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 66 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{66 \{min\_size=(int)newValue;\}}
+
+\end{DoxyCode}
+\mbox{\label{classGBSegmModule_a27ffe08d394d321d9f9441423d36ef5e}} 
+\index{GBSegmModule@{GBSegmModule}!set\_sigma@{set\_sigma}}
+\index{set\_sigma@{set\_sigma}!GBSegmModule@{GBSegmModule}}
+\doxysubsubsection{\texorpdfstring{set\_sigma()}{set\_sigma()}}
+{\footnotesize\ttfamily void G\+B\+Segm\+Module\+::set\+\_\+sigma (\begin{DoxyParamCaption}\item[{const double}]{new\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set sigma (smoothing) parameter for the algorithm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Value} & new value for sigma parameter \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classyarp_1_1sig_1_1SegmentationModuleInterface_a68f28930df5e930934c0ee56ad1f680c}{yarp\+::sig\+::\+Segmentation\+Module\+Interface}}.
+
+
+
+Definition at line 64 of file Segm\+Module.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{64 \{sigma=(float)newValue;\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/segmentation/segmentation/gh-\/pages/graph\+Based/Segm\+Module.\+h\item 
+/home/runner/work/segmentation/segmentation/gh-\/pages/graph\+Based/Segm\+Module.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,201 @@
+\doxysection{lbp Namespace Reference}
+\label{namespacelbp}\index{lbp@{lbp}}
+
+
+Original code by philipp $<$bytefish\mbox{[}at\mbox{]}gmx\mbox{[}dot\mbox{]}de$>$  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename \+\_\+\+Tp $>$ }\\void \mbox{\hyperlink{namespacelbp_a7a2d45fdc785282bc110d25495ef78d7}{histogram\+\_\+}} (const cv\+::\+Mat \&src, cv\+::\+Mat \&hist, int num\+Patterns)
+\begin{DoxyCompactList}\small\item\em Original code by philipp $<$bytefish\mbox{[}at\mbox{]}gmx\mbox{[}dot\mbox{]}de$>$ \end{DoxyCompactList}\item 
+\mbox{\label{namespacelbp_a7f6233ae8ce09653d048465413e5a40f}} 
+{\footnotesize template$<$typename \+\_\+\+Tp $>$ }\\double {\bfseries chi\+\_\+square\+\_\+} (const cv\+::\+Mat \&histogram0, const cv\+::\+Mat \&histogram1)
+\item 
+\mbox{\label{namespacelbp_a033b381259dbac1e636bf1729abd0d84}} 
+void {\bfseries spatial\+\_\+histogram} (const cv\+::\+Mat \&src, cv\+::\+Mat \&spatialhist, int num\+Patterns, const cv\+::\+Size \&window, int overlap=0)
+\item 
+\mbox{\label{namespacelbp_afe088914321c9c6210cdb611aa6c2fa9}} 
+void {\bfseries spatial\+\_\+histogram} (const cv\+::\+Mat \&src, cv\+::\+Mat \&spatialhist, int num\+Patterns, int gridx=8, int gridy=8, int overlap=0)
+\item 
+\mbox{\label{namespacelbp_a1ec08379651e945f526ee485960feb55}} 
+void {\bfseries histogram} (const cv\+::\+Mat \&src, cv\+::\+Mat \&hist, int num\+Patterns)
+\item 
+\mbox{\label{namespacelbp_abc2c2aedd18a2a6edd9c128c843bb572}} 
+double {\bfseries chi\+\_\+square} (const cv\+::\+Mat \&histogram0, const cv\+::\+Mat \&histogram1)
+\item 
+\mbox{\label{namespacelbp_ab84f853b680a693ba42f63e32cdbb7b6}} 
+cv\+::\+Mat {\bfseries histogram} (const cv\+::\+Mat \&src, int num\+Patterns)
+\item 
+\mbox{\label{namespacelbp_a969e1b4575a7bdaf68271e5855b2a3da}} 
+cv\+::\+Mat {\bfseries spatial\+\_\+histogram} (const cv\+::\+Mat \&src, int num\+Patterns, const cv\+::\+Size \&window, int overlap=0)
+\item 
+\mbox{\label{namespacelbp_abc898ced323b22d8659c5a8a28a805b7}} 
+cv\+::\+Mat {\bfseries spatial\+\_\+histogram} (const cv\+::\+Mat \&src, int num\+Patterns, int gridx=8, int gridy=8, int overlap=0)
+\item 
+{\footnotesize template$<$typename \+\_\+\+Tp $>$ }\\void \mbox{\hyperlink{namespacelbp_a640337219aa7c2a5326fa41af8269cc5}{O\+L\+B\+P\+\_\+}} (const cv\+::\+Mat \&src, cv\+::\+Mat \&dst)
+\begin{DoxyCompactList}\small\item\em Original code by philipp $<$bytefish\mbox{[}at\mbox{]}gmx\mbox{[}dot\mbox{]}de$>$ \end{DoxyCompactList}\item 
+\mbox{\label{namespacelbp_a0a37f5c75a252b844f2a0a53e39d4d1c}} 
+{\footnotesize template$<$typename \+\_\+\+Tp $>$ }\\void {\bfseries E\+L\+B\+P\+\_\+} (const cv\+::\+Mat \&src, cv\+::\+Mat \&dst, int radius=1, int neighbors=8)
+\item 
+{\footnotesize template$<$typename \+\_\+\+Tp $>$ }\\void \mbox{\hyperlink{namespacelbp_a32baee0ff6f7c9703bc16f1e965e7324}{V\+A\+R\+L\+B\+P\+\_\+}} (const cv\+::\+Mat \&src, cv\+::\+Mat \&dst, int radius=1, int neighbors=8)
+\item 
+\mbox{\label{namespacelbp_aa36d3518cf5dfc2287a833598ecd2247}} 
+void {\bfseries O\+L\+BP} (const cv\+::\+Mat \&src, cv\+::\+Mat \&dst)
+\item 
+\mbox{\label{namespacelbp_a7ca5bceb1a229bac0760c527a68e838e}} 
+void {\bfseries E\+L\+BP} (const cv\+::\+Mat \&src, cv\+::\+Mat \&dst, int radius=1, int neighbors=8)
+\item 
+\mbox{\label{namespacelbp_a0b3e413fbb2c14f3d7e5c99370a6671d}} 
+void {\bfseries V\+A\+R\+L\+BP} (const cv\+::\+Mat \&src, cv\+::\+Mat \&dst, int radius=1, int neighbors=8)
+\item 
+\mbox{\label{namespacelbp_a5cfe27bf479d2f8eaf4ff487ef7b6532}} 
+cv\+::\+Mat {\bfseries O\+L\+BP} (const cv\+::\+Mat \&src)
+\item 
+\mbox{\label{namespacelbp_aeaa7fc1cf01cd9093610e6d89a7bb4a3}} 
+cv\+::\+Mat {\bfseries E\+L\+BP} (const cv\+::\+Mat \&src, int radius=1, int neighbors=8)
+\item 
+\mbox{\label{namespacelbp_a17e665b32c7d6438478deecaa9174afc}} 
+cv\+::\+Mat {\bfseries V\+A\+R\+L\+BP} (const cv\+::\+Mat \&src, int radius=1, int neighbors=8)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Original code by philipp $<$bytefish\mbox{[}at\mbox{]}gmx\mbox{[}dot\mbox{]}de$>$ 
+
+\begin{DoxyCopyright}{Copyright}
+B\+SD, see L\+I\+C\+E\+N\+SE. 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespacelbp_a7a2d45fdc785282bc110d25495ef78d7}} 
+\index{lbp@{lbp}!histogram\_@{histogram\_}}
+\index{histogram\_@{histogram\_}!lbp@{lbp}}
+\doxysubsubsection{\texorpdfstring{histogram\_()}{histogram\_()}}
+{\footnotesize\ttfamily template$<$typename \+\_\+\+Tp $>$ \\
+void lbp\+::histogram\+\_\+ (\begin{DoxyParamCaption}\item[{const cv\+::\+Mat \&}]{src,  }\item[{cv\+::\+Mat \&}]{hist,  }\item[{int}]{num\+Patterns }\end{DoxyParamCaption})}
+
+
+
+Original code by philipp $<$bytefish\mbox{[}at\mbox{]}gmx\mbox{[}dot\mbox{]}de$>$ 
+
+\begin{DoxyCopyright}{Copyright}
+B\+SD, see L\+I\+C\+E\+N\+SE. 
+\end{DoxyCopyright}
+
+
+Definition at line 28 of file histogram.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{28                                                                    \{}
+\DoxyCodeLine{29     hist = cv::Mat::zeros(1, numPatterns, CV\_32SC1);}
+\DoxyCodeLine{30     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < src.rows; i++) \{}
+\DoxyCodeLine{31         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j = 0; j < src.cols; j++) \{}
+\DoxyCodeLine{32             \textcolor{keywordtype}{int} bin = src.at<\_Tp>(i,j);}
+\DoxyCodeLine{33             hist.at<\textcolor{keywordtype}{int}>(0,bin) += 1;}
+\DoxyCodeLine{34         \}}
+\DoxyCodeLine{35     \}}
+\DoxyCodeLine{36 \}}
+
+\end{DoxyCode}
+\mbox{\label{namespacelbp_a640337219aa7c2a5326fa41af8269cc5}} 
+\index{lbp@{lbp}!OLBP\_@{OLBP\_}}
+\index{OLBP\_@{OLBP\_}!lbp@{lbp}}
+\doxysubsubsection{\texorpdfstring{OLBP\_()}{OLBP\_()}}
+{\footnotesize\ttfamily template$<$typename \+\_\+\+Tp $>$ \\
+void lbp\+::\+O\+L\+B\+P\+\_\+ (\begin{DoxyParamCaption}\item[{const cv\+::\+Mat \&}]{src,  }\item[{cv\+::\+Mat \&}]{dst }\end{DoxyParamCaption})}
+
+
+
+Original code by philipp $<$bytefish\mbox{[}at\mbox{]}gmx\mbox{[}dot\mbox{]}de$>$ 
+
+\begin{DoxyCopyright}{Copyright}
+B\+SD, see L\+I\+C\+E\+N\+SE. 
+\end{DoxyCopyright}
+
+
+Definition at line 27 of file lbp.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{27                                             \{}
+\DoxyCodeLine{28     }
+\DoxyCodeLine{29     dst = cv::Mat::zeros(src.rows-\/2, src.cols-\/2, CV\_8UC1);}
+\DoxyCodeLine{30     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=1;i<src.rows-\/1;i++) \{}
+\DoxyCodeLine{31         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=1;j<src.cols-\/1;j++) \{}
+\DoxyCodeLine{32             \_Tp center = src.at<\_Tp>(i,j);}
+\DoxyCodeLine{33             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} code = 0;}
+\DoxyCodeLine{34             code |= (src.at<\_Tp>(i-\/1,j-\/1) > center) << 7;}
+\DoxyCodeLine{35             code |= (src.at<\_Tp>(i-\/1,j) > center) << 6;}
+\DoxyCodeLine{36             code |= (src.at<\_Tp>(i-\/1,j+1) > center) << 5;}
+\DoxyCodeLine{37             code |= (src.at<\_Tp>(i,j+1) > center) << 4;}
+\DoxyCodeLine{38             code |= (src.at<\_Tp>(i+1,j+1) > center) << 3;}
+\DoxyCodeLine{39             code |= (src.at<\_Tp>(i+1,j) > center) << 2;}
+\DoxyCodeLine{40             code |= (src.at<\_Tp>(i+1,j-\/1) > center) << 1;}
+\DoxyCodeLine{41             code |= (src.at<\_Tp>(i,j-\/1) > center) << 0;}
+\DoxyCodeLine{42             dst.at<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}>(i-\/1,j-\/1) = code;}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44     \}}
+\DoxyCodeLine{45 \}}
+
+\end{DoxyCode}
+\mbox{\label{namespacelbp_a32baee0ff6f7c9703bc16f1e965e7324}} 
+\index{lbp@{lbp}!VARLBP\_@{VARLBP\_}}
+\index{VARLBP\_@{VARLBP\_}!lbp@{lbp}}
+\doxysubsubsection{\texorpdfstring{VARLBP\_()}{VARLBP\_()}}
+{\footnotesize\ttfamily template$<$typename \+\_\+\+Tp $>$ \\
+void lbp\+::\+V\+A\+R\+L\+B\+P\+\_\+ (\begin{DoxyParamCaption}\item[{const cv\+::\+Mat \&}]{src,  }\item[{cv\+::\+Mat \&}]{dst,  }\item[{int}]{radius = {\ttfamily 1},  }\item[{int}]{neighbors = {\ttfamily 8} }\end{DoxyParamCaption})}
+
+result
+
+Definition at line 83 of file lbp.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{83                                                                          \{}
+\DoxyCodeLine{84     }
+\DoxyCodeLine{85     std::max(std::min(neighbors,31),1); \textcolor{comment}{// set bounds}}
+\DoxyCodeLine{86     dst = cv::Mat::zeros(src.rows-\/2*radius, src.cols-\/2*radius, CV\_32FC1); }
+\DoxyCodeLine{87     \textcolor{comment}{// allocate some memory for temporary on-\/line variance calculations}}
+\DoxyCodeLine{88     cv::Mat \_mean = cv::Mat::zeros(src.rows, src.cols, CV\_32FC1);}
+\DoxyCodeLine{89     cv::Mat \_delta = cv::Mat::zeros(src.rows, src.cols, CV\_32FC1);}
+\DoxyCodeLine{90     cv::Mat \_m2 = cv::Mat::zeros(src.rows, src.cols, CV\_32FC1);}
+\DoxyCodeLine{91     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} n=0; n<neighbors; n++) \{}
+\DoxyCodeLine{92         \textcolor{comment}{// sample points}}
+\DoxyCodeLine{93         \textcolor{keywordtype}{float} x = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(radius) * cos(2.0*M\_PI*n/\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(neighbors));}
+\DoxyCodeLine{94         \textcolor{keywordtype}{float} y = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(radius) * -\/sin(2.0*M\_PI*n/\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(neighbors));}
+\DoxyCodeLine{95         \textcolor{comment}{// relative indices}}
+\DoxyCodeLine{96         \textcolor{keywordtype}{int} fx = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(floor(x));}
+\DoxyCodeLine{97         \textcolor{keywordtype}{int} fy = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(floor(y));}
+\DoxyCodeLine{98         \textcolor{keywordtype}{int} cx = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(ceil(x));}
+\DoxyCodeLine{99         \textcolor{keywordtype}{int} cy = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(ceil(y));}
+\DoxyCodeLine{100         \textcolor{comment}{// fractional part}}
+\DoxyCodeLine{101         \textcolor{keywordtype}{float} ty = y -\/ fy;}
+\DoxyCodeLine{102         \textcolor{keywordtype}{float} tx = x -\/ fx;}
+\DoxyCodeLine{103         \textcolor{comment}{// set interpolation weights}}
+\DoxyCodeLine{104         \textcolor{keywordtype}{float} w1 = (1 -\/ tx) * (1 -\/ ty);}
+\DoxyCodeLine{105         \textcolor{keywordtype}{float} w2 =      tx  * (1 -\/ ty);}
+\DoxyCodeLine{106         \textcolor{keywordtype}{float} w3 = (1 -\/ tx) *      ty;}
+\DoxyCodeLine{107         \textcolor{keywordtype}{float} w4 =      tx  *      ty;}
+\DoxyCodeLine{108         \textcolor{comment}{// iterate through your data}}
+\DoxyCodeLine{109         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=radius; i < src.rows-\/radius;i++) \{}
+\DoxyCodeLine{110             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=radius;j < src.cols-\/radius;j++) \{}
+\DoxyCodeLine{111                 \textcolor{keywordtype}{float} t = w1*src.at<\_Tp>(i+fy,j+fx) + w2*src.at<\_Tp>(i+fy,j+cx) + w3*src.at<\_Tp>(i+cy,j+fx) + w4*src.at<\_Tp>(i+cy,j+cx);}
+\DoxyCodeLine{112                 \_delta.at<\textcolor{keywordtype}{float}>(i,j) = t -\/ \_mean.at<\textcolor{keywordtype}{float}>(i,j);}
+\DoxyCodeLine{113                 \_mean.at<\textcolor{keywordtype}{float}>(i,j) = (\_mean.at<\textcolor{keywordtype}{float}>(i,j) + (\_delta.at<\textcolor{keywordtype}{float}>(i,j) / (1.0*(n+1)))); \textcolor{comment}{// i am a bit paranoid}}
+\DoxyCodeLine{114                 \_m2.at<\textcolor{keywordtype}{float}>(i,j) = \_m2.at<\textcolor{keywordtype}{float}>(i,j) + \_delta.at<\textcolor{keywordtype}{float}>(i,j) * (t -\/ \_mean.at<\textcolor{keywordtype}{float}>(i,j));}
+\DoxyCodeLine{115             \}}
+\DoxyCodeLine{116         \}}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118     \textcolor{comment}{// calculate result}}
+\DoxyCodeLine{119     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = radius; i < src.rows-\/radius; i++) \{}
+\DoxyCodeLine{120         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j = radius; j < src.cols-\/radius; j++) \{}
+\DoxyCodeLine{121             dst.at<\textcolor{keywordtype}{float}>(i-\/radius, j-\/radius) = \_m2.at<\textcolor{keywordtype}{float}>(i,j) / (1.0*(neighbors-\/1));}
+\DoxyCodeLine{122         \}}
+\DoxyCodeLine{123     \}}
+\DoxyCodeLine{124 \}}
+
+\end{DoxyCode}

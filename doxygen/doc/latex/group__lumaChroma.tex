@@ -1,0 +1,150 @@
+\doxysection{luma\+Chroma}
+\label{group__lumaChroma}\index{lumaChroma@{lumaChroma}}
+
+
+Receives an rgb image, depending on the image type the user wants to work on (Y\+UV or H\+SV) the module extracts the Y, U and V or H, S, and V planes and performs centre-\/surround processing with a construction of uniqueness maps (intensity saliency, colour, hue, saturation and value ) via a difference-\/of-\/\+Gaussian pyramid filter bank.  
+
+
+Receives an rgb image, depending on the image type the user wants to work on (Y\+UV or H\+SV) the module extracts the Y, U and V or H, S, and V planes and performs centre-\/surround processing with a construction of uniqueness maps (intensity saliency, colour, hue, saturation and value ) via a difference-\/of-\/\+Gaussian pyramid filter bank. 
+
+Receives an rgb image, depending on the image type the user wants to work on (Y\+UV or H\+SV) the module extracts the Y, U and V or H, S, and V planes and performs centre-\/surround processing with a construction of uniqueness maps (intensity saliency, colour, hue, saturation and value ) via a difference-\/of-\/\+Gaussian pyramid filter bank. Version\+:1.\+0.\hypertarget{group__blobExtractor_lib_sec}{}\doxysubsection{Libraries}\label{group__blobExtractor_lib_sec}
+Y\+A\+RP Open\+CV (version $>$= 2.\+0)\hypertarget{group__seg2cloud_parameters_sec}{}\doxysubsection{Parameters}\label{group__seg2cloud_parameters_sec}
+Command-\/line Parameters
+
+The following key-\/value pairs can be specified as command-\/line parameters by prefixing {\ttfamily --} to the key (e.\+g. {\ttfamily --from} file.\+ini. The value part can be changed to suit your needs; the default values are shown below.
+
+
+\begin{DoxyItemize}
+\item {\ttfamily from} {\ttfamily luma\+Chroma.\+ini} ~\newline
+ specifies the configuration file
+\item {\ttfamily context} {\ttfamily luma\+Chroma} ~\newline
+ specifies the sub-\/path from {\ttfamily \$\+I\+C\+U\+B\+\_\+\+R\+O\+OT/icub/app} to the configuration file
+\item {\ttfamily --name} {\ttfamily luma\+Chroma} ~\newline
+ ~\newline
+ specifies the name of the module (used to form the stem of module port names) ~\newline
+
+\item {\ttfamily --image} \textbackslash{}cyuv ~\newline
+ ~\newline
+ specifies the type of the module to work on (yuv or hsv) ~\newline
+
+\item {\ttfamily --out} {\ttfamily Y}, UV, H, S, V ~\newline
+ specifies the output on the default port (y, uv, h, s, v). If nothing has been selected, eg --out without extra paramenter or simply without using --out, the default filter is Y for yuv image type and S for hsv image type
+\end{DoxyItemize}
+
+Configuration File Parameters
+
+The following key-\/value pairs can be specified as parameters in the configuration file (they can also be specified as command-\/line parameters if you so wish). The value part can be changed to suit your needs; the default values are shown below.
+
+
+\begin{DoxyItemize}
+\item {\ttfamily image\+Input\+Port} {\ttfamily /image}\+:i ~\newline
+ ~\newline
+ specifies the input port name (this string will be prefixed by {\ttfamily /yuv\+Proc} or whatever else is specifed by the name parameter)
+\item {\ttfamily Y\+Port} {\ttfamily /\+Y/image}\+:o ~\newline
+ ~\newline
+ specifies the output port name when Y\+UV is selected(this string will be prefixed by {\ttfamily /yuv\+Proc} or whatever else is specifed by the name parameter)
+\item {\ttfamily U\+V\+Port} {\ttfamily /\+U\+V/image}\+:o ~\newline
+ ~\newline
+ specifies the output port name when Y\+UV is selected(this string will be prefixed by {\ttfamily /yuv\+Proc} or whatever else is specifed by the name parameter)
+\item {\ttfamily H\+Port} {\ttfamily /\+H/image}\+:o ~\newline
+ ~\newline
+ specifies the output port name when H\+SV is selected(this string will be prefixed by {\ttfamily /yuv\+Proc} or whatever else is specifed by the name parameter)
+\item {\ttfamily S\+Port} {\ttfamily /\+S/image}\+:o ~\newline
+ ~\newline
+ specifies the output port name when H\+SV is selected(this string will be prefixed by {\ttfamily /yuv\+Proc} or whatever else is specifed by the name parameter)
+\item {\ttfamily V\+Port} {\ttfamily /\+V/image}\+:o ~\newline
+ ~\newline
+ specifies the output port name when H\+SV is selected(this string will be prefixed by {\ttfamily /yuv\+Proc} or whatever else is specifed by the name parameter)
+\item {\ttfamily V\+Port} {\ttfamily /image}\+:o ~\newline
+ ~\newline
+ This contains the default image chosen by the user using the --out paramenter. This was added to simplify connections while changing image types for demo applications such as the I\+OL demo (interactive\+Object\+Learning) or K\+A\+R\+MA demo. This string will be prefixed by {\ttfamily /yuv\+Proc} or whatever else is specifed by the name parameter
+\end{DoxyItemize}\hypertarget{group__lumaChroma_portsa_sec}{}\doxysubsection{Ports Accessed}\label{group__lumaChroma_portsa_sec}
+
+\begin{DoxyItemize}
+\item None
+\end{DoxyItemize}\hypertarget{group__blobExtractor_portsc_sec}{}\doxysubsection{Ports Created}\label{group__blobExtractor_portsc_sec}
+Input ports
+
+
+\begin{DoxyItemize}
+\item {\ttfamily /luma\+Chroma} ~\newline
+ This port is used to change the parameters of the module at run time or stop the module. ~\newline
+ The following commands are available
+
+{\ttfamily help} ~\newline
+ {\ttfamily quit} ~\newline
+ Note that the name of this port mirrors whatever is provided by the {\ttfamily --name} parameter value The port is attached to the terminal so that you can type in commands and receive replies. The port can be used by other modules but also interactively by a user through the yarp rpc directive, viz.\+: {\ttfamily yarp} {\ttfamily rpc} {\ttfamily /yuv\+Proc} This opens a connection from a terminal to the port and allows the user to then type in commands and receive replies.
+\item {\ttfamily /luma\+Chroma/image}\+:i ~\newline
+ Output ports
+\item {\ttfamily /luma\+Chroma} ~\newline
+ see above
+\item {\ttfamily /luma\+Chroma/\+Y/image}\+:o when Y\+UV is selected~\newline
+
+\item {\ttfamily /luma\+Chroma/\+U\+V/image}\+:o when Y\+UV is selected~\newline
+
+\item {\ttfamily /luma\+Chroma/\+H/image}\+:o when H\+SV is selected~\newline
+
+\item {\ttfamily /luma\+Chroma/\+S/image}\+:o when H\+SV is selected~\newline
+
+\item {\ttfamily /luma\+Chroma/\+V/image}\+:o when H\+SV is selected~\newline
+
+\item {\ttfamily /luma\+Chroma/image}\+:o default filter port is selected~\newline
+ Port types
+\end{DoxyItemize}
+
+The functional specification only names the ports to be used to communicate with the module but doesn\textquotesingle{}t say anything about the data transmitted on the ports. This is defined by the following code.
+
+{\ttfamily Buffered\+Port$<$Image\+Of$<$\+Pixel\+Rgb$>$} $>$ {\ttfamily input\+Port}; ~\newline
+ {\ttfamily Buffered\+Port$<$Image\+Of$<$\+Pixel\+Mono$>$} $>$ {\ttfamily out\+PortY}; ~\newline
+ {\ttfamily Buffered\+Port$<$Image\+Of$<$\+Pixel\+Mono$>$} $>$ {\ttfamily out\+Port\+UV}; ~\newline
+ {\ttfamily Buffered\+Port$<$Image\+Of$<$\+Pixel\+Mono$>$} $>$ {\ttfamily out\+PortV}; ~\newline
+ {\ttfamily Buffered\+Port$<$Image\+Of$<$\+Pixel\+Mono$>$} $>$ {\ttfamily default\+Port\+Out}; ~\newline
+\hypertarget{group__lumaChroma_in_files_sec}{}\doxysubsection{Input Data Files}\label{group__lumaChroma_in_files_sec}
+None\hypertarget{group__lumaChroma_out_data_sec}{}\doxysubsection{Output Data Files}\label{group__lumaChroma_out_data_sec}
+None\hypertarget{group__lumaChroma_conf_file_sec}{}\doxysubsection{Configuration Files}\label{group__lumaChroma_conf_file_sec}
+{\ttfamily luma\+Chroma.\+ini} in {\ttfamily \$\+I\+C\+U\+B\+\_\+\+R\+O\+OT/app/luma\+Chroma/conf} ~\newline
+ \hypertarget{group__blobExtractor_tested_os_sec}{}\doxysubsection{Tested OS}\label{group__blobExtractor_tested_os_sec}
+Linux\+: Ubuntu 9.\+10, Debian Stable, squeeze and windows\hypertarget{group__lumaChroma_example_sec}{}\doxysubsection{Example Instantiation of the Module}\label{group__lumaChroma_example_sec}
+{\ttfamily luma\+Chroma --name luma\+Chroma --image yuv (or hsv) --out Y --context luma\+Chroma --from config.\+ini }
+
+\begin{DoxyAuthor}{Author}
+
+\end{DoxyAuthor}
+Vadim Tikhanoff
+
+Copyright (C) 2009 Robot\+Cub Consortium
+
+Copy\+Policy\+: Released under the terms of the G\+NU G\+PL v2.\+0.
+
+\begin{DoxyAuthor}{Author}
+Vadim Tikhanoff \href{mailto:vadim.tikhanoff@iit.it}{\texttt{ vadim.\+tikhanoff@iit.\+it}} ~\newline
+ 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+
+\end{DoxyCopyright}
+\hypertarget{group__seg2cloud_intro_sec}{}\doxysubsection{Description}\label{group__seg2cloud_intro_sec}
+\hypertarget{group__seg2cloud_parameters_sec}{}\doxysubsection{Parameters}\label{group__seg2cloud_parameters_sec}
+
+\begin{DoxyItemize}
+\item -- name\+: Name of the module
+\item -- from \+: specifies the configuration file
+\item -- context \+: specifies the sub-\/path from {\ttfamily \$\+I\+C\+U\+B\+\_\+\+R\+O\+OT/icub/app} to the configuration file
+\item -- image\+: specifies the type of the module to work on (yuv or hsv) ~\newline
+
+\item -- output \+: Y, UV, H, S, V specifies the output on the default port (y, uv, h, s, v) 
+\end{DoxyItemize}\hypertarget{group__seg2cloud_inputports_sec}{}\doxysubsection{Input Ports}\label{group__seg2cloud_inputports_sec}
+
+\begin{DoxyItemize}
+\item /luma\+Chroma/image\+:i \mbox{[}Image\+Of\+Pixel\+Rgb\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+:
+\item /luma\+Chroma \mbox{[}Rpc\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+:
+\end{DoxyItemize}\hypertarget{group__seg2cloud_outputports_sec}{}\doxysubsection{Output Ports}\label{group__seg2cloud_outputports_sec}
+
+\begin{DoxyItemize}
+\item /luma\+Chroma/\+Y/image\+:o \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: when Y\+UV is selected
+\item /luma\+Chroma/\+U\+V/image\+:o \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: when Y\+UV is selected
+\item /luma\+Chroma/\+H/image\+:o \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: when H\+SV is selected
+\item /luma\+Chroma/\+S/image\+:o \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: when H\+SV is selected
+\item /luma\+Chroma/\+V/image\+:o \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: when H\+SV is selected
+\item /luma\+Chroma/image\+:o \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: when H\+SV is selected
+\end{DoxyItemize}\hypertarget{group__seg2cloud_services_sec}{}\doxysubsection{Services}\label{group__seg2cloud_services_sec}

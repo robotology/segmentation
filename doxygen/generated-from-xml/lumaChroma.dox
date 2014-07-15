@@ -1,0 +1,57 @@
+
+  /**
+  *
+  * @ingroup 
+  * \defgroup lumaChroma lumaChroma
+  * Receives an rgb image, depending on the image type the user wants to work on (YUV or HSV) the module extracts the Y, U and V or H, S, and V planes and performs centre-surround processing with a construction of uniqueness maps (intensity saliency, colour, hue, saturation and value ) via a difference-of-Gaussian pyramid filter bank. 
+  * Version:1.0
+  * \author  Vadim Tikhanoff vadim.tikhanoff@iit.it
+  * \n
+  * \copyright 
+  * \section intro_sec Description
+  *
+  
+  * \section parameters_sec Parameters
+  
+  *- -- name: Name of the module
+  *- -- from : specifies the configuration file
+  *- -- context : specifies the sub-path from \c $ICUB_ROOT/icub/app to the configuration file
+  *- -- image: specifies the type of the module to work on (yuv or hsv)  
+  *- -- output : Y, UV, H, S, V specifies the output on the default port  (y, uv, h, s, v)
+  * \section inputports_sec Input Ports
+  * 
+  *- /lumaChroma/image:i [ImageOfPixelRgb]  [default carrier:tcp]: 
+  *
+  
+  *- /lumaChroma [Rpc]  [default carrier:tcp]: 
+  *
+  
+  * \section outputports_sec Output Ports
+  * 
+  *- /lumaChroma/Y/image:o [ImageOfPixelMono]  [default carrier:udp]: when YUV is selected
+  *
+  
+  *- /lumaChroma/UV/image:o [ImageOfPixelMono]  [default carrier:udp]: when YUV is selected
+  *
+  
+  *- /lumaChroma/H/image:o [ImageOfPixelMono]  [default carrier:udp]: when HSV is selected
+  *
+  
+  *- /lumaChroma/S/image:o [ImageOfPixelMono]  [default carrier:udp]: when HSV is selected
+  *
+  
+  *- /lumaChroma/V/image:o [ImageOfPixelMono]  [default carrier:udp]: when HSV is selected
+  *
+  
+  *- /lumaChroma/image:o [ImageOfPixelMono]  [default carrier:udp]: when HSV is selected
+  *
+  
+  *
+  * \section services_sec Services
+  * 
+  *
+  * 
+  *
+  *
+  **/
+

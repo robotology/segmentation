@@ -1,0 +1,22 @@
+\doxysection{/home/runner/work/segmentation/segmentation/gh-\/pages/luma\+Chroma/include/centsur.h File Reference}
+\label{centsur_8h}\index{/home/runner/work/segmentation/segmentation/gh-\/pages/lumaChroma/include/centsur.h@{/home/runner/work/segmentation/segmentation/gh-\/pages/lumaChroma/include/centsur.h}}
+
+
+An implementation modelling the centre-\/surround response, used for construction of spatial uniqueness maps. Based on the difference-\/of-\/\+Gaussians pyramid approach of Itti. A single Gaussian pyramid is created. Neighbouring pyramid entries are subtracted (eg Pyramid level 0 -\/ Pyramid level 1, 1-\/2, 2-\/3 ...etc), and so are 2nd neighbours (eg 1-\/3,2-\/4,3-\/5..etc), to obtain spatial uniqueness at various spatial scales. All resultant subtraction results (the difference of Gaussian maps) are summated to yield the centre-\/surround map output.  
+
+
+{\ttfamily \#include $<$opencv2/opencv.\+hpp$>$}\newline
+
+
+\doxysubsection{Detailed Description}
+An implementation modelling the centre-\/surround response, used for construction of spatial uniqueness maps. Based on the difference-\/of-\/\+Gaussians pyramid approach of Itti. A single Gaussian pyramid is created. Neighbouring pyramid entries are subtracted (eg Pyramid level 0 -\/ Pyramid level 1, 1-\/2, 2-\/3 ...etc), and so are 2nd neighbours (eg 1-\/3,2-\/4,3-\/5..etc), to obtain spatial uniqueness at various spatial scales. All resultant subtraction results (the difference of Gaussian maps) are summated to yield the centre-\/surround map output. 
+
+\begin{DoxyAuthor}{Author}
+Andrew Dankers 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009 
+\end{DoxyDate}
+\begin{DoxyNote}{Note}
+Release under G\+NU G\+PL v2.\+0 
+\end{DoxyNote}

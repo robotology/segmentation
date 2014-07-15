@@ -1,0 +1,83 @@
+
+  /**
+  *
+  * @ingroup 
+  * \defgroup lbpExtract lbpExtract
+  * This module is a two step module that firstly uses Local Binary Pattern as a texture analisys in order to detect objects that are on the table and secondly, segment these object using a grabCut algorithm.
+  * Version:1.0
+  * \author  Vadim Tikhanoff vadim.tikhanoff@iit.it
+  * \n
+  * \copyright Released under the terms of the GNU GPL v2.0
+  * \section intro_sec Description
+  *
+  
+       This module provides information (blobs) about what is located on the table. Its main algorithm uses Local Binary Pattern (LBP) in order to analyse the texture of what is in front of the robot (for IOL this is whatever is on a table). The LBP, which is one of the simplest approaches for describing texture, was proposed by Ojala et al 1996. It utilizes statistical intensity of an image or local structure., then compares each pixel with its neighbors, which are located on a circle around the pixel and finaly these relationships are represented by a binary pattern and converted to a histogram. One we have a texture description of what seems to be located in front of the robot, we can then obtain general blob information both as an image, containing general white blobs of where the object are, and as a yarp bottle containing lists of bounding box points.
+       Another important feature of this module, is that once general blob information have been retreived, it then uses a grabCut algorithm to properly segment all the objects that are located on the table. This is useful if one needs to have a fine segmentation of the object for further processing. The grabCut algorithm is a interactive foreground Extraction that uses iterated graph cuts with minimal user interaction.
+
+   \image html lbpExtract.png "lbpExtract at work"
+   
+  * \section parameters_sec Parameters
+  
+  *- --name: To specify the module's name; all the open ports will be tagged with the prefix /name
+  *- --radius: To specify the radius of the lbp operators
+  *- --numIteration: To specify the the number of iteration for the grabCut segmentation algorithm
+  *- --neighbours: To specify the the neighbours of the lbp operators
+  *- --topBound: To specify the top bound (Y) limit for the blobs
+  *- --minArcLength: To specify the minimum arc length of the allowed blobs
+  *- --maxArcLength: To specify the maximum arc length of the allowed blobs
+  *- --minArea: To specify the minimum area of the allowed blobs
+  *- --maxArea: To specify the maximum area of the allowed blobs
+  *- --minWidth: To specify the minimum width of the linear element of the allowed blobs
+  * \section inputports_sec Input Ports
+  * 
+  *- /lbpExtract/image:i [Image]  [default carrier:]: 
+            Receive camera image.
+           
+  *
+  
+  * \section outputports_sec Output Ports
+  * 
+  *- /lbpExtract/propagated:o [Image]  [default carrier:]: 
+            Propagates out original camera image, for subsequent module synchronisation.
+           
+  *
+  
+  *- /lbpExtract/lbp:o [Image]  [default carrier:]: 
+            Stream out a binary image with the full local binary pattern texture extraction.
+           
+  *
+  
+  *- /lbpExtract/contourslbp:o [Image]  [default carrier:]: 
+            Stream out a binary image containing the extracted contour of the lbp algorithm.
+           
+  *
+  
+  *- /lbpExtract/extractedlbp:o [Image]  [default carrier:]: 
+            Stream out a binary image containing the refined extracted blobs. Here we remove a lot of noise in the image and attempt to have only objects in the scene.   
+           
+  *
+  
+  *- /lbpExtract/segmentedlbp:o [Image]  [default carrier:]: 
+            Stream out an rbg image containing only the finely segmented objects after the grabCut algorithm.
+           
+  *
+  
+  *- /lbpExtract/blobs:o [yarp::os::Bottle]  [default carrier:]: 
+            Stream out a yarp list containing the blobs bounding box.
+           
+  *
+  
+  *
+  * \section services_sec Services
+  * 
+  *- /lbpExtract/rpc:i
+  *  [rpc-server]: 
+  * service port
+  * . This service is described in lbpExtract_IDLServer (lbpExtract.thrift)
+  * 
+  *
+  * 
+  *
+  *
+  **/
+

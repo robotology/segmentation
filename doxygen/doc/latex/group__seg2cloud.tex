@@ -1,0 +1,56 @@
+\doxysection{seg2cloud}
+\label{group__seg2cloud}\index{seg2cloud@{seg2cloud}}
+
+
+Enables 3D object reconstruction in a series of ways Version\+:1.\+0.  
+
+
+Enables 3D object reconstruction in a series of ways Version\+:1.\+0. 
+
+\begin{DoxyAuthor}{Author}
+Ugo Pattacini \href{mailto:ugo.pattacini@iit.it}{\texttt{ ugo.\+pattacini@iit.\+it}}, Tanis Mar \href{mailto:tanis.mar@iit.it}{\texttt{ tanis.\+mar@iit.\+it}} ~\newline
+ 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Released under the terms of the G\+NU G\+PL v2.\+0 
+\end{DoxyCopyright}
+\hypertarget{group__seg2cloud_intro_sec}{}\doxysubsection{Description}\label{group__seg2cloud_intro_sec}
+seg2cloud applies disparity information to retrieve 3D clouds of desired objects. The objects can be chosen from a user defined polygon, from a segmentation algorithm, or from 2D (in color) or 3D (in depth) flood filling. When using other segmentatoin modules (2D or 3D), seeding can be performed automatically.\hypertarget{group__seg2cloud_parameters_sec}{}\doxysubsection{Parameters}\label{group__seg2cloud_parameters_sec}
+
+\begin{DoxyItemize}
+\item -- name\+: Name of the module
+\item -- savename\+: Default file savename
+\item -- saving\+Clouds\+: Toggle save clouds as file
+\item -- format\+: Default file format
+\item -- seed\+Auto\+: Automatic seed computation
+\item -- downsampling\+: Downsampling ratio pixel to pint for reconstruction
+\item -- spatial\+\_\+distance\+: Blob distance threshold for 3D flood (m)
+\item -- color\+\_\+distance\+: Blob distance threshold for 2D flood (R\+GB intensity) 
+\end{DoxyItemize}\hypertarget{group__seg2cloud_inputports_sec}{}\doxysubsection{Input Ports}\label{group__seg2cloud_inputports_sec}
+
+\begin{DoxyItemize}
+\item /seg2cloud/rpc\+:i \mbox{[}rpc\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Takes the following R\+PC commands
+\begin{DoxyEnumerate}
+\item {\bfseries{help}}\+: produces this help.
+\item {\bfseries{clear}}\+: Clears displays and saved points.
+\item {\bfseries{saving}} {\itshape (bool) save }\+: Activates/deactivated saving each reconstructed cloud in file.
+\item {\bfseries{set\+Format }} {\itshape (string) fileformat}\+: Sets the format in which the points will be saved. \textquotesingle{}fileformat\textquotesingle{} can be \textquotesingle{}ply\textquotesingle{}, \textquotesingle{}off\textquotesingle{} or \textquotesingle{}none\textquotesingle{}.
+\item {\bfseries{set\+File\+Name }} {\itshape  (string) filename}\+: Sets the base name given to the files where the 3D points will be saved.
+\item {\bfseries{polygon}}\+: Gets pointcloud from the selected polygon on the disp image.
+\item {\bfseries{flood}}\+: {\itshape  (int) color\+\_\+distance \mbox{[}(int) u (int) v\mbox{]} }\+: Gets pointcloud from 2D color flood. Seed (u, v) coords optional.
+\item {\bfseries{flood3D }} {\itshape  (double) spatial\+\_\+distance \mbox{[}u (int) v (int)\mbox{]}}\+: gets pointcloud from 3D color flood. Seed (u, v) coords optional.
+\item {\bfseries{seg}} {\itshape  \mbox{[}(int) u (int) v\mbox{]} }\+: gets pointcloud from an externally segmented blob. Seed (u, v) coords optional.
+\item {\bfseries{seed\+Auto}} {\itshape (bool) auto }\+: Toggles from manual (click) seed to \textquotesingle{}automatic\textquotesingle{} for segmentation modes.
+\end{DoxyEnumerate}
+\item /seg2cloud/disp\+:i \mbox{[}Image\+Of\+Pixel\+Mono\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: Receives the disparity image.
+\item /seg2cloud/img\+:i \mbox{[}Image\+Of\+Pixel\+Rgb\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: Receives the camera image.
+\item /seg2cloud/seed\+:i \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: Receives the seed coordinates either from tracker or click.
+\end{DoxyItemize}\hypertarget{group__seg2cloud_outputports_sec}{}\doxysubsection{Output Ports}\label{group__seg2cloud_outputports_sec}
+
+\begin{DoxyItemize}
+\item /seg2cloud/pnt\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Sends out the reconstructed 3D object as a bottle of points, where each point is itself a list of 3 values x, y, z, and optionally other 3 r, g, b.
+\item /seg2cloud/pnt2D\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: Sends out the 2D coordinates of the segmented points used to retrieve the pointcloud.
+\item /seg2cloud/disp\+:o \mbox{[}Image\+Of\+Pixel\+Rgb\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: Sends out the processed disparity, with segmented data or bounding box, for visualization.
+\item /seg2cloud/\+S\+FM\+:rpc \mbox{[}rpc\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: rpc port to communicate with the S\+FM module, to receive disp data and the 3D points.
+\item /seg2cloud/seg\+:rpc \mbox{[}rpc\mbox{]} \mbox{[}default carrier\+:tcp\mbox{]}\+: rpc port to communicate with the segmentation module, to receive the segmented blob points.
+\end{DoxyItemize}\hypertarget{group__seg2cloud_services_sec}{}\doxysubsection{Services}\label{group__seg2cloud_services_sec}

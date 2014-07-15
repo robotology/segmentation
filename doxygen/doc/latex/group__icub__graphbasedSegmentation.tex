@@ -1,0 +1,40 @@
+\doxysection{graphbased\+Segmentation}
+\label{group__icub__graphbasedSegmentation}\index{graphbasedSegmentation@{graphbasedSegmentation}}
+
+
+Wrapper module that performs graph-\/based image segmentation exploiting the algorithm developed by Felzenszwalb and Huttenlocher (Brown University).  
+
+
+Wrapper module that performs graph-\/based image segmentation exploiting the algorithm developed by Felzenszwalb and Huttenlocher (Brown University). 
+
+\hypertarget{group__seg2cloud_intro_sec}{}\doxysubsection{Description}\label{group__seg2cloud_intro_sec}
+Wrapper module that performs graph-\/based image segmentation exploiting the algorithm developed by Felzenszwalb and Huttenlocher (Brown University). The algorithm is described in the paper \char`\"{}\+Efficient Graph-\/\+Based Image Segmentation\char`\"{}, Pedro F. Felzenszwalb and Daniel P. Huttenlocher, International Journal of Computer Vision, Volume 59, Number 2, September 2004. The original code is available from \href{http://www.cs.brown.edu/~pff/segment/}{\texttt{ http\+://www.\+cs.\+brown.\+edu/$\sim$pff/segment/}} and has been copied into the src/segmentation/graph\+Based/segment folder.\hypertarget{group__blobExtractor_lib_sec}{}\doxysubsection{Libraries}\label{group__blobExtractor_lib_sec}
+Y\+A\+RP library.\hypertarget{group__seg2cloud_parameters_sec}{}\doxysubsection{Parameters}\label{group__seg2cloud_parameters_sec}
+
+\begin{DoxyItemize}
+\item {\ttfamily name} name of the module (for opened ports)
+\item {\ttfamily sigma} smoothing parameter (standard deviation of a Gaussian filter used to pre-\/process image, in order to compensate for digitization artifacts)
+\item {\ttfamily k} scale factor for boundary-\/detection threshold function (a larger k causes a preference for larger components).
+\item {\ttfamily min\+Region} minumum size of a component.
+\end{DoxyItemize}\hypertarget{group__lumaChroma_portsa_sec}{}\doxysubsection{Ports Accessed}\label{group__lumaChroma_portsa_sec}
+None.\hypertarget{group__blobExtractor_portsc_sec}{}\doxysubsection{Ports Created}\label{group__blobExtractor_portsc_sec}
+
+\begin{DoxyItemize}
+\item /$<$module\+\_\+name$>$/raw\+Img\+:i input port where original images must be sent (default\+: G\+B\+Seg)
+\item /$<$module\+\_\+name$>$/view\+Img\+:o
+\item /$<$module\+\_\+name$>$/conf rpc port, accepts the commands defined in \mbox{\hyperlink{}{graph\+Based\+Segmentation\+Interface.\+thrift }} and documented \mbox{\hyperlink{}{here }}
+\end{DoxyItemize}\hypertarget{group__lumaChroma_in_files_sec}{}\doxysubsection{Input Data Files}\label{group__lumaChroma_in_files_sec}
+None\hypertarget{group__lumaChroma_out_data_sec}{}\doxysubsection{Output Data Files}\label{group__lumaChroma_out_data_sec}
+None\hypertarget{group__lumaChroma_conf_file_sec}{}\doxysubsection{Configuration Files}\label{group__lumaChroma_conf_file_sec}
+No configuration file is needed. Parameters described in \mbox{\hyperlink{group__seg2cloud_parameters_sec}{Parameters}} can be provided in a configuration file; default filename is\hypertarget{group__blobExtractor_tested_os_sec}{}\doxysubsection{Tested OS}\label{group__blobExtractor_tested_os_sec}
+Linux and Windows.\hypertarget{group__lumaChroma_example_sec}{}\doxysubsection{Example Instantiation of the Module}\label{group__lumaChroma_example_sec}
+Examples of module use are provided in the app/scripts folder, and installed into app/graph\+Based\+Segm/scripts.
+
+\begin{DoxyAuthor}{Author}
+Elena Ceseracciu
+\end{DoxyAuthor}
+Copyright (C) 2012 R\+B\+CS -\/ Istituto Italiano di Tecnologia
+
+Copy\+Policy\+: Released under the terms of the G\+NU G\+PL v2.\+0 and later.
+
+This file can be edited at src/segmentation/graph\+Based/main.\+cpp. 

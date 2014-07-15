@@ -1,0 +1,88 @@
+\doxysection{Blob Extractor}
+\label{group__blobExtractor}\index{Blob Extractor@{Blob Extractor}}
+
+
+Module that uses the data from the luma\+Chroma module to extract blobs that are available. \mbox{\hyperlink{group__blobExtractor}{Blob Extractor}} application.  
+
+
+Module that uses the data from the luma\+Chroma module to extract blobs that are available. \mbox{\hyperlink{group__blobExtractor}{Blob Extractor}} application. 
+
+\hypertarget{group__seg2cloud_intro_sec}{}\doxysubsection{Description}\label{group__seg2cloud_intro_sec}
+This module is responsible for extracting all the blobs based upon the \mbox{\hyperlink{group__lumaChroma}{luma\+Chroma}} module. To this end, it receives an image input from the luma\+Chroma and acts upon it to retreive the blobs and their moments (orientation and principal axes)
+
+The commands sent as bottles to the module port /$<$mod\+Name$>$/rpc are the following\+:
+
+(notation\+: \mbox{[}.\mbox{]} identifies a vocab, $<$.$>$ specifies a double, \char`\"{}.\char`\"{} specifies a string)
+
+{\bfseries{T\+H\+R\+E\+SH}} ~\newline
+ format\+: \mbox{[}thresh\mbox{]} $<$10.\+0$>$ ~\newline
+ action\+: Applies a fixed-\/level threshold to each array element, defaults 10.\+0 (input array is the image). reply\+: ok
+
+{\bfseries{E\+R\+O\+DE}} ~\newline
+ format\+: \mbox{[}erode\mbox{]} $<$8.\+0$>$ ~\newline
+ action\+: Erodes an image by using a specific structuring element, defaults 8.\+0. reply\+: ok
+
+{\bfseries{D\+I\+L\+A\+TE}} ~\newline
+ format\+: \mbox{[}dilate\mbox{]} $<$3.\+0$>$ ~\newline
+ action\+: Dilates an image by using a specific structuring element., defaults 3.\+0. reply\+: ok\hypertarget{group__blobExtractor_lib_sec}{}\doxysubsection{Libraries}\label{group__blobExtractor_lib_sec}
+
+\begin{DoxyItemize}
+\item Y\+A\+RP libraries, Open\+CV.
+\end{DoxyItemize}\hypertarget{group__blobExtractor_portsc_sec}{}\doxysubsection{Ports Created}\label{group__blobExtractor_portsc_sec}
+
+\begin{DoxyItemize}
+\item {\itshape /} $<$mod\+Name$>$/img\+:i receives the image acquired from the luma\+Chroma module previously specified through the command-\/line parameters.
+\item {\itshape /} $<$mod\+Name$>$/img\+:o streams out the binary images displaying all blobs.
+\item {\itshape /} $<$mod\+Name$>$/prop\+Img\+:o streams out the camera image propagated for synchronisation.
+\item {\itshape /} $<$mod\+Name$>$/blobs\+:o streams out a yarp list containing all the blobs information, such as bounding box and moments if selected.
+\item {\itshape /} $<$mod\+Name$>$/binary\+:o streams out a cleaned binary image containing only blobs detected (without noise).
+\end{DoxyItemize}\hypertarget{group__seg2cloud_parameters_sec}{}\doxysubsection{Parameters}\label{group__seg2cloud_parameters_sec}
+--name {\itshape name} 
+\begin{DoxyItemize}
+\item specify the module stem-\/name, which is {\itshape blob\+Extractor} by default. The stem-\/name is used as prefix for all open ports.
+\end{DoxyItemize}
+
+--thresh {\itshape value} 
+\begin{DoxyItemize}
+\item specify the threshold value. Applies a fixed-\/level threshold to each array element. The default value is 10.\+0.
+\end{DoxyItemize}
+
+--erode\+\_\+itr {\itshape value} 
+\begin{DoxyItemize}
+\item specify the erode value. Erodes an image by using a specific structuring element. The default value is 8.\+0.
+\end{DoxyItemize}
+
+--dilate\+\_\+itr {\itshape value} 
+\begin{DoxyItemize}
+\item specify the dilate value. Dilates an image by using a specific structuring element. The default value is 3.\+0.
+\end{DoxyItemize}
+
+--gaussian\+\_\+winsize {\itshape value} 
+\begin{DoxyItemize}
+\item specify the gaussian winsize value for the smoothing of the image. The default value is 9.\+0.
+\end{DoxyItemize}
+
+--window\+\_\+ratio {\itshape value} 
+\begin{DoxyItemize}
+\item specify the window\+\_\+ratio value. The default value is 0.\+6.
+\end{DoxyItemize}
+
+--details {\itshape string} 
+\begin{DoxyItemize}
+\item specify the details option. If set to on it provides information on the orientation and principal axes for each blob sent to the /$<$mod\+Name$>$/blobs\+:o port. The default value is off.
+\end{DoxyItemize}
+
+--max\+Height {\itshape value} 
+\begin{DoxyItemize}
+\item specify the max\+Height value. This sets the value for the max height of the blob extraction. The default value is 150.
+\end{DoxyItemize}
+
+--max\+Width {\itshape value} 
+\begin{DoxyItemize}
+\item specify the max\+Width value. This sets the value for the max width of the blob extraction. The default value is 150.
+\end{DoxyItemize}\hypertarget{group__blobExtractor_tested_os_sec}{}\doxysubsection{Tested OS}\label{group__blobExtractor_tested_os_sec}
+Windows, Linux, Mac OS
+
+\begin{DoxyAuthor}{Author}
+Vadim Tikhanoff 
+\end{DoxyAuthor}
