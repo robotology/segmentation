@@ -20,14 +20,3 @@ Example applications of the usage of this module can be found here:
 - [onthefly-recognition](https://github.com/robotology/onthefly-recognition): demo to teach the iCub to recognize new objects on-the-fly.
 - [icubworld](https://github.com/GiuliaP/icubworld): application to acquire a dataset of images from the iCub's cameras while the robot is observing a set of objects shown by a human operator. The dataset can be used, e.g., to train/benchmark offline a visual recognition system.
 
-## Installation
-
-##### Dependencies
-- [YARP](https://github.com/robotology/yarp)
-- [iCub](https://github.com/robotology/icub-main)
-- [icub-contrib-common](https://github.com/robotology/icub-contrib-common)
-- [OpenCV](http://opencv.org/downloads.html)
-
-## License
-
-Material included here is Copyright of _iCub Facility - Istituto Italiano di Tecnologia_ and is released under the terms of the GPL v2.0 or later. See the file LICENSE for details.
