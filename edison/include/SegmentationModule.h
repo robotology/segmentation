@@ -13,7 +13,7 @@ class SegmentationModule;
 
 class SegmentationModule : public yarp::os::Wire {
 public:
-  SegmentationModule() { yarp().setOwner(*this); }
+  SegmentationModule();
   virtual void set_sigmaS(const double newValue);
   virtual void set_sigmaR(const double newValue);
   virtual void set_minRegion(const double newValue);
@@ -29,6 +29,7 @@ public:
   virtual double get_mixture();
   virtual SpeedUpLevelComm get_speedup();
   virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual std::vector<std::string> help(const std::string& functionName="--all");
 };
 
 #endif
