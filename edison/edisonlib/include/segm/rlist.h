@@ -1,28 +1,28 @@
 /*******************************************************
 
                  Mean Shift Analysis Library
-	=============================================
+    =============================================
 
 
-	The mean shift library is a collection of routines
-	that use the mean shift algorithm. Using this algorithm,
-	the necessary output will be generated needed
-	to analyze a given input set of data.
+    The mean shift library is a collection of routines
+    that use the mean shift algorithm. Using this algorithm,
+    the necessary output will be generated needed
+    to analyze a given input set of data.
 
   Region List Class:
   =================
 
-	During segmentation, data regions are defined. The 
-	RegionList class provides a mechanism for doing so, as
-	well as defines some basic operations, such as region
-	growing or small region pruning, on the defined regions.
-	The prototype for the RegionList class is provided below. It
-	is defined in "region.cc".
+    During segmentation, data regions are defined. The 
+    RegionList class provides a mechanism for doing so, as
+    well as defines some basic operations, such as region
+    growing or small region pruning, on the defined regions.
+    The prototype for the RegionList class is provided below. It
+    is defined in "region.cc".
 
 The theory is described in the papers:
 
   D. Comaniciu, P. Meer: Mean Shift: A robust approach toward feature
-									 space analysis.
+                                     space analysis.
 
   C. Christoudias, B. Georgescu, P. Meer: Synergism in low level vision.
 
@@ -36,13 +36,13 @@ Implemented by Chris M. Christoudias, Bogdan Georgescu
 #define RLIST_H
 
 //include global type definitions
-#include	"tdef.h"
+#include    "tdef.h"
 
 //define region structure
 struct REGION {
-	int			label;
-	int			pointCount;
-	int			region;
+    int         label;
+    int         pointCount;
+    int         region;
 
 };
 
@@ -58,14 +58,14 @@ public:
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Method Name:								     |//
-  //|   ============								     |//
+  //|   Method Name:                                     |//
+  //|   ============                                     |//
   //|               *  Class Constructor  *              |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Description:								     |//
-  //|	============								     |//
+  //|   Description:                                     |//
+  //|   ============                                     |//
   //|                                                    |//
   //|   Constructs a region list object.                 |//
   //|                                                    |//
@@ -85,17 +85,17 @@ public:
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Usage:      								     |//
-  //|   ======      								     |//
+  //|   Usage:                                           |//
+  //|   ======                                           |//
   //|     RegionList(maxRegions, L, N)                   |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
 
-	RegionList(int, int, int);
+    RegionList(int, int, int);
 
-	// Class Destructor
-	~RegionList( void );
+    // Class Destructor
+    ~RegionList( void );
 
   /*/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
   /*  Region List Manipulation  */
@@ -104,14 +104,14 @@ public:
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Method Name:								     |//
-  //|   ============								     |//
+  //|   Method Name:                                     |//
+  //|   ============                                     |//
   //|                *  Add Region  *                    |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Description:								     |//
-  //|	============								     |//
+  //|   Description:                                     |//
+  //|   ============                                     |//
   //|                                                    |//
   //|   Adds a region to the region list.                |//
   //|                                                    |//
@@ -134,26 +134,26 @@ public:
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Usage:      								     |//
-  //|   ======      								     |//
+  //|   Usage:                                           |//
+  //|   ======                                           |//
   //|     AddRegion(label, pointCount, indeces)          |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
 
-	void AddRegion(int, int, int*);
+    void AddRegion(int, int, int*);
 
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Method Name:								     |//
-  //|   ============								     |//
+  //|   Method Name:                                     |//
+  //|   ============                                     |//
   //|                    *  Reset  *                     |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Description:								     |//
-  //|	============								     |//
+  //|   Description:                                     |//
+  //|   ============                                     |//
   //|                                                    |//
   //|   Resets the region list for re-use (for new       |//
   //|   classification).                                 |//
@@ -161,7 +161,7 @@ public:
   //<--------------------------------------------------->|//
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
 
-	void Reset( void );	
+    void Reset( void ); 
 
   /*/\/\/\/\/\/\/\/\/\/\*/
   /*  Query Region List */
@@ -170,14 +170,14 @@ public:
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Method Name:								     |//
-  //|   ============								     |//
+  //|   Method Name:                                     |//
+  //|   ============                                     |//
   //|          *  Get Number of Regions  *               |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Description:								     |//
-  //|	============								     |//
+  //|   Description:                                     |//
+  //|   ============                                     |//
   //|                                                    |//
   //|   Returns the number of regions stored by the      |//
   //|   region list.                                     |//
@@ -185,19 +185,19 @@ public:
   //<--------------------------------------------------->|//
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
 
-	int	GetNumRegions ( void );
+    int GetNumRegions ( void );
 
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Method Name:								     |//
-  //|   ============								     |//
+  //|   Method Name:                                     |//
+  //|   ============                                     |//
   //|                  *  Get Label  *                   |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Description:								     |//
-  //|	============								     |//
+  //|   Description:                                     |//
+  //|   ============                                     |//
   //|                                                    |//
   //|   Returns the label of a specified region.         |//
   //|                                                    |//
@@ -209,26 +209,26 @@ public:
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Usage:      								     |//
-  //|   ======      								     |//
+  //|   Usage:                                           |//
+  //|   ======                                           |//
   //|     label = GetLabel(regionNumber)                 |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
 
-	int	GetLabel(int);
+    int GetLabel(int);
 
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Method Name:								     |//
-  //|   ============								     |//
+  //|   Method Name:                                     |//
+  //|   ============                                     |//
   //|                *  Get Region Count  *              |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Description:								     |//
-  //|	============								     |//
+  //|   Description:                                     |//
+  //|   ============                                     |//
   //|                                                    |//
   //|   Returns number of data points contained by a sp- |//
   //|   ecified region.                                  |//
@@ -241,26 +241,26 @@ public:
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Usage:      								     |//
-  //|   ======      								     |//
+  //|   Usage:                                           |//
+  //|   ======                                           |//
   //|     pointCount = GetRegionCount(regionNumber)      |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
 
-	int GetRegionCount(int);
+    int GetRegionCount(int);
 
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Method Name:								     |//
-  //|   ============								     |//
+  //|   Method Name:                                     |//
+  //|   ============                                     |//
   //|               *  Get Region Indeces  *             |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Description:								     |//
-  //|	============								     |//
+  //|   Description:                                     |//
+  //|   ============                                     |//
   //|                                                    |//
   //|   Returns a pointer to a set of grid location ind- |//
   //|   eces specifying the data points belonging to a   |//
@@ -274,14 +274,14 @@ public:
   //|                                                    |//
   //<--------------------------------------------------->|//
   //|                                                    |//
-  //|	Usage:      								     |//
-  //|   ======      								     |//
+  //|   Usage:                                           |//
+  //|   ======                                           |//
   //|     indeces = GetRegionIndeces(regionNumber)       |//
   //|                                                    |//
   //<--------------------------------------------------->|//
   //--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//--\\||//
 
-	int*GetRegionIndeces(int);
+    int*GetRegionIndeces(int);
 
 private:
 
@@ -289,45 +289,45 @@ private:
   /*  Class Error Handler */
   /*\/\/\/\/\/\/\/\/\/\/\/*/
 
-	void ErrorHandler(const char*, const char*, ErrorType);
+    void ErrorHandler(const char*, const char*, ErrorType);
 
   //=============================
   // *** Private Data Members ***
   //=============================
 
-	//#####################################
-	//### REGION LIST PARTITIONED ARRAY ###
-	//#####################################
+    //#####################################
+    //### REGION LIST PARTITIONED ARRAY ###
+    //#####################################
 
-	REGION		*regionList;			//array of maxRegions regions
-	int			minRegion;
+    REGION      *regionList;            //array of maxRegions regions
+    int         minRegion;
 
-	int			maxRegions;				//defines the number maximum number of regions
-										//allowed (determined by user during class construction)
-	int			numRegions;				//the number of regions currently stored by the
-										//region list
-	int			freeRegion;				//an index into the regionList pointing to the next
-										//available region in the regionList
+    int         maxRegions;             //defines the number maximum number of regions
+                                        //allowed (determined by user during class construction)
+    int         numRegions;             //the number of regions currently stored by the
+                                        //region list
+    int         freeRegion;             //an index into the regionList pointing to the next
+                                        //available region in the regionList
 
-	//#####################################
-	//###         INDEX TABLE           ###
-	//#####################################
+    //#####################################
+    //###         INDEX TABLE           ###
+    //#####################################
 
-	int			*indexTable;			//an array of indexes that point into an external structure
-										//specifying which points belong to a region
-	int			freeBlockLoc;			//points to the next free block of memory in the indexTable
+    int         *indexTable;            //an array of indexes that point into an external structure
+                                        //specifying which points belong to a region
+    int         freeBlockLoc;           //points to the next free block of memory in the indexTable
 
-	//#####################################
-	//###     INPUT DATA PARAMETERS     ###
-	//#####################################
+    //#####################################
+    //###     INPUT DATA PARAMETERS     ###
+    //#####################################
 
-	//Dimension of data set
-	int			N;						//dimension of data set being classified by region list
-										//class
+    //Dimension of data set
+    int         N;                      //dimension of data set being classified by region list
+                                        //class
 
-	//Length of the data set
-	int			L;						//number of points contained by the data set being classified by
-										//region list class
+    //Length of the data set
+    int         L;                      //number of points contained by the data set being classified by
+                                        //region list class
 
 };
 
