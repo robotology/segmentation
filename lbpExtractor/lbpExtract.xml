@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="yarpmanifest.xsl"?>
+
+<module>
+
+   <name>lbpExtract</name>
+   <description>This module is a two step module that firstly uses Local Binary Pattern as a texture analisys in order to detect objects that are on the table and secondly, segment these object using a grabCut algorithm.</description>
+   <copypolicy>Released under the terms of the GNU GPL v2.0</copypolicy>
+   <version>1.0</version>
+
+   <description-long>
+       This module provides information (blobs) about what is located on the table. Its main algorithm uses Local Binary Pattern (LBP) in order to analyse the texture of what is in front of the robot (for IOL this is whatever is on a table). The LBP, which is one of the simplest approaches for describing texture, was proposed by Ojala et al 1996. It utilizes statistical intensity of an image or local structure., then compares each pixel with its neighbors, which are located on a circle around the pixel and finaly these relationships are represented by a binary pattern and converted to a histogram. One we have a texture description of what seems to be located in front of the robot, we can then obtain general blob information both as an image, containing general white blobs of where the object are, and as a yarp bottle containing lists of bounding box points.
+       Another important feature of this module, is that once general blob information have been retreived, it then uses a grabCut algorithm to properly segment all the objects that are located on the table. This is useful if one needs to have a fine segmentation of the object for further processing. The grabCut algorithm is a interactive foreground Extraction that uses iterated graph cuts with minimal user interaction.
+
+   \image html lbpExtract.png "lbpExtract at work"
+   </description-long>
+   
+   <arguments>
+   <param default="lbpExtract" desc="To specify the module's name; all the open ports will be tagged with the prefix /name">name</param>
+   <param default="5" desc="To specify the radius of the lbp operators">radius</param>
+   <param default="5" desc="To specify the the number of iteration for the grabCut segmentation algorithm">numIteration</param>
+   <param default="8" desc="To specify the the neighbours of the lbp operators">neighbours</param>
+   <param default="40" desc="To specify the top bound (Y) limit for the blobs">topBound</param>
+   <param default="75" desc="To specify the minimum arc length of the allowed blobs">minArcLength</param>
+   <param default="400" desc="To specify the maximum arc length of the allowed blobs">maxArcLength</param>
+   </arguments>
+
+   <authors>
+       <author email="vadim.tikhanoff@iit.it"> Vadim Tikhanoff </author>
+   </authors>
+
+   <data>
+       <input>
+           <type>Image</type>
+           <port>/lbpExtract/image:i</port>
+           <required>no</required>
+           <priority>no</priority>
+           <description>
+            Receive camera image.
+           </description>
+       </input>
+       <output>
+           <type>Image</type>
+           <port>/lbpExtract/propagated:o</port>
+           <description>
+            Propagates out original camera image, for subsequent module synchronisation.
+           </description>
+       </output>
+       <output>
+           <type>Image</type>
+           <port>/lbpExtract/lbp:o</port>
+           <description>
+            Stream out a binary image with the full local binary pattern texture extraction.
+           </description>
+       </output>
+       <output>
+           <type>Image</type>
+           <port>/lbpExtract/contourslbp:o</port>
+           <description>
+            Stream out a binary image containing the extracted contour of the lbp algorithm.
+           </description>
+       </output>
+       <output>
+           <type>Image</type>
+           <port>/lbpExtract/extractedlbp:o</port>
+           <description>
+            Stream out a binary image containing the refined extracted blobs. Here we remove a lot of noise in the image and attempt to have only objects in the scene.   
+           </description>
+       </output>
+        <output>
+           <type>Image</type>
+           <port>/lbpExtract/segmentedlbp:o</port>
+           <description>
+            Stream out an rbg image containing only the finely segmented objects after the grabCut algorithm.
+           </description>
+       </output>
+       <output>
+           <type>yarp::os::Bottle</type>
+           <port>/lbpExtract/blobs:o</port>
+           <description>
+            Stream out a yarp list containing the blobs bounding box.
+           </description>
+       </output>
+   </data>
+
+   <services>
+       <server>
+           <type>lbpExtract_IDLServer</type>
+           <idl>lbpExtract.thrift</idl>
+           <port>/lbpExtract/rpc:i</port>
+           <description>service port</description>
+       </server>
+   </services>
+
+</module>

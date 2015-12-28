@@ -9,6 +9,9 @@ include(ICUBcontribHelpers)
 
 add_subdirectory(edison)
 add_subdirectory(graphBased)
+add_subdirectory(blobExtractor)
+add_subdirectory(blobSpotter)
+add_subdirectory(lbpExtractor)
 
 icubcontrib_add_uninstall_target()
 
