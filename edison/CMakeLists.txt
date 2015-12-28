@@ -14,12 +14,12 @@ find_package(OpenCV REQUIRED)
 include(YarpInstallationHelpers)
 include(YarpIDL)
 set(generated_libs_dir "${CMAKE_CURRENT_SOURCE_DIR}")
-yarp_idl_to_dir(${PROJECT_NAME}.thrift ${generated_libs_dir})
+yarp_idl_to_dir(EDISONSegmentation.thrift ${generated_libs_dir})
 
 include(ICUBcontribHelpers)
 icubcontrib_set_default_prefix()
 
-include(${PROJECT_NAME}_thrift.cmake)
+include(EDISONSegmentation_thrift.cmake)
 source_group("Thrift Source Files" FILES ${sources})
 source_group("Thrift Header Files" FILES ${headers})
 
