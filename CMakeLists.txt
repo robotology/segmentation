@@ -11,7 +11,7 @@ add_subdirectory(edison)
 add_subdirectory(graphBased)
 add_subdirectory(blobExtractor)
 add_subdirectory(blobSpotter)
-add_subdirectory(lbpExtractor)
+add_subdirectory(lbpExtract)
 
 icubcontrib_add_uninstall_target()
 
