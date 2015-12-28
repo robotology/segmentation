@@ -1,0 +1,99 @@
+
+<application>
+<name>dispBlobber example instantiation</name>
+
+        <dependencies>
+            <port>/SFM/disp:o</port>
+        </dependencies>
+
+        <!-- Modules -->
+	
+        <module>
+            <name>SFM</name>
+            <parameters>--elas_setting MIDDLEBURY --elas_ipol_gap_width 20</parameters>
+            <node>icubNode</node>
+        </module>
+
+		<module>
+                <name>dispBlobber</name>
+                <parameters></parameters>
+                <node>icubNode</node>
+        </module>
+        
+        <module>
+            <name>yarpview</name>
+            <parameters>--name /matchViewer --x 0</parameters>
+            <node>icubNode</node>
+        </module>
+
+        <module>
+            <name>yarpview</name>
+            <parameters>--name /dispViewer --x 330</parameters>
+            <node>icubNode</node>
+        </module>
+
+        <module>
+                <name>yarpview</name>
+                <parameters>--name /nearBlobberViewer</parameters>
+                <node>icubNode</node>
+        </module>
+
+        <!-- Connections -->
+
+        <!-- SFM input -->
+
+        <connection>
+            <from>/icub/camcalib/right/out</from>
+            <to>/SFM/right:i</to>
+            <protocol>tcp</protocol>
+        </connection>
+
+        <connection>
+            <from>/icub/camcalib/left/out</from>
+            <to>/SFM/left:i</to>
+            <protocol>tcp</protocol>
+        </connection>
+
+        <!-- dispBlobber input -->
+
+        <connection>
+            <from>/SFM/disp:o</from>
+            <to>/dispBlobber/img:i</to>
+            <protocol>tcp</protocol>
+        </connection> 
+
+        <connection>
+            <from>/dispBlobber/sfm/rpc</from>
+            <to>/SFM/rpc</to>
+            <protocol>tcp</protocol>
+        </connection> 
+
+        <!-- Output -->
+
+        <connection>
+            <from>/dispBlobber/3dpoints:o</from>
+            <to></to>
+            <protocol>tcp</protocol>
+        </connection>
+
+        <!-- Visualization -->
+		
+        <connection>
+            <from>/SFM/match:o</from>
+            <to>/matchViewer</to>
+            <protocol>tcp</protocol>
+        </connection>
+
+        <connection>
+            <from>/SFM/disp:o</from>
+            <to>/dispViewer</to>
+            <protocol>tcp</protocol>
+        </connection>
+
+        <connection>
+            <from>/dispBlobber/opt:o</from>
+            <to>/nearBlobberViewer</to>
+            <protocol>tcp</protocol>
+        </connection>
+        
+</application>

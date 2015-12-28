@@ -12,6 +12,7 @@ add_subdirectory(graphBased)
 add_subdirectory(blobExtractor)
 add_subdirectory(blobSpotter)
 add_subdirectory(lbpExtract)
+add_subdirectory(dispBlobber)
 
 icubcontrib_add_uninstall_target()
 
