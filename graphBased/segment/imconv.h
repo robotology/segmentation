@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 #include "imutil.h"
 #include "misc.h"
 
-#define	RED_WEIGHT	0.299
-#define GREEN_WEIGHT	0.587
-#define BLUE_WEIGHT	0.114
+#define RED_WEIGHT  0.299
+#define GREEN_WEIGHT    0.587
+#define BLUE_WEIGHT 0.114
 
 static image<uchar> *imageRGBtoGRAY(image<rgb> *input) {
   int width = input->width();
@@ -38,9 +38,9 @@ static image<uchar> *imageRGBtoGRAY(image<rgb> *input) {
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
       imRef(output, x, y) = (uchar)
-	(imRef(input, x, y).r * RED_WEIGHT +
-	 imRef(input, x, y).g * GREEN_WEIGHT +
-	 imRef(input, x, y).b * BLUE_WEIGHT);
+    (imRef(input, x, y).r * RED_WEIGHT +
+     imRef(input, x, y).g * GREEN_WEIGHT +
+     imRef(input, x, y).b * BLUE_WEIGHT);
     }
   }
   return output;
@@ -88,7 +88,7 @@ static image<float> *imageINTtoFLOAT(image<int> *input) {
 }
 
 static image<uchar> *imageFLOATtoUCHAR(image<float> *input, 
-				       float min, float max) {
+                       float min, float max) {
   int width = input->width();
   int height = input->height();
   image<uchar> *output = new image<uchar>(width, height, false);
@@ -150,7 +150,7 @@ static image<uchar> *imageLONGtoUCHAR(image<long> *input) {
 }
 
 static image<uchar> *imageSHORTtoUCHAR(image<short> *input, 
-					short min, short max) {
+                    short min, short max) {
   int width = input->width();
   int height = input->height();
   image<uchar> *output = new image<uchar>(width, height, false);

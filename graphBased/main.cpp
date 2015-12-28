@@ -66,13 +66,11 @@ using namespace yarp::os;
 #include "SegmModule.h"
 
 
-int main(int argc, char *argv[]) {
-   
+int main(int argc, char *argv[])
+{
     Network yarp;   
-
     if (!yarp.checkNetwork())
-        return -1;
-
+        return 1;
 
     ResourceFinder rf;
     rf.setVerbose(true);
@@ -81,7 +79,5 @@ int main(int argc, char *argv[]) {
     rf.configure(argc,argv);
 
     GBSegmModule mod;
-
     return mod.runModule(rf);
-    
 }

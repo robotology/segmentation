@@ -46,7 +46,7 @@ static void normalize(std::vector<float> &mask) {
 /* make filters */
 #define MAKE_FILTER(name, fun)                                \
 static std::vector<float> make_ ## name (float sigma) {       \
-  sigma = std::max(sigma, 0.01F);			      \
+  sigma = std::max(sigma, 0.01F);                 \
   int len = (int)ceil(sigma * WIDTH) + 1;                     \
   std::vector<float> mask(len);                               \
   for (int i = 0; i < len; i++) {                             \
@@ -88,9 +88,9 @@ static image<float> *laplacian(image<float> *src) {
   for (int y = 1; y < height-1; y++) {
     for (int x = 1; x < width-1; x++) {
       float d2x = imRef(src, x-1, y) + imRef(src, x+1, y) -
-	2*imRef(src, x, y);
+    2*imRef(src, x, y);
       float d2y = imRef(src, x, y-1) + imRef(src, x, y+1) -
-	2*imRef(src, x, y);
+    2*imRef(src, x, y);
       imRef(dst, x, y) = d2x + d2y;
     }
   }

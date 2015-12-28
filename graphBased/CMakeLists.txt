@@ -38,7 +38,6 @@ target_link_libraries(${PROJECT_NAME} thriftGBseg ${YARP_LIBRARIES})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 # Adding test client executable - WARNING: it is not added as install target, only built locally!
-add_executable(testClient testClient.cpp)
-target_link_libraries(testClient thriftGBseg ${YARP_LIBRARIES})
+add_executable(testGbsClient testGbsClient.cpp)
+target_link_libraries(testGbsClient thriftGBseg ${YARP_LIBRARIES})
 
-icubcontrib_add_uninstall_target()

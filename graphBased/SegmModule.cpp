@@ -62,9 +62,9 @@ void RGBImageToYarpImage(image<rgb> * im, ImageOf<PixelRgb> * yarpIm) {
 
 }
 
-void GBSegmModule::set_sigma(const double newValue) {sigma=newValue;}
-void GBSegmModule::set_k(const double newValue){k=newValue;}
-void GBSegmModule::set_minRegion(const double newValue){min_size=newValue;}
+void GBSegmModule::set_sigma(const double newValue) {sigma=(float)newValue;}
+void GBSegmModule::set_k(const double newValue){k=(float)newValue;}
+void GBSegmModule::set_minRegion(const double newValue){min_size=(int)newValue;}
 double GBSegmModule::get_sigma(){return sigma;}
 double GBSegmModule::get_k(){return k;}
 double GBSegmModule::get_minRegion(){return min_size;}
@@ -99,7 +99,7 @@ GBSegmModule::GBSegmModule() : _stamp(0,0)
     input = NULL;
     seg = NULL;
     // parameters default values
-    sigma = 0.8;
+    sigma = 0.8F;
     k= 700;
     min_size = 700;
 }
@@ -126,8 +126,8 @@ bool GBSegmModule::configure (yarp::os::ResourceFinder &rf)
 
 
     //override defaults if specified - TODO: range checking
-    if(rf.check("sigma")) sigma = rf.find("sigma").asDouble();		
-    if(rf.check("k")) k = rf.find("k").asDouble();		
+    if(rf.check("sigma")) sigma = (float)rf.find("sigma").asDouble();      
+    if(rf.check("k")) k = (float)rf.find("k").asDouble();      
     if(rf.check("minRegion")) min_size = rf.find("minRegion").asInt();  
 
     std::string slash="/";
@@ -137,7 +137,7 @@ bool GBSegmModule::configure (yarp::os::ResourceFinder &rf)
     attach(_configPort);
 
     //read an image to get the dimensions
-    ImageOf<PixelRgb> *yrpImgIn;	
+    ImageOf<PixelRgb> *yrpImgIn;    
     yrpImgIn = _imgPort.read();
     if (yrpImgIn == NULL)   // this is the case if module is requested to quit while waiting for image
         return true;
