@@ -1,7 +1,7 @@
 // This is an automatically-generated file.
 // It could get re-generated if the ALLOW_IDL_GENERATION flag is on.
 
-#include <iCub/segmentation/SegmentationModuleInterface.h>
+#include <SegmentationModuleInterface.h>
 #include <yarp/os/idl/WireTypes.h>
 
 namespace yarp { namespace sig {

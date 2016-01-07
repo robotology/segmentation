@@ -30,11 +30,11 @@ service SegmentationModuleInterface
 void set_sigma(1:double newValue);
 /** Set k (scale factor for boundary-detection threshold function) parameter for the algorithm
  * @param newValue new value for k parameter 
- */		
-void set_k(1:double newValue);	
+ */                
+void set_k(1:double newValue);     
 /** Set minRegion parameter for the algorithm, i.e., the minimum size of any segmented component
  * @param newValue new value for minRegion parameter 
- */	
+ */        
 void set_minRegion(1:double newValue);  
 /** Get sigma (smoothing) parameter for the algorithm
  * @return current value for sigma parameter 
@@ -42,11 +42,11 @@ void set_minRegion(1:double newValue);
 double get_sigma();
 /** Get k (scale factor for boundary-detection threshold function) parameter for the algorithm
  * @return current value for k parameter 
- */		
-double get_k();	
+ */                
+double get_k();    
 /** Get minRegion parameter for the algorithm, i.e., the minimum size of any segmented component
  * @return current value for minRegion parameter 
- */	
+ */        
 double get_minRegion(); 
 /** Get the number of segmented components that have been detected in the last provided image
  * @return number of segmented components

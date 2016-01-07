@@ -6,7 +6,7 @@
 
 #include <yarp/os/Wire.h>
 #include <yarp/os/idl/WireTypes.h>
-#include <iCub/segmentation/Pixel.h>
+#include <Pixel.h>
 
 namespace yarp {
   namespace sig {
@@ -67,4 +67,3 @@ public:
 };
 
 #endif
-

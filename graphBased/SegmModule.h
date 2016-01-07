@@ -32,7 +32,7 @@
  */
 #include "image.h"
 #include "misc.h"
-#include "iCub/segmentation/SegmentationModuleInterface.h" //Thrift interface
+#include "SegmentationModuleInterface.h" //Thrift interface
 
 class GBSegmModule : public yarp::os::RFModule, public yarp::sig::SegmentationModuleInterface {
 
@@ -54,7 +54,7 @@ private:
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >       _viewPort;     //output image - segmentation (modes of each detected object), edges, etc (configurable)
    // yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelInt> >       _labelPort;    //output image with labels 
    // yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >       _filtPort;     //output the mean shift filtered image
-    yarp::os::Port				                            _configPort;   //to configure the module
+    yarp::os::Port                                          _configPort;   //to configure the module
   //  yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelMono> >      _labelViewPort; //to visualize the labels
 
     yarp::os::Stamp _stamp;
