@@ -9,13 +9,6 @@
 #ifndef __SEGMMODULE__
 #define __SEGMMODULE__
 
- // std
-//#include <stdio.h>
-
-
-// OpenCV
-//#include  <cv.h>
-
 // yarp
 #include <yarp/os/all.h>
 #include <yarp/sig/all.h>

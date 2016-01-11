@@ -22,15 +22,13 @@
 #include <vector>
 #include <numeric>
 
-#include <opencv/cv.h>
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 class dispBlobber
 {
+    int margin;
 
-	int margin;
-
-	int backgroundThresh;
+    int backgroundThresh;
 
     int minBlobSize;
     int gaussSize;
@@ -50,10 +48,10 @@ class dispBlobber
 public:
 
     dispBlobber(int imH, int imW, int _bufferSize,
-    		int _margin,
-    		int _backgroundThresh,
-    		int _minBlobSize, int _gaussSize,
-    		int _dispThreshRatioLow, int _dispThreshRatioHigh);
+            int _margin,
+            int _backgroundThresh,
+            int _minBlobSize, int _gaussSize,
+            int _dispThreshRatioLow, int _dispThreshRatioHigh);
 
     bool setThresh(int low);
     bool setMargin(int mrg);

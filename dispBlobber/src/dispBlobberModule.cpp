@@ -92,7 +92,7 @@ bool DispBlobberModule::respond(const Bottle &command, Bottle &reply)
     {
         bool ok = blobPort->setMargin(command.get(1).asInt());
         if (ok)
-        	responseCode = Vocab::encode("ack");
+            responseCode = Vocab::encode("ack");
             else
             {
                 fprintf(stdout,"Margin for ROI cannot be set. \n");
@@ -167,13 +167,13 @@ DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
 
     if (rf.check("cropSize"))
     {
-    	Value &vCropSize=rf.find("cropSize");
+        Value &vCropSize=rf.find("cropSize");
 
-    	if (!vCropSize.isString())
-    	{
-    		cropSize = vCropSize.asInt();
-    		margin = 0; // not used in this case
-    	}
+        if (!vCropSize.isString())
+        {
+            cropSize = vCropSize.asInt();
+            margin = 0; // not used in this case
+        }
     }
 
     // threshold of intensity of the image under which info is ignored
@@ -189,10 +189,10 @@ DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
     blobExtractor = NULL;
 
     blobExtractor = new dispBlobber(imH, imW, bufferSize,
-    		margin,
-    		backgroundThresh,
-    		minBlobSize, gaussSize,
-    		imageThreshRatioLow, imageThreshRatioHigh);
+            margin,
+            backgroundThresh,
+            minBlobSize, gaussSize,
+            imageThreshRatioLow, imageThreshRatioHigh);
 }
 
 bool DispBlobberPort::open()
@@ -257,7 +257,7 @@ void DispBlobberPort::close()
 }
 
 void DispBlobberPort::interrupt()
-{	
+{   
    
     fprintf(stdout,"Attempting to interrupt ports...\n");
 
@@ -306,55 +306,57 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
 
     /* Prepare the buffer, call the extractor, clear the buffer */
 
-    imagesMatBuffer.push_back(cv::Mat( (IplImage*)input.getIplImage() ));
+    cv::Mat inputMat=cv::cvarrToMat((IplImage*)input.getIplImage());
+    imagesMatBuffer.push_back(inputMat);
 
     double blobSize = blobExtractor->extractBlob(imagesMatBuffer, roi, centroid, blobMat);
 
     if (blobSize>0)
     {
 
-    	if (optOutPort.getOutputCount()>0)
-    	{
-    		yarp::sig::ImageOf<yarp::sig::PixelMono> &blobImage = optOutPort.prepare();
-    	    blobImage.resize(blobMat.cols, blobMat.rows);
+        if (optOutPort.getOutputCount()>0)
+        {
+            yarp::sig::ImageOf<yarp::sig::PixelMono> &blobImage = optOutPort.prepare();
+            blobImage.resize(blobMat.cols, blobMat.rows);
 
-    	    blobMat.copyTo( cv::Mat( (IplImage*)blobImage.getIplImage() ) );
+            cv::Mat blobImageMat=cv::cvarrToMat((IplImage*)blobImage.getIplImage());
+            blobMat.copyTo(blobImageMat);
 
-    		optOutPort.setEnvelope(stamp);
-    		optOutPort.write();
-    	}
+            optOutPort.setEnvelope(stamp);
+            optOutPort.write();
+        }
 
-    	int x = centroid[0];
-    	int y = centroid[1];
+        int x = centroid[0];
+        int y = centroid[1];
 
-    	int dx = ( (cropSize>0) ? cropSize : (roi[2]-roi[0]) );
-    	int dy = ( (cropSize>0) ? cropSize : (roi[3]-roi[1]) );
+        int dx = ( (cropSize>0) ? cropSize : (roi[2]-roi[0]) );
+        int dy = ( (cropSize>0) ? cropSize : (roi[3]-roi[1]) );
 
-    	int dx2 = dx>>1;
-    	int dy2 = dy>>1;
+        int dx2 = dx>>1;
+        int dy2 = dy>>1;
 
-    	int tlx = std::max(x-dx2,0);
-    	int tly = std::max(y-dy2,0);
-    	int brx = std::min(x+dx2,blobMat.cols-1);
-    	int bry = std::min(y+dy2,blobMat.rows-1);
+        int tlx = std::max(x-dx2,0);
+        int tly = std::max(y-dy2,0);
+        int brx = std::min(x+dx2,blobMat.cols-1);
+        int bry = std::min(y+dy2,blobMat.rows-1);
 
-    	if (cropOutPort.getOutputCount()>0)
-    	{
-    		cv::Rect roiRegion = cv::Rect(cv::Point( tlx, tly ), cv::Point( brx, bry ));
+        if (cropOutPort.getOutputCount()>0)
+        {
+            cv::Rect roiRegion = cv::Rect(cv::Point( tlx, tly ), cv::Point( brx, bry ));
 
-    		yarp::sig::ImageOf<yarp::sig::PixelBgr> &cropImage = cropOutPort.prepare();
-    		cropImage.resize(roiRegion.width, roiRegion.height);
+            yarp::sig::ImageOf<yarp::sig::PixelBgr> &cropImage = cropOutPort.prepare();
+            cropImage.resize(roiRegion.width, roiRegion.height);
 
-    		imagesMatBuffer.back()(roiRegion).copyTo( cv::Mat( (IplImage*)cropImage.getIplImage() ) );
+            cv::Mat cropImageMat=cv::cvarrToMat((IplImage*)cropImage.getIplImage());
+            imagesMatBuffer.back()(roiRegion).copyTo(cropImageMat);
 
-    		cropOutPort.setEnvelope(stamp);
-    		cropOutPort.write();
+            cropOutPort.setEnvelope(stamp);
+            cropOutPort.write();
+        }
 
-    	}
-
-    	if (roiOutPort.getOutputCount()>0)
-    	{
-           	Bottle roisBottle;
+        if (roiOutPort.getOutputCount()>0)
+        {
+            Bottle roisBottle;
 
             Bottle &roiBottle = roisBottle.addList();
             roiBottle.addInt(tlx);
@@ -362,134 +364,134 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
             roiBottle.addInt(brx);
             roiBottle.addInt(bry);
 
-    		roiOutPort.prepare() = roisBottle;
+            roiOutPort.prepare() = roisBottle;
 
-        	roiOutPort.setEnvelope(stamp);
-        	roiOutPort.write();
-    	}
+            roiOutPort.setEnvelope(stamp);
+            roiOutPort.write();
+        }
 
-    	if (blobsOutPort.getOutputCount()>0)
-    	{
-        	Bottle blobsBottle;
+        if (blobsOutPort.getOutputCount()>0)
+        {
+            Bottle blobsBottle;
 
-        	Bottle &blobBottle = blobsBottle.addList();
-        	blobBottle.addInt(centroid[0]);
-        	blobBottle.addInt(centroid[1]);
-        	blobBottle.addInt((int)(blobSize+0.5f));
+            Bottle &blobBottle = blobsBottle.addList();
+            blobBottle.addInt(centroid[0]);
+            blobBottle.addInt(centroid[1]);
+            blobBottle.addInt((int)(blobSize+0.5f));
 
-    		blobsOutPort.prepare() = blobsBottle;
+            blobsOutPort.prepare() = blobsBottle;
 
-    		blobsOutPort.setEnvelope(stamp);
-    		blobsOutPort.write();
-    	}
+            blobsOutPort.setEnvelope(stamp);
+            blobsOutPort.write();
+        }
 
-    	if (roiOutPortRight.getOutputCount()>0)
-    	{
-    		Bottle cmd_sfm, reply_sfm;
+        if (roiOutPortRight.getOutputCount()>0)
+        {
+            Bottle cmd_sfm, reply_sfm;
 
-    		cmd_sfm.addInt(tlx);
-    		cmd_sfm.addInt(tly);
-    		sfmRpcPort.write(cmd_sfm,reply_sfm);
+            cmd_sfm.addInt(tlx);
+            cmd_sfm.addInt(tly);
+            sfmRpcPort.write(cmd_sfm,reply_sfm);
 
-    		Bottle roisBottle;
-    		Bottle &roiBottle = roisBottle.addList();
+            Bottle roisBottle;
+            Bottle &roiBottle = roisBottle.addList();
 
-    	    if (reply_sfm.size()>0)
-    	    {
-    	    	double tlX = reply_sfm.get(0).asDouble();
-    	    	double tlY = reply_sfm.get(1).asDouble();
-    	        double tlZ = reply_sfm.get(2).asDouble();
+            if (reply_sfm.size()>0)
+            {
+                double tlX = reply_sfm.get(0).asDouble();
+                double tlY = reply_sfm.get(1).asDouble();
+                double tlZ = reply_sfm.get(2).asDouble();
 
-    	        if (!(tlX==0 && tlY==0 && tlZ==0))
-    	        {
-    	        	int tlur = reply_sfm.get(3).asInt();
-    	        	int tlvr = reply_sfm.get(4).asInt();
+                if (!(tlX==0 && tlY==0 && tlZ==0))
+                {
+                    int tlur = reply_sfm.get(3).asInt();
+                    int tlvr = reply_sfm.get(4).asInt();
 
-    	        	roiBottle.addInt(tlur);
-    	        	roiBottle.addInt(tlvr);
-    	        }
-    	    }
+                    roiBottle.addInt(tlur);
+                    roiBottle.addInt(tlvr);
+                }
+            }
 
-    	    cmd_sfm.clear();
-    	    reply_sfm.clear();
+            cmd_sfm.clear();
+            reply_sfm.clear();
 
-    		cmd_sfm.addInt(brx);
-    	    cmd_sfm.addInt(bry);
-    	    sfmRpcPort.write(cmd_sfm,reply_sfm);
+            cmd_sfm.addInt(brx);
+            cmd_sfm.addInt(bry);
+            sfmRpcPort.write(cmd_sfm,reply_sfm);
 
-    	    if (reply_sfm.size()>0)
-    	    {
-    	    	double brX = reply_sfm.get(0).asDouble();
-    	    	double brY = reply_sfm.get(1).asDouble();
-    	        double brZ = reply_sfm.get(2).asDouble();
+            if (reply_sfm.size()>0)
+            {
+                double brX = reply_sfm.get(0).asDouble();
+                double brY = reply_sfm.get(1).asDouble();
+                double brZ = reply_sfm.get(2).asDouble();
 
-    	        if (!(brX==0 && brY==0 && brZ==0))
-    	        {
-    	        	int brur = reply_sfm.get(3).asInt();
-    	        	int brvr = reply_sfm.get(4).asInt();
+                if (!(brX==0 && brY==0 && brZ==0))
+                {
+                    int brur = reply_sfm.get(3).asInt();
+                    int brvr = reply_sfm.get(4).asInt();
 
-    	        	roiBottle.addInt(brur);
-    	        	roiBottle.addInt(brvr);
-    	        }
-    	    }
+                    roiBottle.addInt(brur);
+                    roiBottle.addInt(brvr);
+                }
+            }
 
-    	    if (roiBottle.size()>0)
-    	    {
-    	    	roiOutPortRight.prepare() = roisBottle;
-    	    	roiOutPortRight.setEnvelope(stamp);
-    	    	roiOutPortRight.write();
-    	    }
+            if (roiBottle.size()>0)
+            {
+                roiOutPortRight.prepare() = roisBottle;
+                roiOutPortRight.setEnvelope(stamp);
+                roiOutPortRight.write();
+            }
 
-    	}
+        }
 
-    	if (blobsOutPortRight.getOutputCount()>0 || points3dOutPort.getOutputCount()>0)
-    	{
-    		Bottle cmd_sfm, reply_sfm;
+        if (blobsOutPortRight.getOutputCount()>0 || points3dOutPort.getOutputCount()>0)
+        {
+            Bottle cmd_sfm, reply_sfm;
 
-    	    cmd_sfm.addInt(centroid[0]);
-    		cmd_sfm.addInt(centroid[1]);
-    		sfmRpcPort.write(cmd_sfm,reply_sfm);
+            cmd_sfm.addInt(centroid[0]);
+            cmd_sfm.addInt(centroid[1]);
+            sfmRpcPort.write(cmd_sfm,reply_sfm);
 
-    	    if (reply_sfm.size()>0)
-    	    {
-    	    	double X = reply_sfm.get(0).asDouble();
-    	    	double Y = reply_sfm.get(1).asDouble();
-    	    	double Z = reply_sfm.get(2).asDouble();
+            if (reply_sfm.size()>0)
+            {
+                double X = reply_sfm.get(0).asDouble();
+                double Y = reply_sfm.get(1).asDouble();
+                double Z = reply_sfm.get(2).asDouble();
 
-    	    	if (points3dOutPort.getOutputCount()>0)
-    	    	{
-    	    		Bottle points3dBottle;
-    	    		Bottle &point3dBottle = points3dBottle.addList();
+                if (points3dOutPort.getOutputCount()>0)
+                {
+                    Bottle points3dBottle;
+                    Bottle &point3dBottle = points3dBottle.addList();
 
-    	    		point3dBottle.addDouble(X);
-    	    		point3dBottle.addDouble(Y);
-    	    		point3dBottle.addDouble(Z);
+                    point3dBottle.addDouble(X);
+                    point3dBottle.addDouble(Y);
+                    point3dBottle.addDouble(Z);
 
-    	    		points3dOutPort.prepare() = points3dBottle;
-    	    		points3dOutPort.setEnvelope(stamp);
-    	    		points3dOutPort.write();
-    	    	}
+                    points3dOutPort.prepare() = points3dBottle;
+                    points3dOutPort.setEnvelope(stamp);
+                    points3dOutPort.write();
+                }
 
-    	    	if (blobsOutPort.getOutputCount()>0)
-    	    	{
-    	    		if (!(X==0.0 && Y==0.0 && Z==0.0))
-    	    		{
-    	    			int ur = reply_sfm.get(3).asInt();
-    	    			int vr = reply_sfm.get(4).asInt();
+                if (blobsOutPort.getOutputCount()>0)
+                {
+                    if (!(X==0.0 && Y==0.0 && Z==0.0))
+                    {
+                        int ur = reply_sfm.get(3).asInt();
+                        int vr = reply_sfm.get(4).asInt();
 
-    	    			Bottle blobsBottle;
-    	    			Bottle &blobBottle = blobsBottle.addList();
+                        Bottle blobsBottle;
+                        Bottle &blobBottle = blobsBottle.addList();
 
-    	    			blobBottle.addInt(ur);
-    	    			blobBottle.addInt(vr);
+                        blobBottle.addInt(ur);
+                        blobBottle.addInt(vr);
 
-    	    			blobsOutPortRight.prepare() = blobsBottle;
-    	    			blobsOutPortRight.setEnvelope(stamp);
-    	    			blobsOutPortRight.write();
-    	    		}
-    	    	}
-    	    }
-    	}
+                        blobsOutPortRight.prepare() = blobsBottle;
+                        blobsOutPortRight.setEnvelope(stamp);
+                        blobsOutPortRight.write();
+                    }
+                }
+            }
+        }
 
     }
 

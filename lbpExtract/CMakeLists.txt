@@ -34,6 +34,7 @@ source_group("Header Files" FILES ${header})
 source_group("IDL Files" FILES ${idl})
 
 include_directories(${PROJECT_SOURCE_DIR}/include
+                    ${OpenCV_INCLUDE_DIRS}
                     ${YARP_INCLUDE_DIRS}
                     ${ICUB_INCLUDE_DIRS})
 

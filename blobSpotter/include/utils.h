@@ -35,8 +35,7 @@
 #include <yarp/sig/Image.h>
 #include <yarp/os/Event.h>
 
-#include <cv.h>
-#include <highgui.h>
+#include <opencv2/opencv.hpp>
 
 class SPOTTERManager;  //forward declaration
 

@@ -400,7 +400,7 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     outLbp.zero();
     outLbpContour.zero();
     
-    imgMat = (IplImage*)img.getIplImage();
+    imgMat = cv::cvarrToMat((IplImage*)img.getIplImage());
 
     yarp::os::Bottle &b = outTargetPort.prepare();
     b.clear();
@@ -576,19 +576,19 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     
     IplImage propag = imgMat;
     outOrig.resize(propag.width, propag.height);
-    cvCopyImage( &propag, (IplImage *) outOrig.getIplImage());
+    cvCopy( &propag, (IplImage *) outOrig.getIplImage());
     outPortPropagate.setEnvelope(ts);
     outPortPropagate.write();
 
     IplImage processed = extracted;//contour
     outImg.resize(processed.width, processed.height);
-    cvCopyImage( &processed, (IplImage *) outImg.getIplImage());
+    cvCopy( &processed, (IplImage *) outImg.getIplImage());
     outPortBlobs.setEnvelope(ts);
     outPortBlobs.write();
     
     IplImage seg = segmented;//contour
     outSeg.resize(seg.width, seg.height);
-    cvCopyImage( &seg, (IplImage *) outSeg.getIplImage());
+    cvCopy( &seg, (IplImage *) outSeg.getIplImage());
     outPortSegmented.setEnvelope(ts);
     outPortSegmented.write();
     
@@ -599,13 +599,13 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
 
     IplImage orig = lbp;//cleaned local binary pattern
     outLbpContour.resize(orig.width, orig.height);
-    cvCopyImage( &orig, (IplImage *) outLbpContour.getIplImage());
+    cvCopy( &orig, (IplImage *) outLbpContour.getIplImage());
     outPortLbpContours.setEnvelope(ts);
     outPortLbpContours.write();
     
     IplImage imag = olbp; // full local binary pattern
     outLbp.resize(imag.width, imag.height);
-    cvCopyImage( &imag, (IplImage *) outLbp.getIplImage());
+    cvCopy( &imag, (IplImage *) outLbp.getIplImage());
     outPortLbp.setEnvelope(ts);
     outPortLbp.write();
 
