@@ -15,6 +15,7 @@
  * Public License for more details
  */
 
+#include <cstdio>
 #include "dispBlobber.hpp"
 
 using namespace std;
