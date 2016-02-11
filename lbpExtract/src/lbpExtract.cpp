@@ -46,8 +46,8 @@ bool SEGMENTModule::configure(yarp::os::ResourceFinder &rf){
     int topB    = rf.check("topBound",yarp::os::Value(40)).asInt();
     int minL    = rf.check("minArcLength",yarp::os::Value(75)).asInt();
     int maxL    = rf.check("maxArcLength",yarp::os::Value(400)).asInt();
-    int minA    = rf.check("minArea",yarp::os::Value(800)).asInt();
-    int maxA    = rf.check("maxArea",yarp::os::Value(2000)).asInt();
+    int minA    = rf.check("minArea",yarp::os::Value(1000)).asInt();
+    int maxA    = rf.check("maxArea",yarp::os::Value(3000)).asInt();
     
     segmentManager->setDefaultValues(rad, neigh, topB, minL, maxL, iter, minA, maxA);
     
