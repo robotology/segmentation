@@ -23,6 +23,8 @@
    <param default="40" desc="To specify the top bound (Y) limit for the blobs">topBound</param>
    <param default="75" desc="To specify the minimum arc length of the allowed blobs">minArcLength</param>
    <param default="400" desc="To specify the maximum arc length of the allowed blobs">maxArcLength</param>
+   <param default="1000" desc="To specify the minimum area of the allowed blobs">minArea</param>
+   <param default="3000" desc="To specify the maximum area of the allowed blobs">maxArea</param>
    </arguments>
 
    <authors>
