@@ -70,6 +70,8 @@ private:
     int     minArcLength, defaultMinArcLength;
     int     maxArcLength, defaultMaxArcLength;
     int     numIteration, defaultNumIteration;
+    int     minArea, defaultMinArea;
+    int     maxArea, defaultMaxArea;
     
     cv::Mat segmented;
     yarp::os::Bottle allPoints;
@@ -93,7 +95,7 @@ public:
     void    onRead( yarp::sig::ImageOf<yarp::sig::PixelRgb> &img );
     void    interrupt();
     
-    bool setDefaultValues(const int32_t radius, const int32_t neighbours, const int32_t topBound, const int32_t minArcLength, const int32_t maxArcLength, const int32_t numIteration );
+    bool setDefaultValues(const int32_t radius, const int32_t neighbours, const int32_t topBound, const int32_t minArcLength, const int32_t maxArcLength, const int32_t numIteration, const int32_t minArea, const int32_t maxArea );
     
     bool setRadius(const int32_t radius);
     bool setNeighbours(const int32_t neighbours);
@@ -101,12 +103,16 @@ public:
     bool setMinArcLength(const int32_t minArcLength);
     bool setMaxArcLength(const int32_t maxArcLength);
     bool setNumIteration(const int32_t numIteration);
+    bool setMinArea(const int32_t minArea);
+    bool setMaxArea(const int32_t maxArea);
     bool resetAllValues();
     int32_t getRadius();
     int32_t getNeighbours();
     int32_t getTopBound();
     int32_t getMinArcLength();
     int32_t getMaxArcLength();
+    int32_t getMinArea();
+    int32_t getMaxArea();
     int32_t getNumIteration();
     yarp::os::Bottle get_component_around(const int32_t x, const int32_t y);
 };
@@ -140,12 +146,16 @@ public:
     bool setMinArcLength(const int32_t minArcLength);
     bool setMaxArcLength(const int32_t maxArcLength);
     bool setNumIteration(const int32_t numIteration);
+    bool setMinArea(const int32_t minArea);
+    bool setMaxArea(const int32_t maxArea);
     bool resetAllValues();
     int32_t getRadius();
     int32_t getNeighbours();
     int32_t getTopBound();
     int32_t getMinArcLength();
     int32_t getMaxArcLength();
+    int32_t getMinArea();
+    int32_t getMaxArea();
     int32_t getNumIteration();
     yarp::os::Bottle get_component_around(const int32_t x, const int32_t y);
 

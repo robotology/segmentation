@@ -84,6 +84,28 @@ public:
    */
   virtual bool setMaxArcLength(const int32_t maxArcLength);
   /**
+   * Gets the maximum area of the allowed blobs
+   * @return the current maximum area
+   */
+  virtual int32_t getMaxArea();
+  /**
+   * Sets the maximum area of the allowed blobs
+   * @param maxArea, integer containing the maxArea
+   * @return true/false on success/failure
+   */
+  virtual bool setMaxArea(const int32_t maxArea);
+  /**
+   * Gets the minimum area of the allowed blobs
+   * @return the current minimum area
+   */
+  virtual int32_t getMinArea();
+  /**
+   * Sets the minimum area of the allowed blobs
+   * @param minArea, integer containing the minArea
+   * @return true/false on success/failure
+   */
+  virtual bool setMinArea(const int32_t minArea);
+  /**
    * Gets the number of iteration for the grabCut segmentation algorithm
    * @return the current maximum arc length
    */

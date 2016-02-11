@@ -44,10 +44,12 @@ bool SEGMENTModule::configure(yarp::os::ResourceFinder &rf){
     int iter    = rf.check("numIteration",yarp::os::Value(5)).asInt();
     int neigh   = rf.check("neighbours",yarp::os::Value(8)).asInt();
     int topB    = rf.check("topBound",yarp::os::Value(40)).asInt();
-    int minA    = rf.check("minArcLength",yarp::os::Value(75)).asInt();
-    int maxA    = rf.check("maxArcLength",yarp::os::Value(400)).asInt();
+    int minL    = rf.check("minArcLength",yarp::os::Value(75)).asInt();
+    int maxL    = rf.check("maxArcLength",yarp::os::Value(400)).asInt();
+    int minA    = rf.check("minArea",yarp::os::Value(800)).asInt();
+    int maxA    = rf.check("maxArea",yarp::os::Value(2000)).asInt();
     
-    segmentManager->setDefaultValues(rad, neigh, topB, minA, maxA, iter);
+    segmentManager->setDefaultValues(rad, neigh, topB, minL, maxL, iter, minA, maxA);
     
     /* now start the thread to do the work */
     segmentManager->open();
@@ -131,6 +133,18 @@ bool SEGMENTModule::setMaxArcLength(const int32_t maxArcLenght){
 }
 
 /**********************************************************/
+bool SEGMENTModule::setMinArea(const int32_t minArea){
+    segmentManager->setMinArea(minArea);
+    return true;
+}
+
+/**********************************************************/
+bool SEGMENTModule::setMaxArea(const int32_t maxArea){
+    segmentManager->setMaxArea(maxArea);
+    return true;
+}
+
+/**********************************************************/
 bool SEGMENTModule::setNumIteration(const int32_t numIteration){
     segmentManager->setNumIteration(numIteration);
     return true;
@@ -169,6 +183,16 @@ int SEGMENTModule::getMaxArcLength(){
 }
 
 /**********************************************************/
+int SEGMENTModule::getMinArea(){
+    return segmentManager->getMinArea();
+}
+
+/**********************************************************/
+int SEGMENTModule::getMaxArea(){
+    return segmentManager->getMaxArea();
+}
+
+/**********************************************************/
 int SEGMENTModule::getNumIteration(){
     return segmentManager->getNumIteration();
 }
@@ -190,7 +214,7 @@ SEGMENTManager::SEGMENTManager( const std::string &moduleName ){
 }
 
 /**********************************************************/
-bool SEGMENTManager::setDefaultValues(const int32_t radius, const int32_t neighbours, const int32_t topBound, const int32_t minArcLength, const int32_t maxArcLength, const int32_t numIteration){
+bool SEGMENTManager::setDefaultValues(const int32_t radius, const int32_t neighbours, const int32_t topBound, const int32_t minArcLength, const int32_t maxArcLength, const int32_t numIteration, const int32_t minArea, const int32_t maxArea){
     
     defaultRadius       = radius;
     defaultNeighbours   = neighbours;
@@ -198,6 +222,8 @@ bool SEGMENTManager::setDefaultValues(const int32_t radius, const int32_t neighb
     defaultMinArcLength = minArcLength;
     defaultMaxArcLength = maxArcLength;
     defaultNumIteration = numIteration;
+    defaultMinArea      = minArea;
+    defaultMaxArea      = maxArea;
 
     return true;
 }
@@ -224,7 +250,10 @@ bool SEGMENTManager::open(){
     topBound = defaultTopBound;
     numIteration = defaultNumIteration;
     
-    yInfo("Module started with the following default values:\nradius: %d, neighbours %d, minArcLength %d, maxArcLength, %d, topBound %d, numIteration %d", radius, neighbours, minArcLength, maxArcLength, topBound, numIteration);
+    minArea = defaultMinArea;
+    maxArea = defaultMaxArea;
+    
+    yInfo("Module started with the following default values:\nradius: %d, neighbours %d, minArcLength %d, maxArcLength, %d, minArea %d, maxArea, %d, topBound %d, numIteration %d", radius, neighbours, minArcLength, maxArcLength, minArea, maxArea, topBound, numIteration);
     
     return true;
 }
@@ -286,6 +315,18 @@ bool SEGMENTManager::setMaxArcLength(const int32_t maxArcLength){
 }
 
 /**********************************************************/
+bool SEGMENTManager::setMinArea(const int32_t minArea){
+    this->minArea = minArea;
+    return true;
+}
+
+/**********************************************************/
+bool SEGMENTManager::setMaxArea(const int32_t maxArea){
+    this->maxArea = maxArea;
+    return true;
+}
+
+/**********************************************************/
 bool SEGMENTManager::setNumIteration(const int32_t numIteration){
     this->numIteration = numIteration;
     return true;
@@ -298,6 +339,8 @@ bool SEGMENTManager::resetAllValues(){
     topBound = defaultTopBound;
     minArcLength = defaultMinArcLength;
     maxArcLength = defaultMaxArcLength;
+    minArea = defaultMinArea;
+    maxArea = defaultMaxArea;
     return true;
 }
 
@@ -324,6 +367,16 @@ int SEGMENTManager::getMinArcLength(){
 /**********************************************************/
 int SEGMENTManager::getMaxArcLength(){
     return this->maxArcLength;
+}
+
+/**********************************************************/
+int SEGMENTManager::getMinArea(){
+    return this->minArea;
+}
+
+/**********************************************************/
+int SEGMENTManager::getMaxArea(){
+    return this->maxArea;
 }
 
 /**********************************************************/
@@ -465,7 +518,11 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     for( size_t i = 0; i< cnt.size(); i++ ){
         
         double length = arcLength( cnt[i], true );
-        if ( (mc[i].y > topBound) && (length > minArcLength) && (length < maxArcLength)){
+        double area   = contourArea(cnt[i]);
+        
+        //yDebug("%d AREA IS %lf", i, area);
+        
+        if ( (mc[i].y > topBound) && (length > minArcLength) && (length < maxArcLength) && (area > minArea) && (area < maxArea)){
             //yDebug(" Contour[%d] -X[%lf]  -Y[%lf] -Length: %.2f minArc %d maxArc %d topBound %d\n", i, mc[i].x, mc[i].y, length, minArcLength, maxArcLength, topBound );
             //cv::drawContours( extracted, cnt, i, cvScalar(255,255,255), 2, 8, hrch, 0, cv::Point() );
 

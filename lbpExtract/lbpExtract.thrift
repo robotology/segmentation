@@ -93,6 +93,32 @@ service lbpExtract_IDLServer
     bool setMaxArcLength(1:i32 maxArcLength);
     
     /**
+     * Gets the maximum area of the allowed blobs
+     * @return the current maximum area
+     **/
+    i32 getMaxArea();
+    
+    /**
+     * Sets the maximum area of the allowed blobs
+     * @param maxArea, integer containing the maxArea
+     * @return true/false on success/failure
+     **/
+    bool setMaxArea(1:i32 maxArea);
+    
+    /**
+     * Gets the minimum area of the allowed blobs
+     * @return the current minimum area
+     **/
+    i32 getMinArea();
+    
+    /**
+     * Sets the minimum area of the allowed blobs
+     * @param minArea, integer containing the minArea
+     * @return true/false on success/failure
+     **/
+    bool setMinArea(1:i32 minArea);
+    
+    /**
      * Gets the number of iteration for the grabCut segmentation algorithm
      * @return the current maximum arc length
      **/

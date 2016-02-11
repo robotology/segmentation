@@ -107,6 +107,40 @@ public:
   virtual bool read(yarp::os::ConnectionReader& connection);
 };
 
+class lbpExtract_IDLServer_getMaxArea : public yarp::os::Portable {
+public:
+  int32_t _return;
+  void init();
+  virtual bool write(yarp::os::ConnectionWriter& connection);
+  virtual bool read(yarp::os::ConnectionReader& connection);
+};
+
+class lbpExtract_IDLServer_setMaxArea : public yarp::os::Portable {
+public:
+  int32_t maxArea;
+  bool _return;
+  void init(const int32_t maxArea);
+  virtual bool write(yarp::os::ConnectionWriter& connection);
+  virtual bool read(yarp::os::ConnectionReader& connection);
+};
+
+class lbpExtract_IDLServer_getMinArea : public yarp::os::Portable {
+public:
+  int32_t _return;
+  void init();
+  virtual bool write(yarp::os::ConnectionWriter& connection);
+  virtual bool read(yarp::os::ConnectionReader& connection);
+};
+
+class lbpExtract_IDLServer_setMinArea : public yarp::os::Portable {
+public:
+  int32_t minArea;
+  bool _return;
+  void init(const int32_t minArea);
+  virtual bool write(yarp::os::ConnectionWriter& connection);
+  virtual bool read(yarp::os::ConnectionReader& connection);
+};
+
 class lbpExtract_IDLServer_getNumIteration : public yarp::os::Portable {
 public:
   int32_t _return;
@@ -404,6 +438,94 @@ void lbpExtract_IDLServer_setMaxArcLength::init(const int32_t maxArcLength) {
   this->maxArcLength = maxArcLength;
 }
 
+bool lbpExtract_IDLServer_getMaxArea::write(yarp::os::ConnectionWriter& connection) {
+  yarp::os::idl::WireWriter writer(connection);
+  if (!writer.writeListHeader(1)) return false;
+  if (!writer.writeTag("getMaxArea",1,1)) return false;
+  return true;
+}
+
+bool lbpExtract_IDLServer_getMaxArea::read(yarp::os::ConnectionReader& connection) {
+  yarp::os::idl::WireReader reader(connection);
+  if (!reader.readListReturn()) return false;
+  if (!reader.readI32(_return)) {
+    reader.fail();
+    return false;
+  }
+  return true;
+}
+
+void lbpExtract_IDLServer_getMaxArea::init() {
+  _return = 0;
+}
+
+bool lbpExtract_IDLServer_setMaxArea::write(yarp::os::ConnectionWriter& connection) {
+  yarp::os::idl::WireWriter writer(connection);
+  if (!writer.writeListHeader(2)) return false;
+  if (!writer.writeTag("setMaxArea",1,1)) return false;
+  if (!writer.writeI32(maxArea)) return false;
+  return true;
+}
+
+bool lbpExtract_IDLServer_setMaxArea::read(yarp::os::ConnectionReader& connection) {
+  yarp::os::idl::WireReader reader(connection);
+  if (!reader.readListReturn()) return false;
+  if (!reader.readBool(_return)) {
+    reader.fail();
+    return false;
+  }
+  return true;
+}
+
+void lbpExtract_IDLServer_setMaxArea::init(const int32_t maxArea) {
+  _return = false;
+  this->maxArea = maxArea;
+}
+
+bool lbpExtract_IDLServer_getMinArea::write(yarp::os::ConnectionWriter& connection) {
+  yarp::os::idl::WireWriter writer(connection);
+  if (!writer.writeListHeader(1)) return false;
+  if (!writer.writeTag("getMinArea",1,1)) return false;
+  return true;
+}
+
+bool lbpExtract_IDLServer_getMinArea::read(yarp::os::ConnectionReader& connection) {
+  yarp::os::idl::WireReader reader(connection);
+  if (!reader.readListReturn()) return false;
+  if (!reader.readI32(_return)) {
+    reader.fail();
+    return false;
+  }
+  return true;
+}
+
+void lbpExtract_IDLServer_getMinArea::init() {
+  _return = 0;
+}
+
+bool lbpExtract_IDLServer_setMinArea::write(yarp::os::ConnectionWriter& connection) {
+  yarp::os::idl::WireWriter writer(connection);
+  if (!writer.writeListHeader(2)) return false;
+  if (!writer.writeTag("setMinArea",1,1)) return false;
+  if (!writer.writeI32(minArea)) return false;
+  return true;
+}
+
+bool lbpExtract_IDLServer_setMinArea::read(yarp::os::ConnectionReader& connection) {
+  yarp::os::idl::WireReader reader(connection);
+  if (!reader.readListReturn()) return false;
+  if (!reader.readBool(_return)) {
+    reader.fail();
+    return false;
+  }
+  return true;
+}
+
+void lbpExtract_IDLServer_setMinArea::init(const int32_t minArea) {
+  _return = false;
+  this->minArea = minArea;
+}
+
 bool lbpExtract_IDLServer_getNumIteration::write(yarp::os::ConnectionWriter& connection) {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(1)) return false;
@@ -616,6 +738,46 @@ bool lbpExtract_IDLServer::setMaxArcLength(const int32_t maxArcLength) {
   bool ok = yarp().write(helper,helper);
   return ok?helper._return:_return;
 }
+int32_t lbpExtract_IDLServer::getMaxArea() {
+  int32_t _return = 0;
+  lbpExtract_IDLServer_getMaxArea helper;
+  helper.init();
+  if (!yarp().canWrite()) {
+    yError("Missing server method '%s'?","int32_t lbpExtract_IDLServer::getMaxArea()");
+  }
+  bool ok = yarp().write(helper,helper);
+  return ok?helper._return:_return;
+}
+bool lbpExtract_IDLServer::setMaxArea(const int32_t maxArea) {
+  bool _return = false;
+  lbpExtract_IDLServer_setMaxArea helper;
+  helper.init(maxArea);
+  if (!yarp().canWrite()) {
+    yError("Missing server method '%s'?","bool lbpExtract_IDLServer::setMaxArea(const int32_t maxArea)");
+  }
+  bool ok = yarp().write(helper,helper);
+  return ok?helper._return:_return;
+}
+int32_t lbpExtract_IDLServer::getMinArea() {
+  int32_t _return = 0;
+  lbpExtract_IDLServer_getMinArea helper;
+  helper.init();
+  if (!yarp().canWrite()) {
+    yError("Missing server method '%s'?","int32_t lbpExtract_IDLServer::getMinArea()");
+  }
+  bool ok = yarp().write(helper,helper);
+  return ok?helper._return:_return;
+}
+bool lbpExtract_IDLServer::setMinArea(const int32_t minArea) {
+  bool _return = false;
+  lbpExtract_IDLServer_setMinArea helper;
+  helper.init(minArea);
+  if (!yarp().canWrite()) {
+    yError("Missing server method '%s'?","bool lbpExtract_IDLServer::setMinArea(const int32_t minArea)");
+  }
+  bool ok = yarp().write(helper,helper);
+  return ok?helper._return:_return;
+}
 int32_t lbpExtract_IDLServer::getNumIteration() {
   int32_t _return = 0;
   lbpExtract_IDLServer_getNumIteration helper;
@@ -823,6 +985,60 @@ bool lbpExtract_IDLServer::read(yarp::os::ConnectionReader& connection) {
       reader.accept();
       return true;
     }
+    if (tag == "getMaxArea") {
+      int32_t _return;
+      _return = getMaxArea();
+      yarp::os::idl::WireWriter writer(reader);
+      if (!writer.isNull()) {
+        if (!writer.writeListHeader(1)) return false;
+        if (!writer.writeI32(_return)) return false;
+      }
+      reader.accept();
+      return true;
+    }
+    if (tag == "setMaxArea") {
+      int32_t maxArea;
+      if (!reader.readI32(maxArea)) {
+        reader.fail();
+        return false;
+      }
+      bool _return;
+      _return = setMaxArea(maxArea);
+      yarp::os::idl::WireWriter writer(reader);
+      if (!writer.isNull()) {
+        if (!writer.writeListHeader(1)) return false;
+        if (!writer.writeBool(_return)) return false;
+      }
+      reader.accept();
+      return true;
+    }
+    if (tag == "getMinArea") {
+      int32_t _return;
+      _return = getMinArea();
+      yarp::os::idl::WireWriter writer(reader);
+      if (!writer.isNull()) {
+        if (!writer.writeListHeader(1)) return false;
+        if (!writer.writeI32(_return)) return false;
+      }
+      reader.accept();
+      return true;
+    }
+    if (tag == "setMinArea") {
+      int32_t minArea;
+      if (!reader.readI32(minArea)) {
+        reader.fail();
+        return false;
+      }
+      bool _return;
+      _return = setMinArea(minArea);
+      yarp::os::idl::WireWriter writer(reader);
+      if (!writer.isNull()) {
+        if (!writer.writeListHeader(1)) return false;
+        if (!writer.writeBool(_return)) return false;
+      }
+      reader.accept();
+      return true;
+    }
     if (tag == "getNumIteration") {
       int32_t _return;
       _return = getNumIteration();
@@ -928,6 +1144,10 @@ std::vector<std::string> lbpExtract_IDLServer::help(const std::string& functionN
     helpString.push_back("setMinArcLength");
     helpString.push_back("getMaxArcLength");
     helpString.push_back("setMaxArcLength");
+    helpString.push_back("getMaxArea");
+    helpString.push_back("setMaxArea");
+    helpString.push_back("getMinArea");
+    helpString.push_back("setMinArea");
     helpString.push_back("getNumIteration");
     helpString.push_back("setNumIteration");
     helpString.push_back("resetAllValues");
@@ -998,6 +1218,28 @@ std::vector<std::string> lbpExtract_IDLServer::help(const std::string& functionN
       helpString.push_back("bool setMaxArcLength(const int32_t maxArcLength) ");
       helpString.push_back("Sets the maximum arc length of the allowed blobs ");
       helpString.push_back("@param maxArcLength, integer containing the maxArcLength ");
+      helpString.push_back("@return true/false on success/failure ");
+    }
+    if (functionName=="getMaxArea") {
+      helpString.push_back("int32_t getMaxArea() ");
+      helpString.push_back("Gets the maximum area of the allowed blobs ");
+      helpString.push_back("@return the current maximum area ");
+    }
+    if (functionName=="setMaxArea") {
+      helpString.push_back("bool setMaxArea(const int32_t maxArea) ");
+      helpString.push_back("Sets the maximum area of the allowed blobs ");
+      helpString.push_back("@param maxArea, integer containing the maxArea ");
+      helpString.push_back("@return true/false on success/failure ");
+    }
+    if (functionName=="getMinArea") {
+      helpString.push_back("int32_t getMinArea() ");
+      helpString.push_back("Gets the minimum area of the allowed blobs ");
+      helpString.push_back("@return the current minimum area ");
+    }
+    if (functionName=="setMinArea") {
+      helpString.push_back("bool setMinArea(const int32_t minArea) ");
+      helpString.push_back("Sets the minimum area of the allowed blobs ");
+      helpString.push_back("@param minArea, integer containing the minArea ");
       helpString.push_back("@return true/false on success/failure ");
     }
     if (functionName=="getNumIteration") {
