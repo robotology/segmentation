@@ -122,6 +122,12 @@ public:
    */
   virtual bool resetAllValues();
   /**
+   * Sets the verbosity of the algorithm
+   * @param boolVerbosity
+   * @return true/false on success/failure
+   */
+  virtual bool verbosity(const int32_t boolVerbosity);
+  /**
    * Gets all the components (points) that belong to any of the segmented blobs
    * @param x: x coordinate of seed point
    * @param y: y coordinate of seed point

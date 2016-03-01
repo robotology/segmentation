@@ -45,9 +45,9 @@ bool SEGMENTModule::configure(yarp::os::ResourceFinder &rf){
     int neigh   = rf.check("neighbours",yarp::os::Value(8)).asInt();
     int topB    = rf.check("topBound",yarp::os::Value(40)).asInt();
     int minL    = rf.check("minArcLength",yarp::os::Value(75)).asInt();
-    int maxL    = rf.check("maxArcLength",yarp::os::Value(400)).asInt();
-    int minA    = rf.check("minArea",yarp::os::Value(1000)).asInt();
-    int maxA    = rf.check("maxArea",yarp::os::Value(3000)).asInt();
+    int maxL    = rf.check("maxArcLength",yarp::os::Value(1000)).asInt();
+    int minA    = rf.check("minArea",yarp::os::Value(300)).asInt();
+    int maxA    = rf.check("maxArea",yarp::os::Value(6000)).asInt();
     
     segmentManager->setDefaultValues(rad, neigh, topB, minL, maxL, iter, minA, maxA);
     
@@ -158,6 +158,19 @@ bool SEGMENTModule::resetAllValues(){
 }
 
 /**********************************************************/
+bool SEGMENTModule::verbosity(const int32_t verbose){
+    bool rep;
+    if (verbose <0 && verbose > 1)
+        rep = false;
+    else
+    {
+        segmentManager->verbosity(verbose);
+        rep = true;
+    }
+    return rep;
+}
+
+/**********************************************************/
 int SEGMENTModule::getRadius(){
     return segmentManager->getRadius();
 }
@@ -253,6 +266,8 @@ bool SEGMENTManager::open(){
     minArea = defaultMinArea;
     maxArea = defaultMaxArea;
     
+    verbose = false;
+    
     yInfo("Module started with the following default values:\nradius: %d, neighbours %d, minArcLength %d, maxArcLength, %d, minArea %d, maxArea, %d, topBound %d, numIteration %d", radius, neighbours, minArcLength, maxArcLength, minArea, maxArea, topBound, numIteration);
     
     return true;
@@ -341,6 +356,13 @@ bool SEGMENTManager::resetAllValues(){
     maxArcLength = defaultMaxArcLength;
     minArea = defaultMinArea;
     maxArea = defaultMaxArea;
+    return true;
+}
+
+/**********************************************************/
+bool SEGMENTManager::verbosity(const int32_t verbose)
+{
+    this->verbose = verbose;
     return true;
 }
 
@@ -473,24 +495,27 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     
     // now to show the patterns a normalization is necessary
     // a simple min-max norm will do the job...
-    normalize(lbp, lbp, 0, 255, cv::NORM_MINMAX, CV_8UC1);
-
-    uint8_t* pixelPtr = (uint8_t*)lbp.data;
-    int cn = lbp.channels();
-    for(int i = 0; i < lbp.rows; i++){
-        for(int j = 0; j < lbp.cols; j += cn){
+    
+    cv::Mat norm(lbp);
+    
+    normalize(lbp, norm, 0, 255, cv::NORM_MINMAX, CV_8UC1);
+    
+    uint8_t* pixelPtr = (uint8_t*)norm.data;
+    int cn = norm.channels();
+    for(int i = 0; i < norm.rows; i++){
+        for(int j = 0; j < norm.cols; j += cn){
             cv::Scalar_<uint8_t> bgrPixel;
-            bgrPixel.val[0] = pixelPtr[i*lbp.cols*cn + j*cn + 0];
+            bgrPixel.val[0] = pixelPtr[i*norm.cols*cn + j*cn + 0];
             
             if (bgrPixel.val[0] < 255 && bgrPixel.val[0] > 5)
-                pixelPtr[i*lbp.cols*cn + j*cn + 0] = 255;
+                pixelPtr[i*norm.cols*cn + j*cn + 0] = 255;
             else
-                pixelPtr[i*lbp.cols*cn + j*cn + 0] = 0;
+                pixelPtr[i*norm.cols*cn + j*cn + 0] = 0;
         }
     }
     
     cv::Mat cleanedImg;
-    cleanedImg = lbp.clone();
+    cleanedImg = norm.clone();
     
     std::vector<std::vector<cv::Point> > cnt;
     std::vector<cv::Vec4i> hrch;
@@ -500,12 +525,12 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     
     // Find contours
     findContours( cleanedImg, cnt, hrch, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1 );
-
+    
     // Get the moments
     std::vector<cv::Moments> mu(cnt.size() );
     for( size_t i = 0; i < cnt.size(); i++ )
         mu[i] = moments( cnt[i], false );
-    
+
     // Get the mass centers:
     std::vector<cv::Point2f> mc( cnt.size() );
     
@@ -520,12 +545,15 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
         double length = arcLength( cnt[i], true );
         double area   = contourArea(cnt[i]);
         
-        //yDebug("%d AREA IS %lf", i, area);
-        
         if ( (mc[i].y > topBound) && (length > minArcLength) && (length < maxArcLength) && (area > minArea) && (area < maxArea)){
             //yDebug(" Contour[%d] -X[%lf]  -Y[%lf] -Length: %.2f minArc %d maxArc %d topBound %d\n", i, mc[i].x, mc[i].y, length, minArcLength, maxArcLength, topBound );
-            //cv::drawContours( extracted, cnt, i, cvScalar(255,255,255), 2, 8, hrch, 0, cv::Point() );
-
+            
+            if (verbose)
+            {
+                yDebug(" Contour[%zu] -X[%lf] -Y[%lf] -Length: %.2f -Area %lf", i, mc[i].x, mc[i].y, length, area);
+                cv::drawContours( extracted, cnt, i, cvScalar(255,0,0), 2, 8, hrch, 0, cv::Point() );
+            }
+        
             approxPolyDP( cv::Mat(cnt[i]), contours_poly[i], 3, true );
             boundRect[i] = boundingRect( cv::Mat(contours_poly[i]) );
             
@@ -613,18 +641,25 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     
     for( size_t i = 0; i< objcnt.size(); i++ ){
         
-        cv::drawContours( extracted, objcnt, i, cvScalar(255,255,255), 2, 8, objhrch, 0, cv::Point() );
+        double area   = contourArea(objcnt[i]);
         
-        approxPolyDP( cv::Mat(objcnt[i]), contours_polySeg[i], 3, true );
-        boundRectSeg[i] = boundingRect( cv::Mat(contours_polySeg[i]) );
+        if (area > minArea)
+        {
+            cv::drawContours( extracted, objcnt, i, cvScalar(255,255,255), CV_FILLED, 8, objhrch, 0, cv::Point() );
         
-        yarp::os::Bottle &t=b.addList();
-        t.addDouble(boundRectSeg[i].tl().x);
-        t.addDouble(boundRectSeg[i].tl().y);
-        t.addDouble(boundRectSeg[i].br().x);
-        t.addDouble(boundRectSeg[i].br().y);
+            approxPolyDP( cv::Mat(objcnt[i]), contours_polySeg[i], 3, true );
+            boundRectSeg[i] = boundingRect( cv::Mat(contours_polySeg[i]) );
         
+            yarp::os::Bottle &t=b.addList();
+            t.addDouble(boundRectSeg[i].tl().x);
+            t.addDouble(boundRectSeg[i].tl().y);
+            t.addDouble(boundRectSeg[i].br().x);
+            t.addDouble(boundRectSeg[i].br().y);
+        }
     }
+    
+    if (verbose)
+        yDebug(" ");
     
     semComp.unlock();
     
@@ -654,7 +689,7 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     lbp::OLBP(tmp, olbp); // use the original operator
     normalize(olbp, olbp, 0, 255, cv::NORM_MINMAX, CV_8UC1);
 
-    IplImage orig = lbp;//cleaned local binary pattern
+    IplImage orig = norm;//cleaned local binary pattern
     outLbpContour.resize(orig.width, orig.height);
     cvCopy( &orig, (IplImage *) outLbpContour.getIplImage());
     outPortLbpContours.setEnvelope(ts);

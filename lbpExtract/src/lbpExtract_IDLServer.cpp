@@ -166,6 +166,15 @@ public:
   virtual bool read(yarp::os::ConnectionReader& connection);
 };
 
+class lbpExtract_IDLServer_verbosity : public yarp::os::Portable {
+public:
+  int32_t boolVerbosity;
+  bool _return;
+  void init(const int32_t boolVerbosity);
+  virtual bool write(yarp::os::ConnectionWriter& connection);
+  virtual bool read(yarp::os::ConnectionReader& connection);
+};
+
 class lbpExtract_IDLServer_get_component_around : public yarp::os::Portable {
 public:
   int32_t x;
@@ -591,6 +600,29 @@ void lbpExtract_IDLServer_resetAllValues::init() {
   _return = false;
 }
 
+bool lbpExtract_IDLServer_verbosity::write(yarp::os::ConnectionWriter& connection) {
+  yarp::os::idl::WireWriter writer(connection);
+  if (!writer.writeListHeader(2)) return false;
+  if (!writer.writeTag("verbosity",1,1)) return false;
+  if (!writer.writeI32(boolVerbosity)) return false;
+  return true;
+}
+
+bool lbpExtract_IDLServer_verbosity::read(yarp::os::ConnectionReader& connection) {
+  yarp::os::idl::WireReader reader(connection);
+  if (!reader.readListReturn()) return false;
+  if (!reader.readBool(_return)) {
+    reader.fail();
+    return false;
+  }
+  return true;
+}
+
+void lbpExtract_IDLServer_verbosity::init(const int32_t boolVerbosity) {
+  _return = false;
+  this->boolVerbosity = boolVerbosity;
+}
+
 bool lbpExtract_IDLServer_get_component_around::write(yarp::os::ConnectionWriter& connection) {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(5)) return false;
@@ -804,6 +836,16 @@ bool lbpExtract_IDLServer::resetAllValues() {
   helper.init();
   if (!yarp().canWrite()) {
     yError("Missing server method '%s'?","bool lbpExtract_IDLServer::resetAllValues()");
+  }
+  bool ok = yarp().write(helper,helper);
+  return ok?helper._return:_return;
+}
+bool lbpExtract_IDLServer::verbosity(const int32_t boolVerbosity) {
+  bool _return = false;
+  lbpExtract_IDLServer_verbosity helper;
+  helper.init(boolVerbosity);
+  if (!yarp().canWrite()) {
+    yError("Missing server method '%s'?","bool lbpExtract_IDLServer::verbosity(const int32_t boolVerbosity)");
   }
   bool ok = yarp().write(helper,helper);
   return ok?helper._return:_return;
@@ -1077,6 +1119,22 @@ bool lbpExtract_IDLServer::read(yarp::os::ConnectionReader& connection) {
       reader.accept();
       return true;
     }
+    if (tag == "verbosity") {
+      int32_t boolVerbosity;
+      if (!reader.readI32(boolVerbosity)) {
+        reader.fail();
+        return false;
+      }
+      bool _return;
+      _return = verbosity(boolVerbosity);
+      yarp::os::idl::WireWriter writer(reader);
+      if (!writer.isNull()) {
+        if (!writer.writeListHeader(1)) return false;
+        if (!writer.writeBool(_return)) return false;
+      }
+      reader.accept();
+      return true;
+    }
     if (tag == "get_component_around") {
       int32_t x;
       int32_t y;
@@ -1151,6 +1209,7 @@ std::vector<std::string> lbpExtract_IDLServer::help(const std::string& functionN
     helpString.push_back("getNumIteration");
     helpString.push_back("setNumIteration");
     helpString.push_back("resetAllValues");
+    helpString.push_back("verbosity");
     helpString.push_back("get_component_around");
     helpString.push_back("help");
   }
@@ -1256,6 +1315,12 @@ std::vector<std::string> lbpExtract_IDLServer::help(const std::string& functionN
     if (functionName=="resetAllValues") {
       helpString.push_back("bool resetAllValues() ");
       helpString.push_back("resets all values to the default ones. (acts as a backup) ");
+      helpString.push_back("@return true/false on success/failure ");
+    }
+    if (functionName=="verbosity") {
+      helpString.push_back("bool verbosity(const int32_t boolVerbosity) ");
+      helpString.push_back("Sets the verbosity of the algorithm ");
+      helpString.push_back("@param boolVerbosity ");
       helpString.push_back("@return true/false on success/failure ");
     }
     if (functionName=="get_component_around") {

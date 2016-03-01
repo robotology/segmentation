@@ -72,6 +72,7 @@ private:
     int     numIteration, defaultNumIteration;
     int     minArea, defaultMinArea;
     int     maxArea, defaultMaxArea;
+    bool    verbose;
     
     cv::Mat segmented;
     yarp::os::Bottle allPoints;
@@ -106,6 +107,8 @@ public:
     bool setMinArea(const int32_t minArea);
     bool setMaxArea(const int32_t maxArea);
     bool resetAllValues();
+    bool verbosity(const int32_t boolVerbosity);
+    
     int32_t getRadius();
     int32_t getNeighbours();
     int32_t getTopBound();
@@ -149,6 +152,8 @@ public:
     bool setMinArea(const int32_t minArea);
     bool setMaxArea(const int32_t maxArea);
     bool resetAllValues();
+    bool verbosity(const int32_t boolVerbosity);
+    
     int32_t getRadius();
     int32_t getNeighbours();
     int32_t getTopBound();

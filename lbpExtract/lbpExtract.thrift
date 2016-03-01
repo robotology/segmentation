@@ -138,6 +138,13 @@ service lbpExtract_IDLServer
     bool resetAllValues();
     
     /**
+     * Sets the verbosity of the algorithm
+     * @param boolVerbosity
+     * @return true/false on success/failure
+     **/
+    bool verbosity(1:i32 boolVerbosity);
+    
+    /**
      * Gets all the components (points) that belong to any of the segmented blobs
      * @param x: x coordinate of seed point
      * @param y: y coordinate of seed point
