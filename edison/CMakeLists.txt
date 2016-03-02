@@ -16,6 +16,7 @@ include(YarpIDL)
 set(generated_libs_dir "${CMAKE_CURRENT_SOURCE_DIR}")
 yarp_idl_to_dir(EDISONsegmentation.thrift ${generated_libs_dir})
 
+include(ICUBcontribOptions)
 include(ICUBcontribHelpers)
 icubcontrib_set_default_prefix()
 
