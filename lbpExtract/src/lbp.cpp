@@ -25,7 +25,7 @@
 /************************************************************************/
 template <typename _Tp>
 void lbp::OLBP_(const cv::Mat& src, cv::Mat& dst) {
-	
+    
     dst = cv::Mat::zeros(src.rows-2, src.cols-2, CV_8UC1);
     for(int i=1;i<src.rows-1;i++) {
         for(int j=1;j<src.cols-1;j++) {
@@ -49,7 +49,7 @@ template <typename _Tp>
 void lbp::ELBP_(const cv::Mat& src, cv::Mat& dst, int radius, int neighbors) {
     neighbors = std::max(std::min(neighbors,31),1); // set bounds...
     dst = cv::Mat::zeros(src.rows-2*radius, src.cols-2*radius, CV_32SC1);
-	
+    
     for(int n=0; n<neighbors; n++) {
         // sample points
         float x = static_cast<float>(radius) * cos(2.0*M_PI*n/static_cast<float>(neighbors));

@@ -3,9 +3,8 @@
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 # 
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-SET(PROJECTNAME lbpExtract)
-PROJECT(${PROJECTNAME})
+cmake_minimum_required(VERSION 2.8.9)
+project(lbpExtract)
 
 find_package(YARP)
 find_package(ICUB)
@@ -23,11 +22,11 @@ include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()
 
 include(YarpIDL)
-yarp_idl_to_dir(${PROJECTNAME}.thrift ${CMAKE_CURRENT_SOURCE_DIR})
+yarp_add_idl(IDL_GEN_FILES ${PROJECT_NAME}.thrift)
 
 file(GLOB source src/*.cpp)
 file(GLOB header include/*.h)
-set(idl ${PROJECTNAME}.thrift)
+set(idl ${PROJECT_NAME}.thrift)
 
 source_group("Source Files" FILES ${source})
 source_group("Header Files" FILES ${header})
@@ -39,8 +38,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include
                     ${ICUB_INCLUDE_DIRS})
 
 add_definitions(-D_USE_MATH_DEFINES)
-add_executable(${PROJECTNAME} ${source} ${header} ${idl})
-target_link_libraries(${PROJECTNAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
-install(TARGETS ${PROJECTNAME} DESTINATION bin)
+add_executable(${PROJECT_NAME} ${source} ${header} ${idl} ${IDL_GEN_FILES})
+target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 add_subdirectory(app)
