@@ -10,7 +10,7 @@ struct Bottle{}
 /**
 * lbpExtract_IDLServer
 *
-* Interface. 
+* Interface.
 */
 
 service lbpExtract_IDLServer
@@ -33,20 +33,20 @@ service lbpExtract_IDLServer
      * @return true/false on success/failure
      **/
     bool setRadius(1:i32 radius);
-    
+
     /**
      * Gets the radius of the lbp operators
      * @return the current radius of the lpb operator
      **/
     i32 getRadius();
-    
+
     /**
      * Sets the neighbours value of the lbp operators
      * @param neighbours integer containing the number of neighbours
      * @return true/false on success/failure
      **/
     bool setNeighbours(1:i32 neighbours);
-    
+
     /**
      * Gets the neighbours of the lbp operators
      * @return the current radius of the lpb operator
@@ -91,65 +91,64 @@ service lbpExtract_IDLServer
     * @return true/false on success/failure
     **/
     bool setMaxArcLength(1:i32 maxArcLength);
-    
+
     /**
      * Gets the maximum area of the allowed blobs
      * @return the current maximum area
      **/
     i32 getMaxArea();
-    
+
     /**
      * Sets the maximum area of the allowed blobs
      * @param maxArea, integer containing the maxArea
      * @return true/false on success/failure
      **/
     bool setMaxArea(1:i32 maxArea);
-    
+
     /**
      * Gets the minimum area of the allowed blobs
      * @return the current minimum area
      **/
     i32 getMinArea();
-    
+
     /**
      * Sets the minimum area of the allowed blobs
      * @param minArea, integer containing the minArea
      * @return true/false on success/failure
      **/
     bool setMinArea(1:i32 minArea);
-    
+
     /**
      * Gets the number of iteration for the grabCut segmentation algorithm
      * @return the current maximum arc length
      **/
     i32 getNumIteration();
-    
+
     /**
      * Sets the number of iteration for the grabCut segmentation algorithm
      * @param numIteration
      * @return true/false on success/failure
      **/
     bool setNumIteration(1:i32 numIteration);
-    
+
     /**
     * resets all values to the default ones. (acts as a backup)
     * @return true/false on success/failure
     **/
     bool resetAllValues();
-    
+
     /**
      * Sets the verbosity of the algorithm
      * @param boolVerbosity
      * @return true/false on success/failure
      **/
     bool verbosity(1:i32 boolVerbosity);
-    
+
     /**
      * Gets all the components (points) that belong to any of the segmented blobs
      * @param x: x coordinate of seed point
      * @param y: y coordinate of seed point
-     * @return Bottle containing a list of points bellonging to the segmented blob
+     * @return Bottle containing a list of points belonging to the segmented blob
      **/
     Bottle get_component_around(1:i32 x, 2:i32 y);
-
 }

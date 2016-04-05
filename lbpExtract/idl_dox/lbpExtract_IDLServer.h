@@ -131,7 +131,7 @@ public:
    * Gets all the components (points) that belong to any of the segmented blobs
    * @param x: x coordinate of seed point
    * @param y: y coordinate of seed point
-   * @return Bottle containing a list of points bellonging to the segmented blob
+   * @return Bottle containing a list of points belonging to the segmented blob
    */
   virtual yarp::os::Bottle get_component_around(const int32_t x, const int32_t y);
   virtual bool read(yarp::os::ConnectionReader& connection);
