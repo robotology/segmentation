@@ -3,7 +3,6 @@
 #include <string>
 #include <iostream>
 #include <yarp/os/Network.h>
-#include <yarp/os/Module.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Port.h>
 
@@ -26,7 +25,7 @@ int main(int argc, char *argv[]) {
 
 
     ResourceFinder rf;
-    rf.configure("ICUB_ROOT.ini", argc, argv);
+    rf.configure(argc, argv);
     std::string name="testGbsClient";
     if (rf.check("name"))
     {

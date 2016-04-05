@@ -60,7 +60,6 @@ This file can be edited at src/segmentation/graphBased/main.cpp.
 
 // yarp
 #include <yarp/os/Network.h>
-#include <yarp/os/Module.h>
 using namespace yarp::os;
 
 #include "SegmModule.h"

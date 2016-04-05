@@ -17,7 +17,6 @@ using namespace std;
 
 // yarp
 #include <yarp/os/Network.h>
-#include <yarp/os/Module.h>
 using namespace yarp::os;
 using namespace yarp::sig;
 

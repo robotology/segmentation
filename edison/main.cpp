@@ -143,7 +143,6 @@ This file can be edited at src/edisonSegmentation/main.cpp.
 
 // yarp
 #include <yarp/os/Network.h>
-#include <yarp/os/Module.h>
 using namespace yarp::os;
 
 #include "EdisonSegmModule.h"
