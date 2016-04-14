@@ -51,7 +51,7 @@ Implemented by Chris M. Christoudias, Bogdan Georgescu
 #include	<stdlib.h>
 
 //define bgLog
-extern bool CmCDisplayProgress;
+bool CmCDisplayProgress;
 void bgLog(const char *PromptStr, ...)
 {
 	//obtain argument list using ANSI standard...
