@@ -5,7 +5,7 @@
  * CopyPolicy: Released under the terms of the GNU GPL v2.0.
  *
  */
-bool CmCDisplayProgress;
+extern bool CmCDisplayProgress;
 #include <string>
 #include <iostream>
 using namespace std;
