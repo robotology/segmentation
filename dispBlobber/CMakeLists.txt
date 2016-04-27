@@ -26,14 +26,16 @@ file(GLOB header inc/*.h)
 
 source_group("Source Files" FILES ${source})
 source_group("Header Files" FILES ${header})
+source_group("DOC Files"    FILES ${PROJECT_NAME}.xml)
 
 include_directories(${PROJECT_SOURCE_DIR}/inc
                     ${YARP_INCLUDE_DIRS}
                     ${OpenCV_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} ${source} ${header})
+add_executable(${PROJECT_NAME} ${source} ${header} ${PROJECT_NAME}.xml)
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+yarp_install(FILES ${PROJECT_NAME}.xml DESTINATION ${ICUBCONTRIB_MODULES_INSTALL_DIR})
 
 file(GLOB conf      ${CMAKE_CURRENT_SOURCE_DIR}/app/conf/*.ini)
 file(GLOB templates ${CMAKE_CURRENT_SOURCE_DIR}/app/scripts/*.xml.template)
