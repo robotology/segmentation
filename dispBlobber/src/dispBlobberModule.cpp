@@ -500,4 +500,4 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
     mutex.post();
 
 }
-//empty line to make gcc happy
+

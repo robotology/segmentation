@@ -210,3 +210,4 @@ double dispBlobber::extractBlob(std::vector<cv::Mat> &images, std::vector<int> &
     
     return blobSize;
 }
+
