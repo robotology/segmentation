@@ -112,13 +112,12 @@
 #include <yarp/sig/Image.h>
 #include <yarp/sig/Vector.h>
 
-#include <gsl/gsl_math.h>
-
 #include <opencv2/opencv.hpp>
 
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 using namespace yarp::os;
@@ -131,12 +130,12 @@ private:
     ResourceFinder              &rf;
 
     BufferedPort<Image>         port_i_img;
-	BufferedPort<Image>         port_i_propImg; // extra port just to propagate image
+    BufferedPort<Image>         port_i_propImg; // extra port just to propagate image
     Port                        port_o_img;
-	Port                        port_o_propImg;
+    Port                        port_o_propImg;
     Port                        port_o_blobs;
-	Port                        port_o_clean;
-	IplImage 					*imgProp;
+    Port                        port_o_clean;
+    IplImage                    *imgProp;
 
     int                         gaussian_winsize;
 
@@ -174,12 +173,12 @@ public:
         string name=rf.find("name").asString().c_str();
 
         port_i_img.open(("/"+name+"/img:i").c_str());
-		port_i_propImg.open(("/"+name+"/propImg:i").c_str());
+        port_i_propImg.open(("/"+name+"/propImg:i").c_str());
         port_o_img.open(("/"+name+"/img:o").c_str());
-		port_o_propImg.open(("/"+name+"/propImg:o").c_str());
+        port_o_propImg.open(("/"+name+"/propImg:o").c_str());
 
         port_o_blobs.open(("/"+name+"/blobs:o").c_str());
-		port_o_clean.open(("/"+name+"/binary:o").c_str());
+        port_o_clean.open(("/"+name+"/binary:o").c_str());
 
         gaussian_winsize=rf.check("gaussian_winsize",Value(9)).asInt();
 
@@ -224,8 +223,8 @@ public:
             port_i_img.getEnvelope(ts);
 
             IplImage *gray=(IplImage*) img->getIplImage();
-			imgProp = cvCloneImage( gray );
-			cvZero(imgProp);
+            imgProp = cvCloneImage( gray );
+            cvZero(imgProp);
 
             cvSmooth(gray,gray,CV_GAUSSIAN,gaussian_winsize);
             cvThreshold(gray,gray,thresh,255.0,CV_THRESH_BINARY);
@@ -285,13 +284,13 @@ public:
                                 }                         
                             }
                             itr++;
-							
+                            
                         }
                     }
                 }
             }
 
-			cleanBlobs(gray);
+            cleanBlobs(gray);
 
             if (details=="on")
             {
@@ -305,23 +304,23 @@ public:
 
             port_o_blobs.setEnvelope(ts);
             port_o_blobs.write(blobs);
-			Image *prop= port_i_propImg.read(false);  
-			
-			if(prop!=NULL)
-			{
-				port_o_propImg.setEnvelope(ts);
-				port_o_propImg.write(*prop);
-			}
-			if(imgProp!=NULL)
-			{
-				ImageOf<PixelMono> *sendImg = new ImageOf<PixelMono>;
-				sendImg->resize(imgProp->width, imgProp->height);
-				cvCopy(imgProp, (IplImage*)sendImg->getIplImage());
-				port_o_clean.setEnvelope(ts);
-				port_o_clean.write(*sendImg);
-				delete sendImg;
-				cvReleaseImage(&imgProp);
-			}
+            Image *prop= port_i_propImg.read(false);  
+            
+            if(prop!=NULL)
+            {
+                port_o_propImg.setEnvelope(ts);
+                port_o_propImg.write(*prop);
+            }
+            if(imgProp!=NULL)
+            {
+                ImageOf<PixelMono> *sendImg = new ImageOf<PixelMono>;
+                sendImg->resize(imgProp->width, imgProp->height);
+                cvCopy(imgProp, (IplImage*)sendImg->getIplImage());
+                port_o_clean.setEnvelope(ts);
+                port_o_clean.write(*sendImg);
+                delete sendImg;
+                cvReleaseImage(&imgProp);
+            }
 
             mutex.post();
         }
@@ -329,15 +328,15 @@ public:
 
     virtual void threadRelease()
     {
-		if(imgProp!=NULL)
-			cvReleaseImage(&imgProp);
+        if(imgProp!=NULL)
+            cvReleaseImage(&imgProp);
         
-		port_i_img.close();
+        port_i_img.close();
         port_o_img.close();
         port_o_blobs.close();
-		port_i_propImg.close();   
-		port_o_clean.close();
-		port_o_propImg.close();
+        port_i_propImg.close();   
+        port_o_clean.close();
+        port_o_propImg.close();
     }
 
 
@@ -384,9 +383,9 @@ public:
         return false;
     }
 
-	void cleanBlobs(IplImage* image)
-	{
-		for (int i=0; i<blobs.size(); i++)
+    void cleanBlobs(IplImage* image)
+    {
+        for (int i=0; i<blobs.size(); i++)
         {
             CvPoint cog=cvPoint(-1,-1);
             if ((i>=0) && (i<blobs.size()))
@@ -400,16 +399,16 @@ public:
                 tl.y=(int)item->get(1).asDouble() - 2;
                 br.x=(int)item->get(2).asDouble() + 2;
                 br.y=(int)item->get(3).asDouble() + 2;
-			
-				cvSetImageROI(image, cvRect(tl.x, tl.y, br.x - tl.x, br.y- tl.y));   
-				cvSetImageROI(imgProp, cvRect(tl.x, tl.y, br.x - tl.x, br.y- tl.y)); 
-				cvCopy(image, imgProp );
-				cvResetImageROI(image);
-				cvResetImageROI(imgProp);
+            
+                cvSetImageROI(image, cvRect(tl.x, tl.y, br.x - tl.x, br.y- tl.y));   
+                cvSetImageROI(imgProp, cvRect(tl.x, tl.y, br.x - tl.x, br.y- tl.y)); 
+                cvCopy(image, imgProp );
+                cvResetImageROI(image);
+                cvResetImageROI(imgProp);
 
-			}
+            }
         }
-	}
+    }
 
     void processImg(IplImage* image)
     {
@@ -429,10 +428,10 @@ public:
                 br.y=(int)item->get(3).asDouble() + 10;
 
                 cog.x=(tl.x + br.x)>>1;
-                cog.y=(tl.y + br.y)>>1;		
-		
-                cvSetImageROI(image, cvRect(tl.x, tl.y, br.x - tl.x, br.y- tl.y));        									
-				getOrientations(image);
+                cog.y=(tl.y + br.y)>>1;     
+        
+                cvSetImageROI(image, cvRect(tl.x, tl.y, br.x - tl.x, br.y- tl.y));                                          
+                getOrientations(image);
                 cvResetImageROI(image);
             }
         }
@@ -456,7 +455,7 @@ public:
         CvSeq *cont = cvCreateSeq(CV_SEQ_ELTYPE_POINT, sizeof(CvSeq), sizeof(CvPoint) , stor);
         cvFindContours( clone, tmpStor, &tmpCont, sizeof(CvContour), 
                     CV_RETR_LIST, CV_CHAIN_APPROX_NONE, cvPoint(0,0));
-	    cvFindContours( clone, stor, &cont, sizeof(CvContour), 
+        cvFindContours( clone, stor, &cont, sizeof(CvContour), 
                     CV_RETR_LIST, CV_CHAIN_APPROX_NONE, cvPoint(0,0));
         cvZero(clone);
         //go first through all contours in order to find if there are some duplications
@@ -465,8 +464,8 @@ public:
             CvBox2D boxtmp = cvMinAreaRect2(tmpCont, tmpStor); 
             //fprintf(stdout,"dgb0.25  %lf  %lf\n", cvRound(boxtmp.center.x), cvRound(boxtmp.center.y));
             tmpCenter[numObj].x = cvRound(boxtmp.center.x);
-	        tmpCenter[numObj].y = cvRound(boxtmp.center.y);
-	       	area[numObj] = fabs(cvContourArea( tmpCont, CV_WHOLE_SEQ ));
+            tmpCenter[numObj].y = cvRound(boxtmp.center.y);
+            area[numObj] = fabs(cvContourArea( tmpCont, CV_WHOLE_SEQ ));
             //fprintf(stdout,"%d X= %d Y= %d\n",numObj, tmpCenter[numObj].x, tmpCenter[numObj].y);
         }
         int inc = 0;
@@ -475,29 +474,29 @@ public:
         index.resize(numObj);
         for (int x=1; x<numObj; x++)
         {
-        	if (abs( tmpCenter[x].x -tmpCenter[x+1].x ) < 10 )
-        		if (abs( tmpCenter[x].y -tmpCenter[x+1].y) < 10)
-        		{
-        			if ( area[x] < area[x+1] )
-        			{
-        				index[inc] = x;
-        				inc++;
-        			}
-        			else
-        			{
-        				index[inc] = x+1;
-        				inc++;
-        			}
-        		} 
-        			
+            if (abs( tmpCenter[x].x -tmpCenter[x+1].x ) < 10 )
+                if (abs( tmpCenter[x].y -tmpCenter[x+1].y) < 10)
+                {
+                    if ( area[x] < area[x+1] )
+                    {
+                        index[inc] = x;
+                        inc++;
+                    }
+                    else
+                    {
+                        index[inc] = x+1;
+                        inc++;
+                    }
+                } 
+                    
         }
         for(;cont;cont = cont->h_next)
         {
             numBlobs++;
             bool draw = true;
             for (int i= 0; i<inc; i++)
-                if (numBlobs == index[i])	
-                	draw = false;
+                if (numBlobs == index[i])   
+                    draw = false;
                     
             int count = cont->total;
             
@@ -574,7 +573,7 @@ public:
         }
         // Free memory.
         cvRelease((void **)&cont); cvRelease((void **)&tmpCont);
-		cvClearMemStorage( stor ); cvClearMemStorage( tmpStor );
+        cvClearMemStorage( stor ); cvClearMemStorage( tmpStor );
         cvReleaseMemStorage(&stor);cvReleaseMemStorage(&tmpStor);
         cvReleaseImage(&clone);
        // fprintf(stdout,"dgb0.9\n");
@@ -662,11 +661,11 @@ public:
             if (newThresh<0 || newThresh>255.0)
             {
                 reply.addString("Invalid threshold (expecting a value between 0 and 255)");
-            	return false;
-			}
+                return false;
+            }
             reply.addString("Setting threshold");
             bdThr->setThreshold(newThresh);
-			return true;
+            return true;
         }
         if(bdThr->execReq(command,reply))
             return true;
