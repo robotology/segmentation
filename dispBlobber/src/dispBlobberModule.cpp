@@ -14,7 +14,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details
  */
+
 #include "dispBlobberModule.hpp"
+#include <yarp/os/LogStream.h>
 
 using namespace cv;
 using namespace std;
@@ -38,9 +40,9 @@ bool DispBlobberModule::configure(yarp::os::ResourceFinder &rf)
     }
     attach(handlerPort);
 
-    blobPort = new DispBlobberPort( moduleName, rf );
+    blobPort = new DispBlobberPort( moduleName);
 
-    blobPort->open();
+    blobPort->open(rf);
 
     closing = false;
 
@@ -148,11 +150,15 @@ double DispBlobberModule::getPeriod()
     return 0.1;
 }
 
-DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
+DispBlobberPort::DispBlobberPort( const string &_moduleName) : RateThread(DEFAULT_THREAD_RATE)
 {
-
+    blobExtractor = NULL;
     this->moduleName = _moduleName;
+}
 
+bool DispBlobberPort::open(yarp::os::ResourceFinder &rf)
+{
+    bool ret = true;
     moduleRF = &rf;
 
     fprintf(stdout,"Parsing parameters...\n");
@@ -178,80 +184,122 @@ DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
 
     // threshold of intensity of the image under which info is ignored
     int backgroundThresh = moduleRF->check("backgroundThresh", Value(30)).asInt();
-   
+
     int minBlobSize = moduleRF->check("minBlobSize", Value(300)).asInt();
 
     int gaussSize = moduleRF->check("gaussSize", Value(5)).asInt();
 
-    int imageThreshRatioLow = moduleRF->check("imageThreshRatioLow", Value(10)).asInt();
+    int imageThreshRatioLow  = moduleRF->check("imageThreshRatioLow", Value(10)).asInt();
     int imageThreshRatioHigh = moduleRF->check("imageThreshRatioHigh", Value(20)).asInt();
 
-    blobExtractor = NULL;
+    useRGBDClient = moduleRF->check("useRGBDClient", Value(false)).asBool();
+
+
+    /* Inputs */
+
+    // if use RGBDclient in param, start the client
+    if(useRGBDClient)
+    {
+        yInfo() << "Using RGBD sensor Client";
+        yarp::os::Property client;
+        client.fromString(rf.toString());
+        client.put("device", "RGBDSensorClient");
+        if(!rgbdClient.open(client) )
+        {
+            yError() << "Error opening RGBD sensor client";
+            return false;
+        }
+        rgbdClient.view(iRGBD);
+        if(!iRGBD)
+        {
+            yError() << "Cannot get RGBD interface from device.";
+            return false;
+        }
+
+        inputImage = new yarp::sig::ImageOf<yarp::sig::PixelFloat>;
+        inputImage->resize(imW, imH);
+    }
+    else // use plain port as fallback to old behaviour
+    {
+        imgInPortName = "/" + moduleName + "/img:i";
+        yInfo() << "Reading depth data from" << imgInPortName << " port";
+        imageInputPort = new yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelBgr> >;
+        if(!imageInputPort)
+        {
+            yError() << "Cannot create BufferedPort " << imgInPortName << " for input streaming.";
+            return false;
+        }
+
+        if(!imageInputPort->open( imgInPortName.c_str() ))
+        {
+            yError() << "Cannot open BufferedPort " << imgInPortName << " for input streaming.";
+            return false;
+        }
+        imageInputPort->useCallback(*this);
+    }
+
+
+    /* Outputs */
+    fprintf(stdout,"Opening ports...\n");
+
+    blobsOutPortName = "/" + moduleName + "/blobs/left:o";
+    ret = blobsOutPort.open(blobsOutPortName) & ret;
+
+    blobsOutPortRightName = "/" + moduleName + "/blobs/right:o";
+    ret= blobsOutPortRight.open(blobsOutPortRightName) & ret;
+
+    points3dOutPortName = "/" + moduleName + "/points3d:o";
+    ret = points3dOutPort.open(points3dOutPortName) & ret;
+
+    roiOutPortName = "/" + moduleName + "/roi/left:o";
+    ret = roiOutPort.open(roiOutPortName) & ret;
+
+    roiOutPortRightName = "/" + moduleName + "/roi/right:o";
+    ret = roiOutPortRight.open(roiOutPortRightName) & ret;
+
+    optOutPortName = "/" + moduleName + "/opt:o";
+    ret = optOutPort.open(optOutPortName) & ret;
+    
+    cropOutPortName = "/" + moduleName + "/crop:o";
+    ret = cropOutPort.open(cropOutPortName) & ret;
+
+    ret = sfmRpcPort.open(("/" + moduleName + "/sfm/rpc").c_str()) & ret;
+
+    if(!ret)
+        yError() << "Failed opening some of the required ports";
 
     blobExtractor = new dispBlobber(imH, imW, bufferSize,
             margin,
             backgroundThresh,
             minBlobSize, gaussSize,
             imageThreshRatioLow, imageThreshRatioHigh);
-}
-
-bool DispBlobberPort::open()
-{
-
-    this->useCallback();
-
-    fprintf(stdout,"Opening ports...\n");
-
-    /* Inputs */
-
-    imgInPortName = "/" + moduleName + "/img:i";
-    BufferedPort<ImageOf<PixelBgr>  >::open( imgInPortName.c_str() );
-
-    /* Outputs */
-
-    blobsOutPortName = "/" + moduleName + "/blobs/left:o";
-    blobsOutPort.open(blobsOutPortName);
-
-    blobsOutPortRightName = "/" + moduleName + "/blobs/right:o";
-    blobsOutPortRight.open(blobsOutPortRightName);
-
-    points3dOutPortName = "/" + moduleName + "/points3d:o";;
-    points3dOutPort.open(points3dOutPortName);
-
-    roiOutPortName = "/" + moduleName + "/roi/left:o";
-    roiOutPort.open(roiOutPortName);
-
-    roiOutPortRightName = "/" + moduleName + "/roi/right:o";
-    roiOutPortRight.open(roiOutPortRightName);
-
-    optOutPortName = "/" + moduleName + "/opt:o";
-    optOutPort.open(optOutPortName);
-    
-    cropOutPortName = "/" + moduleName + "/crop:o";
-    cropOutPort.open(cropOutPortName);
-
-    sfmRpcPort.open(("/" + moduleName + "/sfm/rpc").c_str());
-
-    return true;
+    return ret;
 }
 
 void DispBlobberPort::close()
 {
     fprintf(stdout,"Closing ports...\n");
 
+    if(useRGBDClient)
+    {
+        rgbdClient.close();
+    }
+    else
+    {
+        imageInputPort->close();
+    }
     blobsOutPort.close();
     blobsOutPortRight.close();
     points3dOutPort.close();
 
     roiOutPort.close();
     roiOutPortRight.close();
-    
+
     optOutPort.close();
     cropOutPort.close();
 
     sfmRpcPort.close();
 
-    BufferedPort<ImageOf<PixelBgr>  >::close();
             
     fprintf(stdout,"Finished closing ports...\n");
 }
@@ -260,6 +308,10 @@ void DispBlobberPort::interrupt()
 {   
    
     fprintf(stdout,"Attempting to interrupt ports...\n");
+    if(!useRGBDClient)
+    {
+        imageInputPort->interrupt();
+    }
 
     blobsOutPort.interrupt();
     blobsOutPortRight.interrupt();
@@ -272,8 +324,6 @@ void DispBlobberPort::interrupt()
     cropOutPort.interrupt();
 
     sfmRpcPort.interrupt();
-
-    BufferedPort<ImageOf<PixelBgr>  >::interrupt();
     
     fprintf(stdout,"Finished interrupting ports...\n");
 }
@@ -289,24 +339,40 @@ bool DispBlobberPort::setMargin(int mrg)
     return blobExtractor->setMargin(mrg);
 }
 
+bool DispBlobberPort::threadInit()
+{
+    return true;
+}
+
+void DispBlobberPort::run()
+{
+    iRGBD->getDepthImage(*inputImage, &stamp);
+    cv::Mat input_mat=cv::cvarrToMat((IplImage*)inputImage->getIplImage());
+    compute(input_mat, stamp);
+}
+
+void DispBlobberPort::threadRelease()
+{
+    return;
+}
+
 void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
 {
-    mutex.wait();
-
     /* Get the envelope from the input image */
+    imageInputPort->getEnvelope(stamp);
+    cv::Mat input_mat=cv::cvarrToMat((IplImage*)input.getIplImage());
 
-    Stamp stamp;
-    BufferedPort<ImageOf<PixelBgr>  >::getEnvelope(stamp);
+    compute(input_mat, stamp);
+}
 
+void DispBlobberPort::compute(cv::Mat &inputMat, yarp::os::Stamp stamp)
+{
     /* Prepare output data structures */
-
     std::vector<int> centroid;
     std::vector<int> roi;
     cv::Mat blobMat;
 
     /* Prepare the buffer, call the extractor, clear the buffer */
-
-    cv::Mat inputMat=cv::cvarrToMat((IplImage*)input.getIplImage());
     imagesMatBuffer.push_back(inputMat);
 
     double blobSize = blobExtractor->extractBlob(imagesMatBuffer, roi, centroid, blobMat);

@@ -25,9 +25,12 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/Stamp.h>
 #include <yarp/os/Semaphore.h>
+#include <yarp/os/RateThread.h>
+#include <yarp/dev/IRGBDSensor.h>
 
 #include <yarp/sig/Vector.h>
 #include <yarp/sig/Image.h>
+#include <yarp/dev/PolyDriver.h>
 
 #include <time.h>
 #include <string>
@@ -35,10 +38,13 @@
 
 #include "dispBlobber.hpp"
 
-class DispBlobberPort : public yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelBgr> >
+
+const int DEFAULT_THREAD_RATE = 30;
+
+class DispBlobberPort : public yarp::os::TypedReaderCallback< yarp::sig::ImageOf<yarp::sig::PixelBgr> >,
+                        public yarp::os::RateThread
 {
 private:
-
     std::string moduleName;
 
     yarp::os::ResourceFinder *moduleRF;
@@ -55,6 +61,13 @@ private:
     std::string cropOutPortName;
     std::string optOutPortName;
 
+    bool useRGBDClient;
+    yarp::dev::PolyDriver   rgbdClient;
+    yarp::dev::IRGBDSensor  *iRGBD;
+    yarp::sig::ImageOf<yarp::sig::PixelFloat>                          *inputImage;
+    yarp::os::Stamp                                                     stamp;                  // image timestamp
+
+    yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelBgr> >   *imageInputPort;
     yarp::os::BufferedPort<yarp::os::Bottle>							blobsOutPort;
     yarp::os::BufferedPort<yarp::os::Bottle>							blobsOutPortRight;
     yarp::os::BufferedPort<yarp::os::Bottle>							points3dOutPort;
@@ -72,12 +85,17 @@ private:
     dispBlobber *blobExtractor;
 
     int cropSize;
+    void compute(cv::Mat &inputMat, yarp::os::Stamp stamp);
+
+    bool threadInit();
+    void run();
+    void threadRelease();
 
 public:
 
-    DispBlobberPort( const std::string &moduleName, yarp::os::ResourceFinder &module );
+    DispBlobberPort( const std::string &moduleName);
 
-    bool        open();
+    bool        open(yarp::os::ResourceFinder &rf);
     void        close();
     void        onRead( yarp::sig::ImageOf<yarp::sig::PixelBgr> &img );
     void        interrupt();
