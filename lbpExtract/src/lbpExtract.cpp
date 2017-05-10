@@ -151,6 +151,12 @@ bool SEGMENTModule::setNumIteration(const int32_t numIteration){
 }
 
 /**********************************************************/
+bool SEGMENTModule::setbbOffset(const int32_t offset){
+    segmentManager->setbbOffset(offset);
+    return true;
+}
+
+/**********************************************************/
 bool SEGMENTModule::resetAllValues(){
 
     segmentManager->resetAllValues();
@@ -211,6 +217,11 @@ int SEGMENTModule::getNumIteration(){
 }
 
 /**********************************************************/
+int SEGMENTModule::getbbOffset(){
+    return segmentManager->getbbOffset();
+}
+
+/**********************************************************/
 yarp::os::Bottle SEGMENTModule::get_component_around(const int32_t x, const int32_t y){
     return segmentManager->get_component_around(x, y);
 }
@@ -265,6 +276,8 @@ bool SEGMENTManager::open(){
 
     minArea = defaultMinArea;
     maxArea = defaultMaxArea;
+    
+    bbOffset = 0;
 
     verbose = false;
 
@@ -348,6 +361,12 @@ bool SEGMENTManager::setNumIteration(const int32_t numIteration){
 }
 
 /**********************************************************/
+bool SEGMENTManager::setbbOffset(const int32_t offset){
+    this->bbOffset = offset;
+    return true;
+}
+
+/**********************************************************/
 bool SEGMENTManager::resetAllValues(){
     radius = defaultRadius;
     neighbours = defaultNeighbours;
@@ -356,6 +375,7 @@ bool SEGMENTManager::resetAllValues(){
     maxArcLength = defaultMaxArcLength;
     minArea = defaultMinArea;
     maxArea = defaultMaxArea;
+    bbOffset = 0;
     return true;
 }
 
@@ -405,6 +425,12 @@ int SEGMENTManager::getMaxArea(){
 int SEGMENTManager::getNumIteration(){
     return this->numIteration;
 }
+
+/**********************************************************/
+int SEGMENTManager::getbbOffset(){
+    return this->bbOffset;
+}
+
 
 /**********************************************************/
 yarp::os::Bottle SEGMENTManager::get_component_around(const int32_t x, const int32_t y){
@@ -589,7 +615,7 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
 
             //yDebug("ROI: %d %d %d %d arcLength %.2f \n", boundRect[i].tl().x, boundRect[i].tl().y, blobWidth, blobHeight, length);
 
-            cv::Rect roi(boundRect[i].tl().x, boundRect[i].tl().y, blobWidth, blobHeight);
+            cv::Rect roi(topLeftX, topLeftY, blobWidth, blobHeight);
 
             if (blobWidth > 20 && blobHeight > 20){     //keep it safe for the grabCut algorithm
 
@@ -614,7 +640,7 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
                 image_roi.copyTo(foreground,result); // bg pixels not copied
 
                 ////combine it all for the streaming image
-                foreground.copyTo(segmented(cv::Rect(boundRect[i].tl().x, boundRect[i].tl().y, foreground.cols, foreground.rows)));
+                foreground.copyTo(segmented(cv::Rect(topLeftX, topLeftY, foreground.cols, foreground.rows)));
             }
         }
     }
@@ -651,10 +677,44 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
             boundRectSeg[i] = boundingRect( cv::Mat(contours_polySeg[i]) );
 
             yarp::os::Bottle &t=b.addList();
-            t.addDouble(boundRectSeg[i].tl().x);
-            t.addDouble(boundRectSeg[i].tl().y);
-            t.addDouble(boundRectSeg[i].br().x);
-            t.addDouble(boundRectSeg[i].br().y);
+            
+            if (bbOffset < 0)
+                bbOffset = 0;
+            
+            double topLeftX = boundRectSeg[i].tl().x - bbOffset;
+            double topLeftY = boundRectSeg[i].tl().y - bbOffset;
+            double bottomRightX = boundRectSeg[i].br().x + bbOffset;
+            double bottomRightY = boundRectSeg[i].br().y + bbOffset;
+
+            yDebug("%lf %lf %lf %lf \n", topLeftX, topLeftY,  bottomRightX,  bottomRightY);
+        
+            int shift = 3;
+            
+            if (topLeftX < shift)
+                topLeftX = shift;
+            
+            if (topLeftY < shift)
+                topLeftY = shift;
+            
+            if (bottomRightX > img.width()-3)
+                bottomRightX = img.width()-3;
+            
+            if (bottomRightY > img.height()-3)
+                bottomRightY = img.height()-3;
+            
+            t.addDouble(topLeftX);
+            t.addDouble(topLeftY);
+            t.addDouble(bottomRightX);
+            t.addDouble(bottomRightY);
+            
+            /*cv::Point tl = cv::Point( (topLeftX), (topLeftY) );
+            cv::Point br = cv::Point( (bottomRightX), (bottomRightY) );
+            
+            line(segmented, cv::Point( tl.x, tl.y ), cv::Point( br.x, tl.y ),cv::Scalar(255,255,255), 1, 8);
+            line(segmented, cv::Point( br.x, tl.y ), cv::Point( br.x, br.y ),cv::Scalar(255,255,255), 1, 8);
+            line(segmented, cv::Point( br.x, br.y ), cv::Point( tl.x, br.y ),cv::Scalar(255,255,255), 1, 8);
+            line(segmented, cv::Point( tl.x , br.y ), cv::Point( tl.x, tl.y ),cv::Scalar(255,255,255), 1, 8);
+            */
         }
     }
 

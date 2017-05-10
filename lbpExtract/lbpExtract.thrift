@@ -136,6 +136,19 @@ service lbpExtract_IDLServer
     * @return true/false on success/failure
     **/
     bool resetAllValues();
+    
+    /**
+     * Sets the offset of the bounding box. This increases the size of the bb
+     * to add more backgound
+     * @return true/false on success/failure
+     **/
+    bool setbbOffset(1:i32 offset);
+    
+    /**
+     * Gets the current offset of the bounding box. 
+     * @return true/false on success/failure
+     **/
+    i32 getbbOffset();
 
     /**
      * Sets the verbosity of the algorithm

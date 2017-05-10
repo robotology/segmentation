@@ -72,6 +72,7 @@ private:
     int     numIteration, defaultNumIteration;
     int     minArea, defaultMinArea;
     int     maxArea, defaultMaxArea;
+    int     bbOffset;
     bool    verbose;
     
     cv::Mat segmented;
@@ -106,6 +107,7 @@ public:
     bool setNumIteration(const int32_t numIteration);
     bool setMinArea(const int32_t minArea);
     bool setMaxArea(const int32_t maxArea);
+    bool setbbOffset(const int32_t offset);
     bool resetAllValues();
     bool verbosity(const int32_t boolVerbosity);
     
@@ -117,6 +119,7 @@ public:
     int32_t getMinArea();
     int32_t getMaxArea();
     int32_t getNumIteration();
+    int32_t getbbOffset();
     yarp::os::Bottle get_component_around(const int32_t x, const int32_t y);
 };
 
@@ -153,6 +156,7 @@ public:
     bool setMaxArea(const int32_t maxArea);
     bool resetAllValues();
     bool verbosity(const int32_t boolVerbosity);
+    bool setbbOffset(const int32_t offset);
     
     int32_t getRadius();
     int32_t getNeighbours();
@@ -162,6 +166,7 @@ public:
     int32_t getMinArea();
     int32_t getMaxArea();
     int32_t getNumIteration();
+    int32_t getbbOffset();
     yarp::os::Bottle get_component_around(const int32_t x, const int32_t y);
 
     double getPeriod();
