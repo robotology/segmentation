@@ -122,6 +122,17 @@ public:
    */
   virtual bool resetAllValues();
   /**
+   * Sets the offset of the bounding box. This increases the size of the bb
+   * to add more backgound
+   * @return true/false on success/failure
+   */
+  virtual bool setbbOffset(const int32_t offset);
+  /**
+   * Gets the current offset of the bounding box.
+   * @return true/false on success/failure
+   */
+  virtual int32_t getbbOffset();
+  /**
    * Sets the verbosity of the algorithm
    * @param boolVerbosity
    * @return true/false on success/failure
