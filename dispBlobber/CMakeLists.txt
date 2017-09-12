@@ -22,7 +22,8 @@ icubcontrib_set_default_prefix()
 add_definitions(${YARP_DEFINES})
 
 file(GLOB source src/*.cpp)
-file(GLOB header inc/*.h)
+file(GLOB header inc/*.hpp)
+
 
 source_group("Source Files" FILES ${source})
 source_group("Header Files" FILES ${header})

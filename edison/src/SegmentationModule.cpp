@@ -10,112 +10,112 @@ class SegmentationModule_set_sigmaS : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_set_sigmaR : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_set_minRegion : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_set_gradWindRad : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_set_threshold : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_set_mixture : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_set_speedup : public yarp::os::Portable {
 public:
   SpeedUpLevelComm newSpeedLevel;
   void init(const SpeedUpLevelComm newSpeedLevel);
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_get_sigmaS : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_get_sigmaR : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_get_minRegion : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_get_gradWindRad : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_get_threshold : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_get_mixture : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 class SegmentationModule_get_speedup : public yarp::os::Portable {
 public:
   SpeedUpLevelComm _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection);
-  virtual bool read(yarp::os::ConnectionReader& connection);
+  virtual bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
 };
 
 bool SegmentationModule_set_sigmaS::write(yarp::os::ConnectionWriter& connection) {
