@@ -13,6 +13,8 @@ add_subdirectory(graphBased)
 add_subdirectory(blobExtractor)
 add_subdirectory(lbpExtract)
 add_subdirectory(dispBlobber)
+add_subdirectory(seg2cloud)
+
 
 icubcontrib_add_uninstall_target()
 

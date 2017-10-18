@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="yarpmanifest.xsl"?>
+ 
+<module>
+    <!-- module's name should match its executable file's name. -->
+    <name>seg2cloud</name>
+    <description>Enables 3D object reconstruction in a series of ways</description>
+        <copypolicy>Released under the terms of the GNU GPL v2.0</copypolicy>
+    <version>1.0</version>
+    
+    <description-long>
+    seg2cloud applies disparity information to retrieve 3D clouds of desired objects. The objects can be chosen from a user defined polygon, from a segmentation algorithm, or from 2D (in color) or 3D (in depth) flood filling. When using other segmentatoin modules (2D or 3D), seeding can be performed automatically.
+    </description-long>
+
+    <!-- <arguments> can have multiple <param> tags-->
+    <arguments>    
+    <param desc="Name of the module" default="seg2cloud"> name</param>
+    <param desc="Default file savename" default="savename"> savename</param>
+    <param desc="Toggle save clouds as file" default="false"> savingClouds</param>
+    <param desc="Default file format" default="off"> format</param>
+    <param desc="Automatic seed computation" default="true"> seedAuto</param>
+    <param desc="Downsampling ratio pixel to pint for reconstruction" default="1"> downsampling</param>
+    <param desc="Blob distance threshold for 3D flood (m)" default="0.01"> spatial_distance</param>
+    <param desc="Blob distance threshold for 2D flood (RGB intensity)" default="6"> color_distance</param>
+    </arguments>
+
+    <!-- <authors> can have multiple <author> tags. -->
+    <authors>
+  	  <author email="ugo.pattacini@iit.it"> Ugo Pattacini </author>
+	  <author email="tanis.mar@iit.it"> Tanis Mar </author>
+    </authors>
+    
+     <!-- <data> can have multiple <input> or <output> tags. -->
+     <data>
+        <input port_type="service">
+            <type>rpc</type>
+            <port carrier="tcp">/seg2cloud/rpc:i</port>
+            <description> Takes the following RPC commands
+                -# <b>help</b>:  produces this help.
+                -# <b>clear</b>:  Clears displays and saved points.
+                -# <b>saving</b> <i>(bool) save </i>:  Activates/deactivated saving each reconstructed cloud in file.
+                -# <b>setFormat </b> <i>(string) fileformat</i>: Sets the format in which the points will be saved. 'fileformat' can be  'ply', 'off' or 'none'.
+                -# <b>setFileName </b> <i> (string) filename</i>: Sets the base name given to the files where the 3D points will be saved.
+                -# <b>polygon</b>: Gets pointcloud from the selected polygon on the disp image.
+                -# <b>flood</b>: <i> (int) color_distance [(int) u (int) v] </i>: Gets pointcloud from 2D color flood. Seed (u, v) coords optional.
+                -# <b>flood3D </b> <i> (double) spatial_distance [u (int) v (int)]</i>: gets pointcloud from 3D color flood. Seed (u, v) coords optional.
+                -# <b>seg</b> <i> [(int) u (int) v] </i>: gets pointcloud from an externally segmented blob. Seed (u, v) coords optional.
+                -# <b>seedAuto</b> <i>(bool) auto </i>: Toggles from manual (click) seed to 'automatic' for segmentation modes.
+            </description>
+        </input>
+        <input>
+            <type>ImageOfPixelMono</type>
+            <port carrier="udp">/seg2cloud/disp:i</port>
+            <required>no</required>
+            <priority>no</priority>
+            <description> Receives the disparity image.</description>
+        </input>
+        <input>
+            <type>ImageOfPixelRgb</type>
+            <port carrier="udp">/seg2cloud/img:i</port>
+            <required>no</required>
+            <priority>no</priority>
+            <description> Receives the camera image.</description>
+        </input>
+        <input>
+            <type>Bottle</type>
+            <port carrier="udp">/seg2cloud/seed:i</port>
+            <required>no</required>
+            <priority>no</priority>
+            <description> Receives the seed coordinates either from tracker or click. </description>
+        </input>
+
+        <!-- output data if available -->
+        <output>
+            <type>Bottle</type>
+            <port carrier="tcp">/seg2cloud/pnt:o</port>
+            <description>Sends out the reconstructed 3D object as a bottle of points, where each point is itself a list of 3 values x, y, z, and optionally other 3 r, g, b. </description>
+        </output> 
+        <output>
+            <type>Bottle</type>
+            <port carrier="tcp">/seg2cloud/pnt2D:o</port>
+            <description>Sends out the 2D coordinates of the segmented points used to retrieve the pointcloud. </description>
+        </output>
+        <output>
+            <type>ImageOfPixelRgb</type>
+            <port carrier="udp">/seg2cloud/disp:o</port>
+            <description>Sends out the processed disparity, with segmented data or bounding box, for visualization.</description>
+        </output> 
+        <output port_type="service">
+            <type>rpc</type>
+            <port carrier="tcp">/seg2cloud/SFM:rpc</port>
+            <description>rpc port to communicate with the SFM module, to receive disp data and the 3D points. </description>
+        </output>
+        <output port_type="service">
+            <type>rpc</type>
+            <port carrier="tcp">/seg2cloud/seg:rpc</port>
+            <description>rpc port to communicate with the segmentation module, to receive the segmented blob points. </description>
+        </output>  
+    </data>
+
+    <dependencies>
+        <computer>
+            SFM module must be running. 
+	    For segmentation modes, a segmentation module accepting the correct rpc command "get_component_around" must be connected.
+        </computer>
+    </dependencies>
+
+    <!-- specific libraries or header files which are used for development -->
+    <development>
+        <header></header>
+        <library>YARP</library>       
+    </development>
+
+</module>
+
