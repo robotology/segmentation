@@ -1,0 +1,136 @@
+<application>
+    <name>seg2cloud_APP</name>
+    <module>
+        <name>SFM</name>
+        <parameters></parameters>
+        <node>icub-cuda</node>
+        <prefix></prefix>
+        <geometry>(Pos (x 444.638) (y 540.145))</geometry>
+    </module>
+    <module>
+        <name>lbpExtract</name>
+        <parameters></parameters>
+        <node>icub21</node>
+        <prefix></prefix>
+        <geometry>(Pos (x 454.205) (y 164.07))</geometry>
+    </module>
+    <module>
+        <name>seg2cloud</name>
+        <parameters></parameters>
+        <node>icub21</node>
+        <prefix></prefix>
+        <geometry>(Pos (x 694.101) (y 405.031))</geometry>
+    </module>
+    <module>
+        <name>show3D</name>
+        <parameters></parameters>
+        <node>icub22</node>
+        <prefix>/seg2cloud</prefix>
+        <geometry>(Pos (x 951.271) (y 336.692))</geometry>
+    </module>
+    <module>
+        <name>yarpview</name>
+        <parameters>--x 700 --y 0 --out /out --p 33</parameters>
+        <node>icub22</node>
+        <prefix>/disp</prefix>
+        <geometry>(Pos (x 953.073) (y 401.873))</geometry>
+    </module>
+    <module>
+        <name>yarpview</name>
+        <parameters>--p 33 --x 350 --y 0 --out /out</parameters>
+        <node>icub22</node>
+        <prefix>/segView</prefix>
+        <geometry>(Pos (x 952.276) (y 252.501))</geometry>
+    </module>
+    <module>
+        <name>yarpview</name>
+        <parameters>--p 33 --x 0 --y 0</parameters>
+        <node>icub22</node>
+        <prefix>/imLeft</prefix>
+        <geometry>(Pos (x 452.294) (y 303.89))</geometry>
+    </module>
+    <connection>
+        <from external="true">/icub/camcalib/left/out</from>
+        <to>/imLeft/yarpview/img:i</to>
+        <protocol>udp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 164.25) (y 332.459)) ((x -85) (y 0))  )</geometry>
+    </connection>
+    <connection>
+        <from>/SFM/disp:o</from>
+        <to>/seg2cloud/disp:i</to>
+        <protocol>tcp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 69) (y -48)) ((x -86) (y -16))  )</geometry>
+    </connection>
+    <connection>
+        <from>/disp/out</from>
+        <to>/seg2cloud/seed:i</to>
+        <protocol>udp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 87) (y 80)) ((x -86) (y 48))  )</geometry>
+    </connection>
+    <connection>
+        <from>/segView/out</from>
+        <to>/seg2cloud/seed:i</to>
+        <protocol>udp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 87) (y 80)) ((x -86) (y 48))  )</geometry>
+    </connection>
+    <connection>
+        <from>/lbpExtract/blobs:o</from>
+        <to>/seg2cloud/seed:i</to>
+        <protocol>tcp+recv.portmonitor+type.lua+file.bb2center</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 87) (y 80)) ((x -86) (y 48))  )</geometry>
+    </connection>
+    <connection>
+        <from>/lbpExtract/segmentedlbp:o</from>
+        <to>/segView/yarpview/img:i</to>
+        <protocol>udp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 87) (y 48)) ((x -85) (y 0))  )</geometry>
+    </connection>
+    <connection>
+        <from external="true">/icub/camcalib/left/out</from>
+        <to>/seg2cloud/img:i</to>
+        <protocol>udp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 164.25) (y 332.459)) ((x -86) (y 16))  )</geometry>
+    </connection>
+    <connection>
+        <from>/seg2cloud/SFM:rpc</from>
+        <to>/SFM/rpc</to>
+        <protocol>tcp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 86) (y 16)) ((x 895.413) (y 667.136)) ((x 331.988) (y 659.311)) ((x -69) (y 48))  )</geometry>
+    </connection>
+    <connection>
+        <from external="true">/icub/camcalib/left/out</from>
+        <to>/lbpExtract/image:i</to>
+        <protocol>udp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 164.25) (y 332.459)) ((x -87) (y 0))  )</geometry>
+    </connection>
+    <connection>
+        <from>/seg2cloud/seg:rpc</from>
+        <to external="true">/lbpExtract/rpc:i</to>
+        <protocol>tcp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 86) (y 48)) ((x 449.617) (y 281.393))  )</geometry>
+    </connection>
+    <connection>
+        <from external="true">/icub/camcalib/left/out</from>
+        <to>/SFM/left:i</to>
+        <protocol>tcp</protocol>
+        <geometry>(Pos ((x 801.673) (y 327.991)) ((x 164.25) (y 332.459)) ((x -69) (y -48))  )</geometry>
+    </connection>
+    <connection>
+        <from>/seg2cloud/pnt:o</from>
+        <to>/seg2cloud/show3D/clouds:i</to>
+        <protocol>tcp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 86) (y -48)) ((x -79) (y 16))  )</geometry>
+    </connection>
+    <connection>
+        <from external="true">/icub/camcalib/right/out</from>
+        <to>/SFM/right:i</to>
+        <protocol>tcp</protocol>
+        <geometry>(Pos ((x 880.202) (y 581.759)) ((x 163.449) (y 377.163)) ((x -69) (y -16))  )</geometry>
+    </connection>
+    <connection>
+        <from>/seg2cloud/disp:o</from>
+        <to>/disp/yarpview/img:i</to>
+        <protocol>udp</protocol>
+        <geometry>(Pos ((x -1) (y -1)) ((x 86) (y -16)) ((x 798.785) (y 391.17)) ((x -85) (y 0))  )</geometry>
+    </connection>
+</application>
