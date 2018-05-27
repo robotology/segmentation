@@ -96,7 +96,7 @@ public:
     {
         name = rf.check("name", Value("seg2cloud"), "Getting module name").asString();
 
-        homeContextPath=rf.getHomeContextPath().c_str();
+        homeContextPath=rf.getHomeContextPath();
         savename = rf.check("savename", Value("cloud3D"), "Default file savename").asString();
         saving = rf.check("savingClouds", Value(false), "Toggle save clouds as file").asBool();
         fileFormat = rf.check("format", Value("off"), "Default file format").asString();
@@ -450,7 +450,7 @@ public:
         stringstream fileName;
         string fileNameFormat;
         fileName.str("");
-        fileName << homeContextPath + "/" + savename.c_str() << fileCount;
+        fileName << homeContextPath + "/" + savename << fileCount;
 
         if (fileFormat == "ply")
         {
@@ -492,8 +492,8 @@ public:
                 fout<<endl;
                 for (size_t i=0; i<points.size(); i++)
                 {
-                    fout<<points[i].subVector(0,2).toString(3,4).c_str()<<" "<<
-                          points[i].subVector(3,5).toString(0,3).c_str()<<endl;
+                    fout<<points[i].subVector(0,2).toString(3,4)<<" "<<
+                          points[i].subVector(3,5).toString(0,3)<<endl;
                 }
                 fout<<endl;
             }
@@ -702,7 +702,7 @@ public:
     /*******************************************************************************/
     bool respond(const Bottle &command, Bottle &reply)
     {
-        string cmd=command.get(0).asString().c_str();
+        string cmd=command.get(0).asString();
         int ack=Vocab::encode("ack");
         int nack=Vocab::encode("nack");
 

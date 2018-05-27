@@ -130,9 +130,9 @@ bool GBSegmModule::configure (yarp::os::ResourceFinder &rf)
     if(rf.check("minRegion")) min_size = rf.find("minRegion").asInt();  
 
     std::string slash="/";
-    _imgPort.open((slash + getName("/rawImg:i").c_str()).c_str());
-    _configPort.open((slash + getName("/conf").c_str()).c_str());
-    _viewPort.open((slash +getName("/viewImg:o").c_str()).c_str());
+    _imgPort.open(slash + getName("/rawImg:i"));
+    _configPort.open(slash + getName("/conf"));
+    _viewPort.open(slash +getName("/viewImg:o"));
     attach(_configPort);
 
     //read an image to get the dimensions

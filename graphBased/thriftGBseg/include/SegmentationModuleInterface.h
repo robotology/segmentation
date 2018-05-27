@@ -55,14 +55,14 @@ public:
    * Get the number of segmented components that have been detected in the last provided image
    * @return number of segmented components
    */
-  virtual int32_t get_num_components();
+  virtual std::int32_t get_num_components();
   /**
    * Get the list of pixels corresponding to the component to which a given pixel belongs
    * @param objCenter a pixel belonging to the region of interest
    * @return list of pixels belonging to the same component as the input pixels
    */
   virtual std::vector<Pixel>  get_component_around(const Pixel& objCenter);
-  virtual bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
+  virtual bool read(yarp::os::ConnectionReader& connection) override;
   virtual std::vector<std::string> help(const std::string& functionName="--all");
 };
 

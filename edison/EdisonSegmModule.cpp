@@ -110,16 +110,16 @@ bool EdisonSegmModule::configure (yarp::os::ResourceFinder &rf)
             
     }
     // name of the camera calibration file
-    // ConstString strCamConfigPath=rf.findFile("camera");
+    // std::string strCamConfigPath=rf.findFile("camera");
 
     std::string slash="/";
-    _imgPort.open((slash + getName("/rawImg:i").c_str()).c_str());
-    _configPort.open((slash + getName("/conf").c_str()).c_str());
-    _filtPort.open((slash + getName("/filtImg:o").c_str()).c_str());
-    _labelPort.open((slash +getName("/labeledImg:o").c_str()).c_str());
-    _viewPort.open((slash +getName("/viewImg:o").c_str()).c_str());
-    _rawPort.open((slash +getName("/rawImg:o").c_str()).c_str());
-    _labelViewPort.open((slash +getName("/debugImg:o").c_str()).c_str());
+    _imgPort.open(slash + getName("/rawImg:i"));
+    _configPort.open(slash + getName("/conf"));
+    _filtPort.open(slash + getName("/filtImg:o"));
+    _labelPort.open(slash +getName("/labeledImg:o"));
+    _viewPort.open(slash +getName("/viewImg:o"));
+    _rawPort.open(slash +getName("/rawImg:o"));
+    _labelViewPort.open(slash +getName("/debugImg:o"));
     //attach(_configPort, true);
     attach(_configPort);
 

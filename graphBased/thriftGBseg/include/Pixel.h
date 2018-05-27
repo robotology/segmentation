@@ -23,18 +23,18 @@ public:
   /**
    * Index of pixel along horizontal axis
    */
-  int32_t x;
+  std::int32_t x;
   /**
    * Index of pixel along vertical axis
    */
-  int32_t y;
+  std::int32_t y;
 
   // Default constructor
   Pixel() : x(0), y(0) {
   }
 
   // Constructor with field values
-  Pixel(const int32_t x,const int32_t y) : x(x), y(y) {
+  Pixel(const std::int32_t x,const std::int32_t y) : x(x), y(y) {
   }
 
   // Copy constructor
@@ -51,10 +51,10 @@ public:
   }
 
   // read and write structure on a connection
-  bool read(yarp::os::idl::WireReader& reader) YARP_OVERRIDE;
-  bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
-  bool write(yarp::os::idl::WireWriter& writer) YARP_OVERRIDE;
-  bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+  bool read(yarp::os::idl::WireReader& reader) override;
+  bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::idl::WireWriter& writer) override;
+  bool write(yarp::os::ConnectionWriter& connection) override;
 
 private:
   bool write_x(yarp::os::idl::WireWriter& writer);
@@ -68,7 +68,7 @@ private:
 
 public:
 
-  yarp::os::ConstString toString();
+  std::string toString();
 
   // if you want to serialize this class without nesting, use this helper
   typedef yarp::os::idl::Unwrapped<yarp::sig::Pixel > unwrapped;
@@ -115,24 +115,24 @@ public:
       group--;
       if (group==0&&is_dirty) communicate();
     }
-    void set_x(const int32_t x) {
+    void set_x(const std::int32_t x) {
       will_set_x();
       obj->x = x;
       mark_dirty_x();
       communicate();
       did_set_x();
     }
-    void set_y(const int32_t y) {
+    void set_y(const std::int32_t y) {
       will_set_y();
       obj->y = y;
       mark_dirty_y();
       communicate();
       did_set_y();
     }
-    int32_t get_x() {
+    std::int32_t get_x() {
       return obj->x;
     }
-    int32_t get_y() {
+    std::int32_t get_y() {
       return obj->y;
     }
     virtual bool will_set_x() { return true; }
@@ -142,8 +142,8 @@ public:
     void clean() {
       dirty_flags(false);
     }
-    bool read(yarp::os::ConnectionReader& connection) YARP_OVERRIDE;
-    bool write(yarp::os::ConnectionWriter& connection) YARP_OVERRIDE;
+    bool read(yarp::os::ConnectionReader& connection) override;
+    bool write(yarp::os::ConnectionWriter& connection) override;
   private:
 
     Pixel *obj;

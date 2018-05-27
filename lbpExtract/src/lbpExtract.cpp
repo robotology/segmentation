@@ -29,7 +29,7 @@ bool SEGMENTModule::configure(yarp::os::ResourceFinder &rf){
     handlerPortName += getName();
     handlerPortName +=  "/rpc:i";
 
-    if (!rpcPort.open(handlerPortName.c_str())){
+    if (!rpcPort.open(handlerPortName)) {
         fprintf(stdout, "%s : Unable to open port %s\n", getName().c_str(), handlerPortName.c_str());
         return false;
     }
@@ -258,7 +258,7 @@ bool SEGMENTManager::open(){
 
     //create all ports
     inPortName = "/" + moduleName + "/image:i";
-    BufferedPort<ImageOf<PixelRgb> >::open( inPortName.c_str() );
+    BufferedPort<ImageOf<PixelRgb> >::open( inPortName );
 
     outPortPropagate.open( "/" + moduleName + "/propagated:o" );
     outPortBlobs.open( "/" + moduleName + "/extractedlbp:o" );

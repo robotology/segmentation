@@ -17,8 +17,8 @@ class SpeedUpLevelCommVocab;
 
 class SpeedUpLevelCommVocab : public yarp::os::idl::WireVocab {
 public:
-  virtual int fromString(const std::string& input) YARP_OVERRIDE;
-  virtual std::string toString(int input) YARP_OVERRIDE;
+  virtual int fromString(const std::string& input) override;
+  virtual std::string toString(int input) override;
 };
 
 

@@ -103,7 +103,7 @@ bool Pixel::Editor::read(yarp::os::ConnectionReader& connection) {
     writer.writeString("send: 'help' or 'patch (param1 val1) (param2 val2)'");
     return true;
   }
-  yarp::os::ConstString tag;
+  std::string tag;
   if (!reader.readString(tag)) return false;
   if (tag=="help") {
     yarp::os::idl::WireWriter writer(reader);
@@ -111,16 +111,16 @@ bool Pixel::Editor::read(yarp::os::ConnectionReader& connection) {
     if (!writer.writeListHeader(2)) return false;
     if (!writer.writeTag("many",1, 0)) return false;
     if (reader.getLength()>0) {
-      yarp::os::ConstString field;
+      std::string field;
       if (!reader.readString(field)) return false;
       if (field=="x") {
         if (!writer.writeListHeader(2)) return false;
-        if (!writer.writeString("int32_t x")) return false;
+        if (!writer.writeString("std::int32_t x")) return false;
         if (!writer.writeString("Index of pixel along horizontal axis")) return false;
       }
       if (field=="y") {
         if (!writer.writeListHeader(2)) return false;
-        if (!writer.writeString("int32_t y")) return false;
+        if (!writer.writeString("std::int32_t y")) return false;
         if (!writer.writeString("Index of pixel along vertical axis")) return false;
       }
     }
@@ -140,8 +140,8 @@ bool Pixel::Editor::read(yarp::os::ConnectionReader& connection) {
   }
   for (int i=1; i<len; i++) {
     if (nested && !reader.readListHeader(3)) return false;
-    yarp::os::ConstString act;
-    yarp::os::ConstString key;
+    std::string act;
+    std::string key;
     if (have_act) {
       act = tag;
     } else {
@@ -169,7 +169,7 @@ bool Pixel::Editor::read(yarp::os::ConnectionReader& connection) {
   return true;
 }
 
-yarp::os::ConstString Pixel::toString() {
+std::string Pixel::toString() {
   yarp::os::Bottle b;
   b.read(*this);
   return b.toString();

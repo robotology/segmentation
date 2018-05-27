@@ -170,15 +170,15 @@ public:
 
     virtual bool threadInit()
     {
-        string name=rf.find("name").asString().c_str();
+        string name=rf.find("name").asString();
 
-        port_i_img.open(("/"+name+"/img:i").c_str());
-        port_i_propImg.open(("/"+name+"/propImg:i").c_str());
-        port_o_img.open(("/"+name+"/img:o").c_str());
-        port_o_propImg.open(("/"+name+"/propImg:o").c_str());
+        port_i_img.open("/"+name+"/img:i");
+        port_i_propImg.open("/"+name+"/propImg:i");
+        port_o_img.open("/"+name+"/img:o");
+        port_o_propImg.open("/"+name+"/propImg:o");
 
-        port_o_blobs.open(("/"+name+"/blobs:o").c_str());
-        port_o_clean.open(("/"+name+"/binary:o").c_str());
+        port_o_blobs.open("/"+name+"/blobs:o");
+        port_o_clean.open("/"+name+"/binary:o");
 
         gaussian_winsize=rf.check("gaussian_winsize",Value(9)).asInt();
 
@@ -603,8 +603,8 @@ public:
             return false;
         }
 
-        string name=rf.find("name").asString().c_str();
-        rpcPort.open(("/"+name+"/rpc").c_str());
+        string name=rf.find("name").asString();
+        rpcPort.open("/"+name+"/rpc");
         attach(rpcPort);
 
         return true;

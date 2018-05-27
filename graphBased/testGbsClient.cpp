@@ -33,9 +33,9 @@ int main(int argc, char *argv[]) {
     }
     
     std::string slash="/";
-    clientPort.open((slash+name+slash +"rpc:o").c_str());
-    fixationPort.open((slash+name+slash +"interestPoint:i").c_str()); 
-    maskPort.open((slash+name+slash +"mask:o").c_str());
+    clientPort.open(slash+name+slash +"rpc:o");
+    fixationPort.open(slash+name+slash +"interestPoint:i");
+    maskPort.open(slash+name+slash +"mask:o");
     
     
     SegmentationModuleInterface segmIf;

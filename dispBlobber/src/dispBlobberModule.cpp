@@ -32,7 +32,7 @@ bool DispBlobberModule::configure(yarp::os::ResourceFinder &rf)
     handlerPortName += getName();
     handlerPortName +=  "/rpc:i";
 
-    if (!handlerPort.open(handlerPortName.c_str()))    {
+    if (!handlerPort.open(handlerPortName)) {
         fprintf(stdout, "%s : Unable to open RPC port %s\n", getName().c_str(), handlerPortName.c_str());
         return false;
     }
@@ -84,7 +84,7 @@ bool DispBlobberModule::respond(const Bottle &command, Bottle &reply)
     reply.clear();
 
     /* Get command string */
-    string receivedCmd = command.get(0).asString().c_str();
+    string receivedCmd = command.get(0).asString();
 
     int responseCode;   // contain Vocab-encoded response
 
@@ -205,7 +205,7 @@ bool DispBlobberPort::open()
     /* Inputs */
 
     imgInPortName = "/" + moduleName + "/img:i";
-    BufferedPort<ImageOf<PixelBgr>  >::open( imgInPortName.c_str() );
+    BufferedPort<ImageOf<PixelBgr>  >::open( imgInPortName );
 
     /* Outputs */
 
@@ -230,7 +230,7 @@ bool DispBlobberPort::open()
     cropOutPortName = "/" + moduleName + "/crop:o";
     cropOutPort.open(cropOutPortName);
 
-    sfmRpcPort.open(("/" + moduleName + "/sfm/rpc").c_str());
+    sfmRpcPort.open("/" + moduleName + "/sfm/rpc");
 
     return true;
 }
