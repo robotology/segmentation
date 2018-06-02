@@ -20,7 +20,6 @@ include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()
 
-include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 set(folder_source main.cpp)

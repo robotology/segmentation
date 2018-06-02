@@ -19,18 +19,14 @@ include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()
 
-add_definitions(${YARP_DEFINES})
-
 file(GLOB source src/*.cpp)
 file(GLOB header inc/*.hpp)
-
 
 source_group("Source Files" FILES ${source})
 source_group("Header Files" FILES ${header})
 source_group("DOC Files"    FILES ${PROJECT_NAME}.xml)
 
 include_directories(${PROJECT_SOURCE_DIR}/inc
-                    ${YARP_INCLUDE_DIRS}
                     ${OpenCV_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} ${source} ${header} ${PROJECT_NAME}.xml)

@@ -30,7 +30,7 @@ source_group("Header Files" FILES ${module_header})
 add_subdirectory(app)
 
 # Set up the executable.
-include_directories(${YARP_INCLUDE_DIRS}  ${thriftGBseg_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/segment)
+include_directories(${thriftGBseg_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/segment)
 
 add_executable(${PROJECT_NAME} ${module_source} ${module_header} ${segment_headers})
 target_link_libraries(${PROJECT_NAME} thriftGBseg ${YARP_LIBRARIES})

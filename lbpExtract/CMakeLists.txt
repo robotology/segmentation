@@ -36,7 +36,6 @@ source_group("DOC Files" FILES ${doc})
 
 include_directories(${PROJECT_SOURCE_DIR}/include
                     ${OpenCV_INCLUDE_DIRS}
-                    ${YARP_INCLUDE_DIRS}
                     ${ICUB_INCLUDE_DIRS})
 
 add_definitions(-D_USE_MATH_DEFINES)

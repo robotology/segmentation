@@ -19,14 +19,13 @@ endforeach()
 
 source_group("Thrift Source Files" FILES ${sources})
 source_group("Thrift Header Files" FILES ${headers})
-include_directories(${PROJECT_SOURCE_DIR}/include ${YARP_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_library(${PROJECT_NAME} ${THRIFT_HEADERS} ${THRIFT_SOURCES})
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 icubcontrib_export_library(${PROJECT_NAME} INTERNAL_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
-                                           EXTERNAL_INCLUDE_DIRS ${YARP_INCLUDE_DIRS}
                                            DESTINATION include/iCub/segmentation
                                            FILES ${THRIFT_HEADERS})
 

@@ -13,8 +13,6 @@ find_package(OpenCV REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 
-add_definitions(${YARP_DEFINES})   # add yarp definitions - this contains also -D_REENTRANT
-
 include(YarpInstallationHelpers)
 include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
@@ -23,7 +21,7 @@ icubcontrib_set_default_prefix()
 set(sources src/main.cpp)
 source_group("Source Files" FILES ${sources})
 
-include_directories(${YARP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS})
 add_executable(${PROJECTNAME} ${sources})
 target_link_libraries(${PROJECTNAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
 install(TARGETS ${PROJECTNAME} DESTINATION bin)

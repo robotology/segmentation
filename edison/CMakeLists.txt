@@ -31,7 +31,6 @@ source_group("Source Files" FILES ${module_source})
 source_group("Header Files" FILES ${module_header})
 
 include_directories(${edisonlib_INCLUDE_DIR}
-                    ${YARP_INCLUDE_DIRS}
                     ${OpenCV_INCLUDE_DIRS}
                     ${generated_libs_dir}/include)
 
