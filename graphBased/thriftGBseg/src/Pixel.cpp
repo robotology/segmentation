@@ -1,4 +1,12 @@
-// This is an automatically-generated file.
+/*
+ * Copyright (C) 2006-2018 Istituto Italiano di Tecnologia (IIT)
+ * All rights reserved.
+ *
+ * This software may be modified and distributed under the terms of the
+ * BSD-3-Clause license. See the accompanying LICENSE file for details.
+ */
+
+// This is an automatically generated file.
 // It could get re-generated if the ALLOW_IDL_GENERATION flag is on.
 
 #include <Pixel.h>
@@ -44,34 +52,34 @@ bool Pixel::read(yarp::os::ConnectionReader& connection) {
   return read(reader);
 }
 
-bool Pixel::write_x(yarp::os::idl::WireWriter& writer) {
+bool Pixel::write_x(const yarp::os::idl::WireWriter& writer) const {
   if (!writer.writeI32(x)) return false;
   return true;
 }
-bool Pixel::nested_write_x(yarp::os::idl::WireWriter& writer) {
+bool Pixel::nested_write_x(const yarp::os::idl::WireWriter& writer) const {
   if (!writer.writeI32(x)) return false;
   return true;
 }
-bool Pixel::write_y(yarp::os::idl::WireWriter& writer) {
+bool Pixel::write_y(const yarp::os::idl::WireWriter& writer) const {
   if (!writer.writeI32(y)) return false;
   return true;
 }
-bool Pixel::nested_write_y(yarp::os::idl::WireWriter& writer) {
+bool Pixel::nested_write_y(const yarp::os::idl::WireWriter& writer) const {
   if (!writer.writeI32(y)) return false;
   return true;
 }
-bool Pixel::write(yarp::os::idl::WireWriter& writer) {
+bool Pixel::write(const yarp::os::idl::WireWriter& writer) const {
   if (!write_x(writer)) return false;
   if (!write_y(writer)) return false;
   return !writer.isError();
 }
 
-bool Pixel::write(yarp::os::ConnectionWriter& connection) {
+bool Pixel::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   return write(writer);
 }
-bool Pixel::Editor::write(yarp::os::ConnectionWriter& connection) {
+bool Pixel::Editor::write(yarp::os::ConnectionWriter& connection) const {
   if (!isValid()) return false;
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(dirty_count+1)) return false;
@@ -169,7 +177,7 @@ bool Pixel::Editor::read(yarp::os::ConnectionReader& connection) {
   return true;
 }
 
-std::string Pixel::toString() {
+std::string Pixel::toString() const {
   yarp::os::Bottle b;
   b.read(*this);
   return b.toString();

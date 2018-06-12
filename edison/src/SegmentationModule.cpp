@@ -1,4 +1,12 @@
-// This is an automatically-generated file.
+/*
+ * Copyright (C) 2006-2018 Istituto Italiano di Tecnologia (IIT)
+ * All rights reserved.
+ *
+ * This software may be modified and distributed under the terms of the
+ * BSD-3-Clause license. See the accompanying LICENSE file for details.
+ */
+
+// This is an automatically generated file.
 // It could get re-generated if the ALLOW_IDL_GENERATION flag is on.
 
 #include <SegmentationModule.h>
@@ -10,7 +18,7 @@ class SegmentationModule_set_sigmaS : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -18,7 +26,7 @@ class SegmentationModule_set_sigmaR : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -26,7 +34,7 @@ class SegmentationModule_set_minRegion : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -34,7 +42,7 @@ class SegmentationModule_set_gradWindRad : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -42,7 +50,7 @@ class SegmentationModule_set_threshold : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -50,7 +58,7 @@ class SegmentationModule_set_mixture : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -58,7 +66,7 @@ class SegmentationModule_set_speedup : public yarp::os::Portable {
 public:
   SpeedUpLevelComm newSpeedLevel;
   void init(const SpeedUpLevelComm newSpeedLevel);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -66,7 +74,7 @@ class SegmentationModule_get_sigmaS : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -74,7 +82,7 @@ class SegmentationModule_get_sigmaR : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -82,7 +90,7 @@ class SegmentationModule_get_minRegion : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -90,7 +98,7 @@ class SegmentationModule_get_gradWindRad : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -98,7 +106,7 @@ class SegmentationModule_get_threshold : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -106,7 +114,7 @@ class SegmentationModule_get_mixture : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -114,11 +122,11 @@ class SegmentationModule_get_speedup : public yarp::os::Portable {
 public:
   SpeedUpLevelComm _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
-bool SegmentationModule_set_sigmaS::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_set_sigmaS::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_sigmaS",1,2)) return false;
@@ -136,7 +144,7 @@ void SegmentationModule_set_sigmaS::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModule_set_sigmaR::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_set_sigmaR::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_sigmaR",1,2)) return false;
@@ -154,7 +162,7 @@ void SegmentationModule_set_sigmaR::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModule_set_minRegion::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_set_minRegion::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_minRegion",1,2)) return false;
@@ -172,7 +180,7 @@ void SegmentationModule_set_minRegion::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModule_set_gradWindRad::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_set_gradWindRad::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_gradWindRad",1,2)) return false;
@@ -190,7 +198,7 @@ void SegmentationModule_set_gradWindRad::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModule_set_threshold::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_set_threshold::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_threshold",1,2)) return false;
@@ -208,7 +216,7 @@ void SegmentationModule_set_threshold::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModule_set_mixture::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_set_mixture::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_mixture",1,2)) return false;
@@ -226,7 +234,7 @@ void SegmentationModule_set_mixture::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModule_set_speedup::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_set_speedup::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_speedup",1,2)) return false;
@@ -244,7 +252,7 @@ void SegmentationModule_set_speedup::init(const SpeedUpLevelComm newSpeedLevel) 
   this->newSpeedLevel = newSpeedLevel;
 }
 
-bool SegmentationModule_get_sigmaS::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_get_sigmaS::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_sigmaS",1,2)) return false;
@@ -265,7 +273,7 @@ void SegmentationModule_get_sigmaS::init() {
   _return = (double)0;
 }
 
-bool SegmentationModule_get_sigmaR::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_get_sigmaR::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_sigmaR",1,2)) return false;
@@ -286,7 +294,7 @@ void SegmentationModule_get_sigmaR::init() {
   _return = (double)0;
 }
 
-bool SegmentationModule_get_minRegion::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_get_minRegion::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_minRegion",1,2)) return false;
@@ -307,7 +315,7 @@ void SegmentationModule_get_minRegion::init() {
   _return = (double)0;
 }
 
-bool SegmentationModule_get_gradWindRad::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_get_gradWindRad::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_gradWindRad",1,2)) return false;
@@ -328,7 +336,7 @@ void SegmentationModule_get_gradWindRad::init() {
   _return = (double)0;
 }
 
-bool SegmentationModule_get_threshold::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_get_threshold::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_threshold",1,2)) return false;
@@ -349,7 +357,7 @@ void SegmentationModule_get_threshold::init() {
   _return = (double)0;
 }
 
-bool SegmentationModule_get_mixture::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_get_mixture::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_mixture",1,2)) return false;
@@ -370,7 +378,7 @@ void SegmentationModule_get_mixture::init() {
   _return = (double)0;
 }
 
-bool SegmentationModule_get_speedup::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModule_get_speedup::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_speedup",1,2)) return false;

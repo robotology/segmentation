@@ -1,4 +1,12 @@
-// This is an automatically-generated file.
+/*
+ * Copyright (C) 2006-2018 Istituto Italiano di Tecnologia (IIT)
+ * All rights reserved.
+ *
+ * This software may be modified and distributed under the terms of the
+ * BSD-3-Clause license. See the accompanying LICENSE file for details.
+ */
+
+// This is an automatically generated file.
 // It could get re-generated if the ALLOW_IDL_GENERATION flag is on.
 
 #ifndef YARP_THRIFT_GENERATOR_STRUCT_Pixel
@@ -53,14 +61,14 @@ public:
   // read and write structure on a connection
   bool read(yarp::os::idl::WireReader& reader) override;
   bool read(yarp::os::ConnectionReader& connection) override;
-  bool write(yarp::os::idl::WireWriter& writer) override;
-  bool write(yarp::os::ConnectionWriter& connection) override;
+  bool write(const yarp::os::idl::WireWriter& writer) const override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
 
 private:
-  bool write_x(yarp::os::idl::WireWriter& writer);
-  bool nested_write_x(yarp::os::idl::WireWriter& writer);
-  bool write_y(yarp::os::idl::WireWriter& writer);
-  bool nested_write_y(yarp::os::idl::WireWriter& writer);
+  bool write_x(const yarp::os::idl::WireWriter& writer) const;
+  bool nested_write_x(const yarp::os::idl::WireWriter& writer) const;
+  bool write_y(const yarp::os::idl::WireWriter& writer) const;
+  bool nested_write_y(const yarp::os::idl::WireWriter& writer) const;
   bool read_x(yarp::os::idl::WireReader& reader);
   bool nested_read_x(yarp::os::idl::WireReader& reader);
   bool read_y(yarp::os::idl::WireReader& reader);
@@ -68,7 +76,7 @@ private:
 
 public:
 
-  std::string toString();
+  std::string toString() const;
 
   // if you want to serialize this class without nesting, use this helper
   typedef yarp::os::idl::Unwrapped<yarp::sig::Pixel > unwrapped;
@@ -143,7 +151,7 @@ public:
       dirty_flags(false);
     }
     bool read(yarp::os::ConnectionReader& connection) override;
-    bool write(yarp::os::ConnectionWriter& connection) override;
+    bool write(yarp::os::ConnectionWriter& connection) const override;
   private:
 
     Pixel *obj;

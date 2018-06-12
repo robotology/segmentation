@@ -1,4 +1,12 @@
-// This is an automatically-generated file.
+/*
+ * Copyright (C) 2006-2018 Istituto Italiano di Tecnologia (IIT)
+ * All rights reserved.
+ *
+ * This software may be modified and distributed under the terms of the
+ * BSD-3-Clause license. See the accompanying LICENSE file for details.
+ */
+
+// This is an automatically generated file.
 // It could get re-generated if the ALLOW_IDL_GENERATION flag is on.
 
 #include <SegmentationModuleInterface.h>
@@ -11,7 +19,7 @@ class SegmentationModuleInterface_set_sigma : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -19,7 +27,7 @@ class SegmentationModuleInterface_set_k : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -27,7 +35,7 @@ class SegmentationModuleInterface_set_minRegion : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -35,7 +43,7 @@ class SegmentationModuleInterface_get_sigma : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -43,7 +51,7 @@ class SegmentationModuleInterface_get_k : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -51,7 +59,7 @@ class SegmentationModuleInterface_get_minRegion : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -59,7 +67,7 @@ class SegmentationModuleInterface_get_num_components : public yarp::os::Portable
 public:
   std::int32_t _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
@@ -68,11 +76,11 @@ public:
   Pixel objCenter;
   std::vector<Pixel>  _return;
   void init(const Pixel& objCenter);
-  virtual bool write(yarp::os::ConnectionWriter& connection) override;
+  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
   virtual bool read(yarp::os::ConnectionReader& connection) override;
 };
 
-bool SegmentationModuleInterface_set_sigma::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_set_sigma::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_sigma",1,2)) return false;
@@ -90,7 +98,7 @@ void SegmentationModuleInterface_set_sigma::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModuleInterface_set_k::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_set_k::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_k",1,2)) return false;
@@ -108,7 +116,7 @@ void SegmentationModuleInterface_set_k::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModuleInterface_set_minRegion::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_set_minRegion::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("set_minRegion",1,2)) return false;
@@ -126,7 +134,7 @@ void SegmentationModuleInterface_set_minRegion::init(const double newValue) {
   this->newValue = newValue;
 }
 
-bool SegmentationModuleInterface_get_sigma::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_get_sigma::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_sigma",1,2)) return false;
@@ -147,7 +155,7 @@ void SegmentationModuleInterface_get_sigma::init() {
   _return = (double)0;
 }
 
-bool SegmentationModuleInterface_get_k::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_get_k::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_k",1,2)) return false;
@@ -168,7 +176,7 @@ void SegmentationModuleInterface_get_k::init() {
   _return = (double)0;
 }
 
-bool SegmentationModuleInterface_get_minRegion::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_get_minRegion::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(2)) return false;
   if (!writer.writeTag("get_minRegion",1,2)) return false;
@@ -189,7 +197,7 @@ void SegmentationModuleInterface_get_minRegion::init() {
   _return = (double)0;
 }
 
-bool SegmentationModuleInterface_get_num_components::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_get_num_components::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(3)) return false;
   if (!writer.writeTag("get_num_components",1,3)) return false;
@@ -210,7 +218,7 @@ void SegmentationModuleInterface_get_num_components::init() {
   _return = 0;
 }
 
-bool SegmentationModuleInterface_get_component_around::write(yarp::os::ConnectionWriter& connection) {
+bool SegmentationModuleInterface_get_component_around::write(yarp::os::ConnectionWriter& connection) const {
   yarp::os::idl::WireWriter writer(connection);
   if (!writer.writeListHeader(5)) return false;
   if (!writer.writeTag("get_component_around",1,3)) return false;
@@ -430,7 +438,7 @@ bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
         if (!writer.writeListHeader(1)) return false;
         {
           if (!writer.writeListBegin(BOTTLE_TAG_LIST, static_cast<uint32_t>(_return.size()))) return false;
-          std::vector<Pixel> ::iterator _iter5;
+          std::vector<Pixel> ::const_iterator _iter5;
           for (_iter5 = _return.begin(); _iter5 != _return.end(); ++_iter5)
           {
             if (!writer.writeNested((*_iter5))) return false;
