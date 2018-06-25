@@ -3,7 +3,7 @@
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 # 
 
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 3.5)
 project(lbpExtract)
 
 find_package(YARP)
@@ -35,8 +35,7 @@ source_group("IDL Files" FILES ${idl})
 source_group("DOC Files" FILES ${doc})
 
 include_directories(${PROJECT_SOURCE_DIR}/include
-                    ${OpenCV_INCLUDE_DIRS}
-                    ${ICUB_INCLUDE_DIRS})
+                    ${OpenCV_INCLUDE_DIRS})
 
 add_definitions(-D_USE_MATH_DEFINES)
 add_executable(${PROJECT_NAME} ${source} ${header} ${doc} ${idl} ${IDL_GEN_FILES})

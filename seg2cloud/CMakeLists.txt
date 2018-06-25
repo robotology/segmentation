@@ -2,9 +2,8 @@
 # Authors: Ugo Pattacini
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
-cmake_minimum_required(VERSION 2.8)
-set(PROJECTNAME seg2cloud)
-project(${PROJECTNAME})
+cmake_minimum_required(VERSION 3.5)
+project(seg2cloud)
 
 find_package(YARP REQUIRED)
 find_package(ICUBcontrib REQUIRED)
@@ -22,12 +21,12 @@ set(sources src/main.cpp)
 source_group("Source Files" FILES ${sources})
 
 include_directories(${OpenCV_INCLUDE_DIRS})
-add_executable(${PROJECTNAME} ${sources})
-target_link_libraries(${PROJECTNAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
-install(TARGETS ${PROJECTNAME} DESTINATION bin)
+add_executable(${PROJECT_NAME} ${sources})
+target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 # app
 file(GLOB scripts ${CMAKE_CURRENT_SOURCE_DIR}/app/scripts/*.template)
 yarp_install(FILES ${scripts} DESTINATION ${ICUBCONTRIB_APPLICATIONS_TEMPLATES_INSTALL_DIR})
-yarp_install(FILES ${PROJECTNAME}.xml DESTINATION ${ICUBCONTRIB_MODULES_INSTALL_DIR})
+yarp_install(FILES ${PROJECT_NAME}.xml DESTINATION ${ICUBCONTRIB_MODULES_INSTALL_DIR})
 
