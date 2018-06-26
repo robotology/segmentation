@@ -2,7 +2,6 @@
 project(thriftGBseg)
 
 #thrift file generation -- remember to compile YARP with CREATE_IDLS and ENABLE_yarpidl_thrift options, and to define ALLOW_IDL_GENERATION=ON when configuring this project
-include(YarpIDL)
 set(generated_libs_dir "${CMAKE_CURRENT_SOURCE_DIR}")
 yarp_idl_to_dir(${PROJECT_SOURCE_DIR}/graphBasedSegmentationInterface.thrift ${generated_libs_dir})
 

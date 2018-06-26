@@ -10,18 +10,15 @@ find_package(YARP)
 find_package(ICUB)
 find_package(ICUBcontrib)
 
-list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 list(APPEND CMAKE_MODULE_PATH ${ICUB_MODULE_PATH})
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 
 find_package(OpenCV)
 
-include(YarpInstallationHelpers)
 include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()
 
-include(YarpIDL)
 yarp_add_idl(IDL_GEN_FILES ${PROJECT_NAME}.thrift)
 
 file(GLOB source src/*.cpp)

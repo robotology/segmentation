@@ -7,12 +7,9 @@ project(EdisonSegmentation)
 
 find_package(YARP REQUIRED)
 find_package(ICUBcontrib REQUIRED)
-list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH}
-                              ${ICUBCONTRIB_MODULE_PATH})
+list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 find_package(OpenCV REQUIRED)
 
-include(YarpInstallationHelpers)
-include(YarpIDL)
 set(generated_libs_dir "${CMAKE_CURRENT_SOURCE_DIR}")
 yarp_idl_to_dir(EDISONsegmentation.thrift ${generated_libs_dir})
 

@@ -9,12 +9,10 @@ project(dispBlobber)
 find_package(YARP REQUIRED)
 find_package(ICUBcontrib REQUIRED)
 
-list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 
 find_package(OpenCV)
 
-include(YarpInstallationHelpers)
 include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()

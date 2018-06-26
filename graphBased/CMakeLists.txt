@@ -6,8 +6,6 @@ cmake_minimum_required(VERSION 3.5)
 project(graphBasedSegmentation)
 
 find_package(YARP REQUIRED)
-list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
-include(YarpInstallationHelpers)
 find_package(ICUBcontrib)
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 include(ICUBcontribHelpers)
