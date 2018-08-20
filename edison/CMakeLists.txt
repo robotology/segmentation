@@ -28,7 +28,6 @@ source_group("Source Files" FILES ${module_source})
 source_group("Header Files" FILES ${module_header})
 
 include_directories(${edisonlib_INCLUDE_DIR}
-                    ${OpenCV_INCLUDE_DIRS}
                     ${generated_libs_dir}/include)
 
 add_executable(${PROJECT_NAME} ${module_source} ${module_header} ${sources} ${headers})

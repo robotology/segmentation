@@ -18,7 +18,6 @@ icubcontrib_set_default_prefix()
 set(sources src/main.cpp)
 source_group("Source Files" FILES ${sources})
 
-include_directories(${OpenCV_INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} ${sources})
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

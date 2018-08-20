@@ -31,8 +31,7 @@ source_group("Header Files" FILES ${header})
 source_group("IDL Files" FILES ${idl})
 source_group("DOC Files" FILES ${doc})
 
-include_directories(${PROJECT_SOURCE_DIR}/include
-                    ${OpenCV_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_definitions(-D_USE_MATH_DEFINES)
 add_executable(${PROJECT_NAME} ${source} ${header} ${doc} ${idl} ${IDL_GEN_FILES})

@@ -24,8 +24,7 @@ source_group("Source Files" FILES ${source})
 source_group("Header Files" FILES ${header})
 source_group("DOC Files"    FILES ${PROJECT_NAME}.xml)
 
-include_directories(${PROJECT_SOURCE_DIR}/inc
-                    ${OpenCV_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/inc)
 
 add_executable(${PROJECT_NAME} ${source} ${header} ${PROJECT_NAME}.xml)
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})

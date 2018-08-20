@@ -17,8 +17,6 @@ include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()
 
-include_directories(${OpenCV_INCLUDE_DIRS})
-
 set(folder_source main.cpp)
 source_group("Source Files" FILES ${folder_source})
 
