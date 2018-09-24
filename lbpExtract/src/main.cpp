@@ -31,7 +31,7 @@ int main(int argc, char * argv[])
     ResourceFinder rf;
     rf.setVerbose( true );
     rf.setDefaultContext( "lbpExtract" );
-    rf.setDefaultConfigFile( "lbpExtract" );
+    rf.setDefaultConfigFile( "lbpExtract.ini" );
     rf.setDefault("name","lbpExtract");
     rf.configure( argc, argv );
 
