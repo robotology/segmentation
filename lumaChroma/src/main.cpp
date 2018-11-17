@@ -17,6 +17,7 @@
  */
 
 /** 
+ * \defgroup lumaChroma lumaChroma
  * Receives an rgb image, depending on the image type the user wants to work on (YUV or HSV) the module extracts the Y, U and V or H, S, and V planes and performs centre-surround processing with a construction of uniqueness maps (intensity saliency, colour, hue, saturation and value ) via a difference-of-Gaussian pyramid filter bank. 
  * 
  * \section lib_sec Libraries

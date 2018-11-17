@@ -16,12 +16,13 @@
  */
 
 /**
+\defgroup blobExtractor Blob Extractor
  Module that uses the data from the lumaChroma module to extract blobs that are available.
- \ref icub_blobExtractor application.
+ \ref blobExtractor application.
 
  \section intro_sec Description
  This module is responsible for extracting all the blobs 
- based upon the \ref icub_lumaChroma module. To this end, it receives 
+ based upon the \ref lumaChroma module. To this end, it receives 
  an image input from the lumaChroma and acts upon it to retreive 
  the blobs and their moments (orientation and principal axes)
  
