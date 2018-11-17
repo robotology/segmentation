@@ -16,8 +16,6 @@
  */
 
 /**
- \defgroup icub_blobExtractor Blob Extractor
-
  Module that uses the data from the lumaChroma module to extract blobs that are available.
  \ref icub_blobExtractor application.
 
