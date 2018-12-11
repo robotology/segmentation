@@ -180,6 +180,7 @@ DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
     int backgroundThresh = moduleRF->check("backgroundThresh", Value(30)).asInt();
    
     int minBlobSize = moduleRF->check("minBlobSize", Value(300)).asInt();
+    int maxBlobSize = moduleRF->check("maxBlobSize", Value(2000)).asInt();
 
     int gaussSize = moduleRF->check("gaussSize", Value(5)).asInt();
 
@@ -191,7 +192,7 @@ DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
     blobExtractor = new dispBlobber(imH, imW, bufferSize,
             margin,
             backgroundThresh,
-            minBlobSize, gaussSize,
+            minBlobSize, maxBlobSize, gaussSize,
             imageThreshRatioLow, imageThreshRatioHigh);
 }
 

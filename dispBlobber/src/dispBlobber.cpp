@@ -23,7 +23,7 @@ using namespace std;
 dispBlobber::dispBlobber(int imH, int imW, int _bufferSize,
         int _margin,
         int _backgroundThresh,
-        int _minBlobSize, int _gaussSize,
+        int _minBlobSize, int _maxBlobSize, int _gaussSize,
         int _imageThreshRatioLow, int _imageThreshRatioHigh)
 {
 
@@ -35,6 +35,7 @@ dispBlobber::dispBlobber(int imH, int imW, int _bufferSize,
     backgroundThresh = _backgroundThresh;       // threshold of intensity on the image under which info is ignored
     
     minBlobSize = _minBlobSize;
+    maxBlobSize = _maxBlobSize;
     
     gaussSize = _gaussSize;
 
@@ -139,7 +140,7 @@ double dispBlobber::extractBlob(std::vector<cv::Mat> &images, std::vector<int> &
         blobSize = cv::contourArea(contours[c]);
 
         // select only the biggest valid blob
-        if( blobSize > minBlobSize && blobSize > blobSizeOld)
+        if( blobSize > minBlobSize && blobSize > blobSizeOld && blobSize < maxBlobSize)
         {
             blobI = c;
             blobSizeOld = blobSize;

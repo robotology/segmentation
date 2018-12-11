@@ -31,6 +31,7 @@ class dispBlobber
     int backgroundThresh;
 
     int minBlobSize;
+    int maxBlobSize;
     int gaussSize;
     
     int imageThreshRatioLow;
@@ -50,7 +51,7 @@ public:
     dispBlobber(int imH, int imW, int _bufferSize,
             int _margin,
             int _backgroundThresh,
-            int _minBlobSize, int _gaussSize,
+            int _minBlobSize, int _maxBlobSize, int _gaussSize,
             int _dispThreshRatioLow, int _dispThreshRatioHigh);
 
     bool setThresh(int low);
