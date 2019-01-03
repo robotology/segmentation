@@ -15,9 +15,11 @@
  * Public License for more details
  */
 
+#include <yarp/cv/Cv.h>
 #include "lbpExtract.h"
 
 using namespace yarp::sig;
+using namespace yarp::cv;
 
 /**********************************************************/
 bool SEGMENTModule::configure(yarp::os::ResourceFinder &rf){
@@ -501,7 +503,7 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     outLbp.zero();
     outLbpContour.zero();
 
-    imgMat = cv::cvarrToMat((IplImage*)img.getIplImage());
+    imgMat = toCvMat(img);
 
     yarp::os::Bottle &b = outTargetPort.prepare();
     b.clear();
@@ -726,21 +728,18 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     if (b.size())
         outTargetPort.write();
 
-    IplImage propag = imgMat;
-    outOrig.resize(propag.width, propag.height);
-    cvCopy( &propag, (IplImage *) outOrig.getIplImage());
+    outOrig.resize(imgMat.size().width, imgMat.size().height);
+    imgMat.copyTo(toCvMat(outOrig));
     outPortPropagate.setEnvelope(ts);
     outPortPropagate.write();
 
-    IplImage processed = extracted;//contour
-    outImg.resize(processed.width, processed.height);
-    cvCopy( &processed, (IplImage *) outImg.getIplImage());
+    outImg.resize(extracted.size().width, extracted.size().height);
+    extracted.copyTo(toCvMat(outImg));
     outPortBlobs.setEnvelope(ts);
     outPortBlobs.write();
 
-    IplImage seg = segmented;//contour
-    outSeg.resize(seg.width, seg.height);
-    cvCopy( &seg, (IplImage *) outSeg.getIplImage());
+    outSeg.resize(segmented.size().width, segmented.size().height);
+    segmented.copyTo(toCvMat(outSeg));
     outPortSegmented.setEnvelope(ts);
     outPortSegmented.write();
 
@@ -749,17 +748,14 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     lbp::OLBP(tmp, olbp); // use the original operator
     normalize(olbp, olbp, 0, 255, cv::NORM_MINMAX, CV_8UC1);
 
-    IplImage orig = norm;//cleaned local binary pattern
-    outLbpContour.resize(orig.width, orig.height);
-    cvCopy( &orig, (IplImage *) outLbpContour.getIplImage());
+    outLbpContour.resize(norm.size().width, norm.size().height);
+    norm.copyTo(toCvMat(outLbpContour));
     outPortLbpContours.setEnvelope(ts);
     outPortLbpContours.write();
 
-    IplImage imag = olbp; // full local binary pattern
-    outLbp.resize(imag.width, imag.height);
-    cvCopy( &imag, (IplImage *) outLbp.getIplImage());
+    outLbp.resize(olbp.size().width, olbp.size().height);
+    olbp.copyTo(toCvMat(outLbp));
     outPortLbp.setEnvelope(ts);
     outPortLbp.write();
-
 }
 //empty line to make gcc happy

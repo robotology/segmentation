@@ -7,12 +7,10 @@
  */
 extern bool CmCDisplayProgress;
 #include <string>
+#include <vector>
 #include <iostream>
-using namespace std;
-
 
 #include "EdisonSegmModule.h"
-
 
 #include <edge/BgImage.h>
 #include <edge/BgEdge.h>
@@ -22,51 +20,55 @@ using namespace std;
 
 // yarp
 #include <yarp/os/Network.h>
+#include <yarp/cv/Cv.h>
+
+using namespace std;
 using namespace yarp::os;
 using namespace yarp::sig;
+using namespace yarp::cv;
 
 void EdisonSegmModule::setSpeedUpValue(int newSpeedUpValue)
 {
-                switch(newSpeedUpValue) {
-                    case(0): speedup = NO_SPEEDUP; break;
-                    case(1): speedup = MED_SPEEDUP; break;
-                    case(2): speedup = HIGH_SPEEDUP; break;
-                    default: speedup = NO_SPEEDUP;
-                }
+    switch(newSpeedUpValue) {
+        case(0): speedup = NO_SPEEDUP; break;
+        case(1): speedup = MED_SPEEDUP; break;
+        case(2): speedup = HIGH_SPEEDUP; break;
+        default: speedup = NO_SPEEDUP;
+    }
 }
 
 EdisonSegmModule::EdisonSegmModule() : _stamp(0,0)
 {
-  orig_height_       = -1;
-  orig_width_        = -1;
-  height_            = -1;
-  width_             = -1;
-  dim_               = -1;   //defaults to color image
-  numEdges_          = -1;
-  numBoundaries_     = -1;
-  inputImage_        = (unsigned char *) NULL;
-  filtImage_         = (unsigned char *) NULL;
-  segmImage_         = (unsigned char *) NULL;
-  gradMap_           = (float *) NULL;
-  confMap_           = (float *) NULL;
-  weightMap_         = (float *) NULL;
-  edges_             = (int *)   NULL;
-  boundaries_        = (int *)   NULL;
+    orig_height_       = -1;
+    orig_width_        = -1;
+    height_            = -1;
+    width_             = -1;
+    dim_               = -1;   //defaults to color image
+    numEdges_          = -1;
+    numBoundaries_     = -1;
+    inputImage_        = (unsigned char *) NULL;
+    filtImage_         = (unsigned char *) NULL;
+    segmImage_         = (unsigned char *) NULL;
+    gradMap_           = (float *) NULL;
+    confMap_           = (float *) NULL;
+    weightMap_         = (float *) NULL;
+    edges_             = (int *)   NULL;
+    boundaries_        = (int *)   NULL;
 
-  //defaults for the parameters - as the ones in the EDISON GUI application
-  sigmaS = 7;       
-  sigmaR = 6.5;     
-  minRegion = 20;  
-  gradWindRad = 2; 
-  threshold = 0.3F; 
-  mixture = 0.2F;
-  speedup = MED_SPEEDUP; 
+    //defaults for the parameters - as the ones in the EDISON GUI application
+    sigmaS = 7;       
+    sigmaR = 6.5;     
+    minRegion = 20;  
+    gradWindRad = 2; 
+    threshold = 0.3F; 
+    mixture = 0.2F;
+    speedup = MED_SPEEDUP; 
 }
 
 EdisonSegmModule::~EdisonSegmModule()
 {
-  if(edges_)       delete [] edges_;
-  if(boundaries_)  delete [] boundaries_;
+    if(edges_)       delete [] edges_;
+    if(boundaries_)  delete [] boundaries_;
 }
 
 
@@ -104,13 +106,9 @@ bool EdisonSegmModule::configure (yarp::os::ResourceFinder &rf)
     if(rf.check("mixture")) mixture = (float)rf.find("mixture").asDouble();  
     if(rf.check("speedup")) 
     {
-            int spdp = rf.find("speedup").asInt(); 
-            setSpeedUpValue(spdp);
-
-            
+        int spdp = rf.find("speedup").asInt(); 
+        setSpeedUpValue(spdp);
     }
-    // name of the camera calibration file
-    // std::string strCamConfigPath=rf.findFile("camera");
 
     std::string slash="/";
     _imgPort.open(slash + getName("/rawImg:i"));
@@ -130,17 +128,6 @@ bool EdisonSegmModule::configure (yarp::os::ResourceFinder &rf)
         return true;
     orig_height_ = yrpImgIn->height();
     orig_width_ = yrpImgIn->width();
-
-    //THIS IS NOT REQUIRED - INPUT IMAGES ARE ALWAYS RGB
-    //IF DIM == 3 THEN THE PROCESSING CLASS CONVERTS TO LUV
-    //IF DIM == 1 THEN THE PROCESSING CLASS ONLY USES THE FIRST CHANNEL
-    //WE USE HUE CHANNEL, SO MUST CONVERT FROM RGB TO HSV
-    //check compatibility of image depth 
-    /*if (yrpImgIn->getPixelSize() != dim_) 
-    {
-            cout << endl << "Incompatible image depth" << endl;
-            return false;
-    }*/ 
 
     //override internal image dimension if necessary
     if( width_ > orig_width_ )
@@ -203,38 +190,26 @@ bool EdisonSegmModule::updateModule()
     Stamp s;
     if(!_imgPort.getEnvelope(s))
     {
-            cout << "No stamp found in input image. Will use private stamp" << endl;
-            use_private_stamp = true;
+        cout << "No stamp found in input image. Will use private stamp" << endl;
+        use_private_stamp = true;
     }
     else
     {
-            cout << "Received image #" << s.getCount() << " generated at time " << s.getTime() << endl;
-            use_private_stamp = false;
+        cout << "Received image #" << s.getCount() << " generated at time " << s.getTime() << endl;
+        use_private_stamp = false;
     }
 
     if(cycles == 0)
-            _timestart = yarp::os::Time::now();
+        _timestart = yarp::os::Time::now();
     cycles++;
 
-    IplImage *iplimg = (IplImage*)yrpImgIn->getIplImage();
-
-    //computing the ROI to crop the image
-    /*struct _IplROI roi;
-    roi.coi = 0; // all channels are selected
-    roi.height = height_;
-    roi.width = width_;
-    roi.xOffset = ( orig_width_ - width_ ) / 2;
-    roi.yOffset = ( orig_height_ - height_ ) / 2;*/
-    
-    //copying roi data to buffer
-    /*iplimg->roi = &roi;
-    cvCopy( iplimg, inputImage.getIplImage());*/
+    cv::Mat imgMat = toCvMat(*yrpImgIn);
 
     //Rescale image if required
     if( (width_ != orig_width_) || (height_ != orig_height_ ) )
-            cvResize(iplimg, inputImage.getIplImage(), CV_INTER_NN);
+        cv::resize(imgMat,toCvMat(inputImage),cv::Size(),1.0,1.0);
     else
-            cvCopy( iplimg, inputImage.getIplImage());
+        imgMat.copyTo(toCvMat(inputImage));
 
     double edgetime = yarp::os::Time::now();
     //compute gradient and confidence maps
@@ -244,11 +219,11 @@ bool EdisonSegmModule::updateModule()
     edgeDetector.ComputeEdgeInfo(&bgImage, confMap_, gradMap_);
     //compute the weigth map
     for(int i = 0; i < width_*height_; i++) {
-      if(gradMap_[i] > 0.02) {
-        weightMap_[i] = mixture*gradMap_[i] + (1 - mixture)*confMap_[i];
-      } else {
-        weightMap_[i] = 0;
-      }
+        if(gradMap_[i] > 0.02) {
+            weightMap_[i] = mixture*gradMap_[i] + (1 - mixture)*confMap_[i];
+        } else {
+            weightMap_[i] = 0;
+        }
     }
     ///////////////////////////// This block can be parallelized
     cout << "Edge computation Time (ms): " << (yarp::os::Time::now() - edgetime)*1000.0 << endl;
@@ -258,8 +233,10 @@ bool EdisonSegmModule::updateModule()
         iProc.DefineImage(inputImage_, COLOR, height_, width_);
     else
     {   
-        cvCvtColor(inputImage.getIplImage(), inputHsv.getIplImage(), CV_RGB2HSV);
-        cvSplit(inputHsv.getIplImage(), inputHue.getIplImage(), 0, 0, 0);
+        vector<cv::Mat> channels;
+        cv::cvtColor(toCvMat(inputImage), toCvMat(inputHsv), CV_RGB2HSV);
+        cv::split(toCvMat(inputHsv),channels);
+        toCvMat(inputHue)=channels[0];
         iProc.DefineImage(inputHue_, GRAYSCALE, height_, width_);
     }
     if(iProc.ErrorStatus) {
@@ -272,7 +249,6 @@ bool EdisonSegmModule::updateModule()
         return false;
     }
 
-
     double filtertime = yarp::os::Time::now();
     iProc.Filter(sigmaS, sigmaR, speedup);
         if(iProc.ErrorStatus) {
@@ -280,7 +256,6 @@ bool EdisonSegmModule::updateModule()
         return false;
     }
     cout << "Mean Shift Filter Computation Time (ms): " << (yarp::os::Time::now() - filtertime)*1000.0 << endl;
-
 
     //obtain the filtered image
     iProc.GetResults(filtImage_);
@@ -304,21 +279,6 @@ bool EdisonSegmModule::updateModule()
         cout << "MeanShift Error" << endl;
         return false;
     }
-
-    //define the boundaries - do not need this
-    /*
-    RegionList *regionList        = iProc.GetBoundaries();
-    int        *regionIndeces     = regionList->GetRegionIndeces(0);
-    int        numRegions         = regionList->GetNumRegions();
-    numBoundaries_ = 0;
-    for(int i = 0; i < numRegions; i++) {
-        numBoundaries_ += regionList->GetRegionCount(i);
-    }
-    if(boundaries_) delete [] boundaries_;
-    boundaries_ = new int [numBoundaries_];
-    for(int i = 0; i < numBoundaries_; i++) {
-        boundaries_[i] = regionIndeces[i];
-    }*/
         
     int regionCount; // how many regions have been found
     int *labels = NULL; //pointer for the labels (should this be released in the end?) 
@@ -330,10 +290,7 @@ bool EdisonSegmModule::updateModule()
     for(int i = 0; i < width_*height_; i++)
         labelp[i] = labels[i];
     
-    IplImage *labelint = (IplImage*)labelImage.getIplImage();
-    IplImage *labelchar = (IplImage*)labelView.getIplImage();
-
-    cvConvert(labelint, labelchar);
+    cv::convertScaleAbs(toCvMat(labelImage),toCvMat(labelView));
 
     //prepare timestamps
     if(use_private_stamp)
@@ -359,7 +316,7 @@ bool EdisonSegmModule::updateModule()
     if( (width_ != orig_width_) || (height_ != orig_height_ ) )
     {
         yrpImgLabel.resize(orig_width_, orig_height_);
-        cvResize(labelImage.getIplImage(), yrpImgLabel.getIplImage(), CV_INTER_NN);
+        cv::resize(toCvMat(labelImage),toCvMat(yrpImgLabel),cv::Size(),1.0,1.0);
     }
     else
         yrpImgLabel = labelImage;
@@ -370,7 +327,7 @@ bool EdisonSegmModule::updateModule()
     if( (width_ != orig_width_) || (height_ != orig_height_ ) )
     {
         yrpImgDebug.resize(orig_width_, orig_height_);
-        cvResize(labelView.getIplImage(), yrpImgDebug.getIplImage(), CV_INTER_NN);
+        cv::resize(toCvMat(labelView),toCvMat(yrpImgDebug),cv::Size(),1.0,1.0);
     }
     else
         yrpImgDebug = labelView;
@@ -382,7 +339,7 @@ bool EdisonSegmModule::updateModule()
     if( (width_ != orig_width_) || (height_ != orig_height_ ) )
     {
         yrpFiltOut.resize(orig_width_, orig_height_);
-        cvResize(filtImage.getIplImage(), yrpFiltOut.getIplImage(), CV_INTER_NN);
+        cv::resize(toCvMat(filtImage),toCvMat(yrpFiltOut),cv::Size(),1.0,1.0);
     }
     else
         yrpFiltOut = filtImage;
@@ -393,7 +350,7 @@ bool EdisonSegmModule::updateModule()
     if( (width_ != orig_width_) || (height_ != orig_height_ ) )
     {
         yrpImgView.resize(orig_width_, orig_height_);
-        cvResize(segmImage.getIplImage(), yrpImgView.getIplImage(), CV_INTER_NN);
+        cv::resize(toCvMat(segmImage),toCvMat(yrpImgView),cv::Size(),1.0,1.0);
     }
     else
         yrpImgView = segmImage;
@@ -402,7 +359,6 @@ bool EdisonSegmModule::updateModule()
     ImageOf<PixelRgb> &yrpImgOut = _rawPort.prepare();
     yrpImgOut = *yrpImgIn;
     _rawPort.write();
-
 
     //report the frame rate
     if(cycles % 100 == 0)

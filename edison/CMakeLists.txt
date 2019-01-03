@@ -5,10 +5,10 @@ add_subdirectory(edisonlib)
 
 project(EdisonSegmentation)
 
-find_package(YARP REQUIRED)
 find_package(ICUBcontrib REQUIRED)
-list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
+find_package(YARP 3.1.100 REQUIRED COMPONENTS OS sig cv)
 find_package(OpenCV REQUIRED)
+list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 
 set(generated_libs_dir "${CMAKE_CURRENT_SOURCE_DIR}")
 yarp_idl_to_dir(EDISONsegmentation.thrift ${generated_libs_dir})

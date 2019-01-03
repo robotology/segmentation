@@ -221,8 +221,7 @@ bool GBSegmModule::updateModule()
             _timestart = yarp::os::Time::now();
     cycles++;
 
-    //IplImage *iplimg = (IplImage*)yrpImgIn->getIplImage();
- cout << "converting image of size " << yrpImgIn->width() << yrpImgIn->height() <<" to size" << input->width() << input->height() << endl;
+    cout << "converting image of size " << yrpImgIn->width() << yrpImgIn->height() <<" to size" << input->width() << input->height() << endl;
     YarpImageToRGBImage(input, yrpImgIn);
     cout << "converted" << endl;
     segMutex.wait();

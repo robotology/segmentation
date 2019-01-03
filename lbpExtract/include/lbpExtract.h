@@ -26,10 +26,9 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/Semaphore.h>
 #include <yarp/os/Stamp.h>
+#include <yarp/os/RpcClient.h>
 #include <yarp/sig/Vector.h>
 #include <yarp/sig/Image.h>
-
-#include <yarp/os/RpcClient.h>
 
 #include <ctime>
 #include <string>

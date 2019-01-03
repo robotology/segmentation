@@ -16,6 +16,7 @@
  * Public License for more details
  */
 
+#include <yarp/cv/Cv.h>
 #include "lumaChroma.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +27,7 @@ const int KERNSIZEMAX = 9;
 using namespace std;
 using namespace yarp::os; 
 using namespace yarp::sig;
+using namespace yarp::cv;
 
 bool lumaChroma::configure(yarp::os::ResourceFinder &rf)
 {    
@@ -189,7 +191,7 @@ bool PROCThread::open()
     inputPortName = "/" + moduleName + "/image:i";
     BufferedPort<ImageOf<PixelRgb> >::open( inputPortName.c_str() );
 
-	outputPortName = "/" + moduleName + "/propImg:o";
+    outputPortName = "/" + moduleName + "/propImg:o";
     imageOutPort.open( outputPortName.c_str() );
 
     outputPortName1 = "/" + moduleName + "/" + temp[0] + "/image:o";
@@ -227,7 +229,7 @@ void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img)
         allocate( img );
     }
     extender( img, KERNSIZEMAX );
-    cv::Mat inputMat=cv::cvarrToMat((IplImage*)inputExtImage->getIplImage());
+    cv::Mat inputMat=toCvMat(*inputExtImage);
     if ( isYUV )
         cv::cvtColor( inputMat, orig, CV_RGB2YCrCb);
     else
@@ -238,8 +240,8 @@ void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img)
     //performs centre-surround uniqueness analysis on first plane
     centerSurr->proc_im_8u( planes[0] );
 
-    IplImage y_img = centerSurr->get_centsur_norm8u();
-    cvCopy( &y_img, ( IplImage *)img_Y->getIplImage());
+    cv::Mat y_img = centerSurr->get_centsur_norm8u();
+    y_img.copyTo(toCvMat(*img_Y));
     csTot32f.setTo(cv::Scalar(0));
 
     //performs centre-surround uniqueness analysis on second plane:
@@ -248,8 +250,8 @@ void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img)
         cv::add(centerSurr->get_centsur_32f(), csTot32f, csTot32f);
     else
     {
-        IplImage s_img = centerSurr->get_centsur_norm8u();
-        cvCopy( &y_img, ( IplImage *)img_UV->getIplImage());
+        cv::Mat s_img = centerSurr->get_centsur_norm8u();
+        s_img.copyTo(toCvMat(*img_UV));
     }
     //performs centre-surround uniqueness analysis on third plane:
     centerSurr->proc_im_8u( planes[2] );
@@ -257,8 +259,8 @@ void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img)
         cv::add(centerSurr->get_centsur_32f(), csTot32f, csTot32f);
     else
     {
-        IplImage v_img = centerSurr->get_centsur_norm8u();
-        cvCopy( &v_img, ( IplImage *)img_V->getIplImage());
+        cv::Mat v_img = centerSurr->get_centsur_norm8u();
+        v_img.copyTo(toCvMat(*img_V));
     }
     if ( isYUV )
     {
@@ -271,8 +273,7 @@ void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img)
             valueMax = 255.0f; valueMin = 0.0f;
         }
         cv::convertScaleAbs( csTot32f, uvimg, 255/(valueMax - valueMin), -255*valueMin/(valueMax-valueMin) );
-        IplImage uv_img = uvimg;
-        cvCopy( &uv_img, ( IplImage *)img_UV->getIplImage());
+        uvimg.copyTo(toCvMat(*img_UV));
     }
     //this is nasty, resizes the images...
     unsigned char* imgY = img_Y->getPixelAddress( KERNSIZEMAX, KERNSIZEMAX );
@@ -345,9 +346,9 @@ void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img)
         else 
             fprintf(stdout, "something went wrong\n");  
             
-		imageOutPort.prepare() = img;
+        imageOutPort.prepare() = img;
         defaultPortOut.write();
-		imageOutPort.write();
+        imageOutPort.write();
     }
 
     mutex.post();
@@ -426,7 +427,7 @@ void PROCThread::close()
 {
     cout << "now closing ports..." << endl;
     mutex.wait();
-	imageOutPort.close();
+    imageOutPort.close();
     imageOutPort1.close();
     imageOutPort2.close();
     if ( !isYUV ) 
@@ -447,7 +448,7 @@ void PROCThread::interrupt()
     cout << "cleaning up..." << endl;
     cout << "attempting to interrupt ports" << endl;
     
-	imageOutPort.interrupt();
+    imageOutPort.interrupt();
     imageOutPort1.interrupt();
     imageOutPort2.interrupt();
 

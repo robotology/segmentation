@@ -5,14 +5,13 @@
 cmake_minimum_required(VERSION 3.5)
 project(blobExtractor)
 
-find_package(YARP REQUIRED)
-find_package(ICUB REQUIRED)
-list(APPEND CMAKE_MODULE_PATH ${ICUB_MODULE_PATH})
-
-find_package(OpenCV REQUIRED)
-
 find_package(ICUBcontrib REQUIRED)
+find_package(YARP 3.1.100 REQUIRED COMPONENTS OS sig cv)
+find_package(ICUB REQUIRED)
+find_package(OpenCV REQUIRED)
+list(APPEND CMAKE_MODULE_PATH ${ICUB_MODULE_PATH})
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
+
 include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
 icubcontrib_set_default_prefix()

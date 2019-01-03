@@ -14,12 +14,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details
  */
+
+#include <yarp/cv/Cv.h>
 #include "dispBlobberModule.hpp"
 
 using namespace cv;
 using namespace std;
 using namespace yarp::os;
 using namespace yarp::sig;
+using namespace yarp::cv;
 
 
 bool DispBlobberModule::configure(yarp::os::ResourceFinder &rf)
@@ -307,7 +310,7 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
 
     /* Prepare the buffer, call the extractor, clear the buffer */
 
-    cv::Mat inputMat=cv::cvarrToMat((IplImage*)input.getIplImage());
+    cv::Mat inputMat=toCvMat(input);
     imagesMatBuffer.push_back(inputMat);
 
     double blobSize = blobExtractor->extractBlob(imagesMatBuffer, roi, centroid, blobMat);
@@ -320,7 +323,7 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
             yarp::sig::ImageOf<yarp::sig::PixelMono> &blobImage = optOutPort.prepare();
             blobImage.resize(blobMat.cols, blobMat.rows);
 
-            cv::Mat blobImageMat=cv::cvarrToMat((IplImage*)blobImage.getIplImage());
+            cv::Mat blobImageMat=toCvMat(blobImage);
             blobMat.copyTo(blobImageMat);
 
             optOutPort.setEnvelope(stamp);
@@ -348,7 +351,7 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
             yarp::sig::ImageOf<yarp::sig::PixelBgr> &cropImage = cropOutPort.prepare();
             cropImage.resize(roiRegion.width, roiRegion.height);
 
-            cv::Mat cropImageMat=cv::cvarrToMat((IplImage*)cropImage.getIplImage());
+            cv::Mat cropImageMat=toCvMat(cropImage);
             imagesMatBuffer.back()(roiRegion).copyTo(cropImageMat);
 
             cropOutPort.setEnvelope(stamp);

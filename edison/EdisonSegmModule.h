@@ -36,7 +36,7 @@ class EdisonSegmModule : public yarp::os::RFModule, public SegmentationModule {
 
 private:
     double _timestart;
-    int orig_height_, height_, orig_width_, width_, dim_;		//input image dimensions
+    int orig_height_, height_, orig_width_, width_, dim_;       //input image dimensions
     
     //internal storage for the input image - must be RGB
     yarp::sig::ImageOf<yarp::sig::PixelRgb> inputImage;
@@ -78,8 +78,8 @@ private:
     int *boundaries_, numBoundaries_;
 
     //parameters for mean shift
-    int sigmaS;		//spatial bandwidth
-    float sigmaR;		//range bandwidth
+    int sigmaS;     //spatial bandwidth
+    float sigmaR;       //range bandwidth
     int minRegion;  //area of the smallest objects to consider
     
     //parameters for synergistic segmentation
@@ -95,7 +95,7 @@ private:
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >       _viewPort;     //output image - segmentation (modes of each detected object), edges, etc (configurable)
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelInt> >       _labelPort;    //output image with labels 
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >       _filtPort;     //output the mean shift filtered image
-    yarp::os::Port				                            _configPort;   //to configure the module
+    yarp::os::Port                                          _configPort;   //to configure the module
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelMono> >      _labelViewPort; //to visualize the labels
 
     yarp::os::Stamp _stamp;

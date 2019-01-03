@@ -28,11 +28,13 @@
 #include <yarp/os/all.h>
 #include <yarp/sig/all.h>
 #include <yarp/math/Math.h>
+#include <yarp/cv/Cv.h>
 
 using namespace std;
 using namespace yarp::os;
 using namespace yarp::sig;
 using namespace yarp::math;
+using namespace yarp::cv;
 
 
 /*******************************************************************************/
@@ -193,9 +195,9 @@ public:
         ImageOf<PixelRgb> &imgDispOut=portDispOut.prepare();
         imgDispOut.resize(imgDispIn->width(),imgDispIn->height());
 
-        cv::Mat imgInMat=cv::cvarrToMat((IplImage*)imgIn->getIplImage());
-        cv::Mat imgDispInMat=cv::cvarrToMat((IplImage*)imgDispIn->getIplImage());
-        cv::Mat imgDispOutMat=cv::cvarrToMat((IplImage*)imgDispOut.getIplImage());
+        cv::Mat imgInMat=toCvMat(*imgIn);
+        cv::Mat imgDispInMat=toCvMat(*imgDispIn);
+        cv::Mat imgDispOutMat=toCvMat(imgDispOut);
         cv::cvtColor(imgDispInMat,imgDispOutMat,CV_GRAY2RGB);
 
         vector<vector<cv::Point> > contours;
@@ -570,7 +572,7 @@ public:
         if (imgDispIn==NULL)
             return false;
 
-        cv::Mat imgDispInMat=cv::cvarrToMat((IplImage*)imgDispIn->getIplImage());
+        cv::Mat imgDispInMat=toCvMat(*imgDispIn);
 
         return getDepthSeed(imgDispInMat,seedPoint);
     }
