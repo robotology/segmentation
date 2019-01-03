@@ -18,112 +18,112 @@ class SegmentationModule_set_sigmaS : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_set_sigmaR : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_set_minRegion : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_set_gradWindRad : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_set_threshold : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_set_mixture : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_set_speedup : public yarp::os::Portable {
 public:
   SpeedUpLevelComm newSpeedLevel;
   void init(const SpeedUpLevelComm newSpeedLevel);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_get_sigmaS : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_get_sigmaR : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_get_minRegion : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_get_gradWindRad : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_get_threshold : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_get_mixture : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModule_get_speedup : public yarp::os::Portable {
 public:
   SpeedUpLevelComm _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 bool SegmentationModule_set_sigmaS::write(yarp::os::ConnectionWriter& connection) const {
@@ -745,7 +745,7 @@ bool SegmentationModule::read(yarp::os::ConnectionReader& connection) {
     if (reader.noMore()) { reader.fail(); return false; }
     std::string next_tag = reader.readTag();
     if (next_tag=="") break;
-    tag = tag + "_" + next_tag;
+    tag.append("_").append(next_tag);
   }
   return false;
 }
@@ -754,74 +754,74 @@ std::vector<std::string> SegmentationModule::help(const std::string& functionNam
   bool showAll=(functionName=="--all");
   std::vector<std::string> helpString;
   if(showAll) {
-    helpString.push_back("*** Available commands:");
-    helpString.push_back("set_sigmaS");
-    helpString.push_back("set_sigmaR");
-    helpString.push_back("set_minRegion");
-    helpString.push_back("set_gradWindRad");
-    helpString.push_back("set_threshold");
-    helpString.push_back("set_mixture");
-    helpString.push_back("set_speedup");
-    helpString.push_back("get_sigmaS");
-    helpString.push_back("get_sigmaR");
-    helpString.push_back("get_minRegion");
-    helpString.push_back("get_gradWindRad");
-    helpString.push_back("get_threshold");
-    helpString.push_back("get_mixture");
-    helpString.push_back("get_speedup");
-    helpString.push_back("help");
+    helpString.emplace_back("*** Available commands:");
+    helpString.emplace_back("set_sigmaS");
+    helpString.emplace_back("set_sigmaR");
+    helpString.emplace_back("set_minRegion");
+    helpString.emplace_back("set_gradWindRad");
+    helpString.emplace_back("set_threshold");
+    helpString.emplace_back("set_mixture");
+    helpString.emplace_back("set_speedup");
+    helpString.emplace_back("get_sigmaS");
+    helpString.emplace_back("get_sigmaR");
+    helpString.emplace_back("get_minRegion");
+    helpString.emplace_back("get_gradWindRad");
+    helpString.emplace_back("get_threshold");
+    helpString.emplace_back("get_mixture");
+    helpString.emplace_back("get_speedup");
+    helpString.emplace_back("help");
   }
   else {
     if (functionName=="set_sigmaS") {
-      helpString.push_back("void set_sigmaS(const double newValue) ");
+      helpString.emplace_back("void set_sigmaS(const double newValue) ");
     }
     if (functionName=="set_sigmaR") {
-      helpString.push_back("void set_sigmaR(const double newValue) ");
+      helpString.emplace_back("void set_sigmaR(const double newValue) ");
     }
     if (functionName=="set_minRegion") {
-      helpString.push_back("void set_minRegion(const double newValue) ");
+      helpString.emplace_back("void set_minRegion(const double newValue) ");
     }
     if (functionName=="set_gradWindRad") {
-      helpString.push_back("void set_gradWindRad(const double newValue) ");
+      helpString.emplace_back("void set_gradWindRad(const double newValue) ");
     }
     if (functionName=="set_threshold") {
-      helpString.push_back("void set_threshold(const double newValue) ");
+      helpString.emplace_back("void set_threshold(const double newValue) ");
     }
     if (functionName=="set_mixture") {
-      helpString.push_back("void set_mixture(const double newValue) ");
+      helpString.emplace_back("void set_mixture(const double newValue) ");
     }
     if (functionName=="set_speedup") {
-      helpString.push_back("void set_speedup(const SpeedUpLevelComm newSpeedLevel) ");
+      helpString.emplace_back("void set_speedup(const SpeedUpLevelComm newSpeedLevel) ");
     }
     if (functionName=="get_sigmaS") {
-      helpString.push_back("double get_sigmaS() ");
+      helpString.emplace_back("double get_sigmaS() ");
     }
     if (functionName=="get_sigmaR") {
-      helpString.push_back("double get_sigmaR() ");
+      helpString.emplace_back("double get_sigmaR() ");
     }
     if (functionName=="get_minRegion") {
-      helpString.push_back("double get_minRegion() ");
+      helpString.emplace_back("double get_minRegion() ");
     }
     if (functionName=="get_gradWindRad") {
-      helpString.push_back("double get_gradWindRad() ");
+      helpString.emplace_back("double get_gradWindRad() ");
     }
     if (functionName=="get_threshold") {
-      helpString.push_back("double get_threshold() ");
+      helpString.emplace_back("double get_threshold() ");
     }
     if (functionName=="get_mixture") {
-      helpString.push_back("double get_mixture() ");
+      helpString.emplace_back("double get_mixture() ");
     }
     if (functionName=="get_speedup") {
-      helpString.push_back("SpeedUpLevelComm get_speedup() ");
+      helpString.emplace_back("SpeedUpLevelComm get_speedup() ");
     }
     if (functionName=="help") {
-      helpString.push_back("std::vector<std::string> help(const std::string& functionName=\"--all\")");
-      helpString.push_back("Return list of available commands, or help message for a specific function");
-      helpString.push_back("@param functionName name of command for which to get a detailed description. If none or '--all' is provided, print list of available commands");
-      helpString.push_back("@return list of strings (one string per line)");
+      helpString.emplace_back("std::vector<std::string> help(const std::string& functionName=\"--all\")");
+      helpString.emplace_back("Return list of available commands, or help message for a specific function");
+      helpString.emplace_back("@param functionName name of command for which to get a detailed description. If none or '--all' is provided, print list of available commands");
+      helpString.emplace_back("@return list of strings (one string per line)");
     }
   }
-  if ( helpString.empty()) helpString.push_back("Command not found");
+  if ( helpString.empty()) helpString.emplace_back("Command not found");
   return helpString;
 }
 

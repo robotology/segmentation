@@ -19,56 +19,56 @@ class SegmentationModuleInterface_set_sigma : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModuleInterface_set_k : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModuleInterface_set_minRegion : public yarp::os::Portable {
 public:
   double newValue;
   void init(const double newValue);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModuleInterface_get_sigma : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModuleInterface_get_k : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModuleInterface_get_minRegion : public yarp::os::Portable {
 public:
   double _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModuleInterface_get_num_components : public yarp::os::Portable {
 public:
   std::int32_t _return;
   void init();
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 class SegmentationModuleInterface_get_component_around : public yarp::os::Portable {
@@ -76,8 +76,8 @@ public:
   Pixel objCenter;
   std::vector<Pixel>  _return;
   void init(const Pixel& objCenter);
-  virtual bool write(yarp::os::ConnectionWriter& connection) const override;
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool write(yarp::os::ConnectionWriter& connection) const override;
+  bool read(yarp::os::ConnectionReader& connection) override;
 };
 
 bool SegmentationModuleInterface_set_sigma::write(yarp::os::ConnectionWriter& connection) const {
@@ -473,7 +473,7 @@ bool SegmentationModuleInterface::read(yarp::os::ConnectionReader& connection) {
     if (reader.noMore()) { reader.fail(); return false; }
     std::string next_tag = reader.readTag();
     if (next_tag=="") break;
-    tag = tag + "_" + next_tag;
+    tag.append("_").append(next_tag);
   }
   return false;
 }
@@ -482,67 +482,67 @@ std::vector<std::string> SegmentationModuleInterface::help(const std::string& fu
   bool showAll=(functionName=="--all");
   std::vector<std::string> helpString;
   if(showAll) {
-    helpString.push_back("*** Available commands:");
-    helpString.push_back("set_sigma");
-    helpString.push_back("set_k");
-    helpString.push_back("set_minRegion");
-    helpString.push_back("get_sigma");
-    helpString.push_back("get_k");
-    helpString.push_back("get_minRegion");
-    helpString.push_back("get_num_components");
-    helpString.push_back("get_component_around");
-    helpString.push_back("help");
+    helpString.emplace_back("*** Available commands:");
+    helpString.emplace_back("set_sigma");
+    helpString.emplace_back("set_k");
+    helpString.emplace_back("set_minRegion");
+    helpString.emplace_back("get_sigma");
+    helpString.emplace_back("get_k");
+    helpString.emplace_back("get_minRegion");
+    helpString.emplace_back("get_num_components");
+    helpString.emplace_back("get_component_around");
+    helpString.emplace_back("help");
   }
   else {
     if (functionName=="set_sigma") {
-      helpString.push_back("void set_sigma(const double newValue) ");
-      helpString.push_back("Set sigma (smoothing) parameter for the algorithm ");
-      helpString.push_back("@param newValue new value for sigma parameter ");
+      helpString.emplace_back("void set_sigma(const double newValue) ");
+      helpString.emplace_back("Set sigma (smoothing) parameter for the algorithm ");
+      helpString.emplace_back("@param newValue new value for sigma parameter ");
     }
     if (functionName=="set_k") {
-      helpString.push_back("void set_k(const double newValue) ");
-      helpString.push_back("Set k (scale factor for boundary-detection threshold function) parameter for the algorithm ");
-      helpString.push_back("@param newValue new value for k parameter ");
+      helpString.emplace_back("void set_k(const double newValue) ");
+      helpString.emplace_back("Set k (scale factor for boundary-detection threshold function) parameter for the algorithm ");
+      helpString.emplace_back("@param newValue new value for k parameter ");
     }
     if (functionName=="set_minRegion") {
-      helpString.push_back("void set_minRegion(const double newValue) ");
-      helpString.push_back("Set minRegion parameter for the algorithm, i.e., the minimum size of any segmented component ");
-      helpString.push_back("@param newValue new value for minRegion parameter ");
+      helpString.emplace_back("void set_minRegion(const double newValue) ");
+      helpString.emplace_back("Set minRegion parameter for the algorithm, i.e., the minimum size of any segmented component ");
+      helpString.emplace_back("@param newValue new value for minRegion parameter ");
     }
     if (functionName=="get_sigma") {
-      helpString.push_back("double get_sigma() ");
-      helpString.push_back("Get sigma (smoothing) parameter for the algorithm ");
-      helpString.push_back("@return current value for sigma parameter ");
+      helpString.emplace_back("double get_sigma() ");
+      helpString.emplace_back("Get sigma (smoothing) parameter for the algorithm ");
+      helpString.emplace_back("@return current value for sigma parameter ");
     }
     if (functionName=="get_k") {
-      helpString.push_back("double get_k() ");
-      helpString.push_back("Get k (scale factor for boundary-detection threshold function) parameter for the algorithm ");
-      helpString.push_back("@return current value for k parameter ");
+      helpString.emplace_back("double get_k() ");
+      helpString.emplace_back("Get k (scale factor for boundary-detection threshold function) parameter for the algorithm ");
+      helpString.emplace_back("@return current value for k parameter ");
     }
     if (functionName=="get_minRegion") {
-      helpString.push_back("double get_minRegion() ");
-      helpString.push_back("Get minRegion parameter for the algorithm, i.e., the minimum size of any segmented component ");
-      helpString.push_back("@return current value for minRegion parameter ");
+      helpString.emplace_back("double get_minRegion() ");
+      helpString.emplace_back("Get minRegion parameter for the algorithm, i.e., the minimum size of any segmented component ");
+      helpString.emplace_back("@return current value for minRegion parameter ");
     }
     if (functionName=="get_num_components") {
-      helpString.push_back("std::int32_t get_num_components() ");
-      helpString.push_back("Get the number of segmented components that have been detected in the last provided image ");
-      helpString.push_back("@return number of segmented components ");
+      helpString.emplace_back("std::int32_t get_num_components() ");
+      helpString.emplace_back("Get the number of segmented components that have been detected in the last provided image ");
+      helpString.emplace_back("@return number of segmented components ");
     }
     if (functionName=="get_component_around") {
-      helpString.push_back("std::vector<Pixel>  get_component_around(const Pixel& objCenter) ");
-      helpString.push_back("Get the list of pixels corresponding to the component to which a given pixel belongs ");
-      helpString.push_back("@param objCenter a pixel belonging to the region of interest ");
-      helpString.push_back("@return list of pixels belonging to the same component as the input pixels ");
+      helpString.emplace_back("std::vector<Pixel>  get_component_around(const Pixel& objCenter) ");
+      helpString.emplace_back("Get the list of pixels corresponding to the component to which a given pixel belongs ");
+      helpString.emplace_back("@param objCenter a pixel belonging to the region of interest ");
+      helpString.emplace_back("@return list of pixels belonging to the same component as the input pixels ");
     }
     if (functionName=="help") {
-      helpString.push_back("std::vector<std::string> help(const std::string& functionName=\"--all\")");
-      helpString.push_back("Return list of available commands, or help message for a specific function");
-      helpString.push_back("@param functionName name of command for which to get a detailed description. If none or '--all' is provided, print list of available commands");
-      helpString.push_back("@return list of strings (one string per line)");
+      helpString.emplace_back("std::vector<std::string> help(const std::string& functionName=\"--all\")");
+      helpString.emplace_back("Return list of available commands, or help message for a specific function");
+      helpString.emplace_back("@param functionName name of command for which to get a detailed description. If none or '--all' is provided, print list of available commands");
+      helpString.emplace_back("@return list of strings (one string per line)");
     }
   }
-  if ( helpString.empty()) helpString.push_back("Command not found");
+  if ( helpString.empty()) helpString.emplace_back("Command not found");
   return helpString;
 }
 }} // namespace

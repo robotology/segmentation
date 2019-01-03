@@ -70,7 +70,7 @@ public:
    * @return list of pixels belonging to the same component as the input pixels
    */
   virtual std::vector<Pixel>  get_component_around(const Pixel& objCenter);
-  virtual bool read(yarp::os::ConnectionReader& connection) override;
+  bool read(yarp::os::ConnectionReader& connection) override;
   virtual std::vector<std::string> help(const std::string& functionName="--all");
 };
 
