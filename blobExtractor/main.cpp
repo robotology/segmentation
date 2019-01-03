@@ -404,7 +404,8 @@ public:
                 cog.x=(tl.x + br.x)>>1;
                 cog.y=(tl.y + br.y)>>1;     
         
-                getOrientations(image(cv::Rect(tl.x,tl.y,br.x-tl.x,br.y-tl.y)));
+                cv::Mat imageRoi=image(cv::Rect(tl.x,tl.y,br.x-tl.x,br.y-tl.y));
+                getOrientations(imageRoi);
             }
         }
         numBlobs = 0;
