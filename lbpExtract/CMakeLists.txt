@@ -32,8 +32,8 @@ source_group("DOC Files" FILES ${doc})
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_definitions(-D_USE_MATH_DEFINES)
 add_executable(${PROJECT_NAME} ${source} ${header} ${doc} ${idl} ${IDL_GEN_FILES})
+target_compile_definitions(${PROJECT_NAME} PRIVATE _USE_MATH_DEFINES)
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 yarp_install(FILES ${doc} DESTINATION ${ICUBCONTRIB_MODULES_INSTALL_DIR})
