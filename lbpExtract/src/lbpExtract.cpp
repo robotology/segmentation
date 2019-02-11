@@ -554,6 +554,18 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     // Find contours
     findContours( cleanedImg, cnt, hrch, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1 );
 
+    // Align contours with initial image
+    int alignOffsetX = (imgMat.cols - cleanedImg.cols) / 2;
+    int alignOffsetY = (imgMat.rows - cleanedImg.rows) / 2;
+    for( size_t i = 0; i < cnt.size(); i++ )
+    {
+        for( size_t j = 0; j < cnt[i].size(); j++ )
+        {
+            cnt[i][j].x += alignOffsetX;
+            cnt[i][j].y += alignOffsetY;
+        }
+    }
+
     // Get the moments
     std::vector<cv::Moments> mu(cnt.size() );
     for( size_t i = 0; i < cnt.size(); i++ )
