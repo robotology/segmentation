@@ -119,6 +119,19 @@ service lbpExtract_IDLServer
     bool setMinArea(1:i32 minArea);
 
     /**
+     * Gets the minimum width of the linear elements of the allowed blobs
+     * @return the current minimum width
+     **/
+    i32 getMinWidth();
+
+    /**
+     * Sets the minimum width of the linear elements of the allowed blobs
+     * @param minWidth, integer containing the minWidth
+     * @return true/false on success/failure
+     **/
+    bool setMinWidth(1:i32 minWidth);
+
+    /**
      * Gets the number of iteration for the grabCut segmentation algorithm
      * @return the current maximum arc length
      **/
