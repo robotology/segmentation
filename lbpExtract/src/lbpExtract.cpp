@@ -729,17 +729,17 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
         outTargetPort.write();
 
     outOrig.resize(imgMat.size().width, imgMat.size().height);
-    imgMat.copyTo(toCvMat(outOrig));
+    outOrig = fromCvMat<PixelRgb>(imgMat);
     outPortPropagate.setEnvelope(ts);
     outPortPropagate.write();
 
     outImg.resize(extracted.size().width, extracted.size().height);
-    extracted.copyTo(toCvMat(outImg));
+    outImg = fromCvMat<PixelRgb>(extracted);
     outPortBlobs.setEnvelope(ts);
     outPortBlobs.write();
 
     outSeg.resize(segmented.size().width, segmented.size().height);
-    segmented.copyTo(toCvMat(outSeg));
+    outSeg = fromCvMat<PixelRgb>(segmented);
     outPortSegmented.setEnvelope(ts);
     outPortSegmented.write();
 
@@ -749,12 +749,12 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     normalize(olbp, olbp, 0, 255, cv::NORM_MINMAX, CV_8UC1);
 
     outLbpContour.resize(norm.size().width, norm.size().height);
-    norm.copyTo(toCvMat(outLbpContour));
+    outLbpContour = fromCvMat<PixelMono>(norm);
     outPortLbpContours.setEnvelope(ts);
     outPortLbpContours.write();
 
     outLbp.resize(olbp.size().width, olbp.size().height);
-    olbp.copyTo(toCvMat(outLbp));
+    outLbp = fromCvMat<PixelMono>(olbp);
     outPortLbp.setEnvelope(ts);
     outPortLbp.write();
 }
