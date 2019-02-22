@@ -25,6 +25,7 @@
    <param default="400" desc="To specify the maximum arc length of the allowed blobs">maxArcLength</param>
    <param default="1000" desc="To specify the minimum area of the allowed blobs">minArea</param>
    <param default="3000" desc="To specify the maximum area of the allowed blobs">maxArea</param>
+   <param default="3" desc="To specify the minimum width of the linear element of the allowed blobs">minWidth</param>
    </arguments>
 
    <authors>

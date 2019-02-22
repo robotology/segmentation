@@ -50,8 +50,9 @@ bool SEGMENTModule::configure(yarp::os::ResourceFinder &rf){
     int maxL    = rf.check("maxArcLength",yarp::os::Value(1000)).asInt();
     int minA    = rf.check("minArea",yarp::os::Value(300)).asInt();
     int maxA    = rf.check("maxArea",yarp::os::Value(6000)).asInt();
+    int minW    = rf.check("minWidth",yarp::os::Value(3)).asInt();
 
-    segmentManager->setDefaultValues(rad, neigh, topB, minL, maxL, iter, minA, maxA);
+    segmentManager->setDefaultValues(rad, neigh, topB, minL, maxL, iter, minA, maxA, minW);
 
     /* now start the thread to do the work */
     segmentManager->open();
@@ -147,6 +148,12 @@ bool SEGMENTModule::setMaxArea(const int32_t maxArea){
 }
 
 /**********************************************************/
+bool SEGMENTModule::setMinWidth(const int32_t minWidth){
+    segmentManager->setMinWidth(minWidth);
+    return true;
+}
+
+/**********************************************************/
 bool SEGMENTModule::setNumIteration(const int32_t numIteration){
     segmentManager->setNumIteration(numIteration);
     return true;
@@ -214,6 +221,11 @@ int SEGMENTModule::getMaxArea(){
 }
 
 /**********************************************************/
+int SEGMENTModule::getMinWidth(){
+    return segmentManager->getMinWidth();
+}
+
+/**********************************************************/
 int SEGMENTModule::getNumIteration(){
     return segmentManager->getNumIteration();
 }
@@ -240,7 +252,7 @@ SEGMENTManager::SEGMENTManager( const std::string &moduleName ){
 }
 
 /**********************************************************/
-bool SEGMENTManager::setDefaultValues(const int32_t radius, const int32_t neighbours, const int32_t topBound, const int32_t minArcLength, const int32_t maxArcLength, const int32_t numIteration, const int32_t minArea, const int32_t maxArea){
+bool SEGMENTManager::setDefaultValues(const int32_t radius, const int32_t neighbours, const int32_t topBound, const int32_t minArcLength, const int32_t maxArcLength, const int32_t numIteration, const int32_t minArea, const int32_t maxArea, const int32_t minWidth){
 
     defaultRadius       = radius;
     defaultNeighbours   = neighbours;
@@ -250,6 +262,7 @@ bool SEGMENTManager::setDefaultValues(const int32_t radius, const int32_t neighb
     defaultNumIteration = numIteration;
     defaultMinArea      = minArea;
     defaultMaxArea      = maxArea;
+    defaultMinWidth     = minWidth;
 
     return true;
 }
@@ -278,12 +291,14 @@ bool SEGMENTManager::open(){
 
     minArea = defaultMinArea;
     maxArea = defaultMaxArea;
-    
+
+    minWidth = defaultMinWidth;
+
     bbOffset = 0;
 
     verbose = false;
 
-    yInfo("Module started with the following default values:\nradius: %d, neighbours %d, minArcLength %d, maxArcLength, %d, minArea %d, maxArea, %d, topBound %d, numIteration %d", radius, neighbours, minArcLength, maxArcLength, minArea, maxArea, topBound, numIteration);
+    yInfo("Module started with the following default values:\nradius: %d, neighbours %d, minArcLength %d, maxArcLength %d, minArea %d, maxArea %d, minWidth %d, topBound %d, numIteration %d", radius, neighbours, minArcLength, maxArcLength, minArea, maxArea, minWidth, topBound, numIteration);
 
     return true;
 }
@@ -357,6 +372,12 @@ bool SEGMENTManager::setMaxArea(const int32_t maxArea){
 }
 
 /**********************************************************/
+bool SEGMENTManager::setMinWidth(const int32_t minWidth){
+    this->minWidth = minWidth;
+    return true;
+}
+
+/**********************************************************/
 bool SEGMENTManager::setNumIteration(const int32_t numIteration){
     this->numIteration = numIteration;
     return true;
@@ -377,6 +398,7 @@ bool SEGMENTManager::resetAllValues(){
     maxArcLength = defaultMaxArcLength;
     minArea = defaultMinArea;
     maxArea = defaultMaxArea;
+    minWidth = defaultMinWidth;
     bbOffset = 0;
     return true;
 }
@@ -421,6 +443,11 @@ int SEGMENTManager::getMinArea(){
 /**********************************************************/
 int SEGMENTManager::getMaxArea(){
     return this->maxArea;
+}
+
+/**********************************************************/
+int SEGMENTManager::getMinWidth(){
+    return this->minWidth;
 }
 
 /**********************************************************/
@@ -551,8 +578,38 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
     cv::Mat structuringElement = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
     cv::morphologyEx( cleanedImg, cleanedImg, cv::MORPH_CLOSE, structuringElement );
 
-    // Find contours
+    // Find contours and trim blobs according to radius size
+    if(radius > 1)
+    {
+        findContours( cleanedImg, cnt, hrch, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1 );
+        cv::fillPoly( cleanedImg, cnt, 255);
+        structuringElement = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(2*radius-1, 2*radius-1));
+        cv::morphologyEx( cleanedImg, cleanedImg, cv::MORPH_ERODE, structuringElement );
+    }
+
+    // Find new clean contours and further remove parts that are too thin
+    if(minWidth > 0)
+    {
+        findContours( cleanedImg, cnt, hrch, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1 );
+        cv::fillPoly( cleanedImg, cnt, 255);
+        structuringElement = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(minWidth, minWidth));
+        cv::morphologyEx( cleanedImg, cleanedImg, cv::MORPH_OPEN, structuringElement );
+    }
+
+    // Find final clean contours
     findContours( cleanedImg, cnt, hrch, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1 );
+
+    // Align contours with initial image
+    int alignOffsetX = (imgMat.cols - cleanedImg.cols) / 2;
+    int alignOffsetY = (imgMat.rows - cleanedImg.rows) / 2;
+    for( size_t i = 0; i < cnt.size(); i++ )
+    {
+        for( size_t j = 0; j < cnt[i].size(); j++ )
+        {
+            cnt[i][j].x += alignOffsetX;
+            cnt[i][j].y += alignOffsetY;
+        }
+    }
 
     // Get the moments
     std::vector<cv::Moments> mu(cnt.size() );
@@ -679,39 +736,39 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
             boundRectSeg[i] = boundingRect( cv::Mat(contours_polySeg[i]) );
 
             yarp::os::Bottle &t=b.addList();
-            
+
             if (bbOffset < 0)
                 bbOffset = 0;
-            
+
             double topLeftX = boundRectSeg[i].tl().x - bbOffset;
             double topLeftY = boundRectSeg[i].tl().y - bbOffset;
             double bottomRightX = boundRectSeg[i].br().x + bbOffset;
             double bottomRightY = boundRectSeg[i].br().y + bbOffset;
 
             yDebug("%lf %lf %lf %lf \n", topLeftX, topLeftY,  bottomRightX,  bottomRightY);
-        
+
             int shift = 3;
-            
+
             if (topLeftX < shift)
                 topLeftX = shift;
-            
+
             if (topLeftY < shift)
                 topLeftY = shift;
-            
+
             if (bottomRightX > img.width()-3)
                 bottomRightX = img.width()-3;
-            
+
             if (bottomRightY > img.height()-3)
                 bottomRightY = img.height()-3;
-            
+
             t.addDouble(topLeftX);
             t.addDouble(topLeftY);
             t.addDouble(bottomRightX);
             t.addDouble(bottomRightY);
-            
+
             /*cv::Point tl = cv::Point( (topLeftX), (topLeftY) );
             cv::Point br = cv::Point( (bottomRightX), (bottomRightY) );
-            
+
             line(segmented, cv::Point( tl.x, tl.y ), cv::Point( br.x, tl.y ),cv::Scalar(255,255,255), 1, 8);
             line(segmented, cv::Point( br.x, tl.y ), cv::Point( br.x, br.y ),cv::Scalar(255,255,255), 1, 8);
             line(segmented, cv::Point( br.x, br.y ), cv::Point( tl.x, br.y ),cv::Scalar(255,255,255), 1, 8);
