@@ -24,7 +24,6 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
 #include <yarp/os/Stamp.h>
-#include <yarp/os/Semaphore.h>
 
 #include <yarp/sig/Vector.h>
 #include <yarp/sig/Image.h>
@@ -32,6 +31,7 @@
 #include <time.h>
 #include <string>
 #include <iostream>
+#include <mutex>
 
 #include "dispBlobber.hpp"
 
@@ -85,7 +85,7 @@ public:
     bool        setMargin(int mrg);
     bool        setThresh(int low);
 
-    yarp::os::Semaphore mutex;
+    std::mutex  mtx;
        
 };
 

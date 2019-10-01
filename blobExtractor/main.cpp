@@ -105,7 +105,6 @@
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/RFModule.h>
 #include <yarp/os/PeriodicThread.h>
-#include <yarp/os/Semaphore.h>
 #include <yarp/os/Stamp.h>
 
 #include <yarp/sig/Image.h>
@@ -120,6 +119,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <mutex>
 
 using namespace std;
 using namespace yarp::os;
@@ -148,8 +148,8 @@ private:
     int                              maxHeight;
     int                              maxWidth;
                                      
-    Semaphore                        mutex;
-    Semaphore                        contours;
+    mutex                            mtx;
+    mutex                            contours;
     Bottle                           blobs;
     Bottle                           non_blobs;
                                      
@@ -209,9 +209,8 @@ public:
 
     virtual void setThreshold(double newThreshold)
     {
-        mutex.wait();
+        lock_guard<mutex> lg(mtx);
         thresh = newThreshold;
-        mutex.post();
     }
 
     virtual void run()
@@ -231,7 +230,7 @@ public:
             cv::erode(gray,gray,cv::Mat(),cv::Point(-1,-1),erode_itr);
             cv::dilate(gray,gray,cv::Mat(),cv::Point(-1,-1),dilate_itr);
 
-            mutex.wait();
+            lock_guard<mutex> lg(mtx);
             blobs.clear();
             non_blobs.clear();
 
@@ -291,9 +290,8 @@ public:
 
             if (details=="on")
             {
-                contours.wait();
+                lock_guard<mutex> lg(contours);
                 processImg(gray);
-                contours.post(); 
             }
             
             port_o_img.setEnvelope(ts);
@@ -317,8 +315,6 @@ public:
                 port_o_clean.setEnvelope(ts);
                 port_o_clean.write(sendImg);
             }
-
-            mutex.post();
         }
     }
 
@@ -336,25 +332,22 @@ public:
     {
         if(command.get(0).asVocab()==Vocab::encode("thresh"))
         {
-            mutex.wait();
+            lock_guard<mutex> lg(mtx);
             thresh = command.get(1).asDouble();
-            mutex.post();
             reply.addVocab(Vocab::encode("ok"));
             return true;
         }
         if(command.get(0).asVocab()==Vocab::encode("erode"))
         {
-            mutex.wait();
+            lock_guard<mutex> lg(mtx);
             erode_itr = command.get(1).asInt();
-            mutex.post();
             reply.addVocab(Vocab::encode("ok"));
             return true;
         }
         if(command.get(0).asVocab()==Vocab::encode("dilate"))
         {
-            mutex.wait();
+            lock_guard<mutex> lg(mtx);
             dilate_itr = command.get(1).asInt();
-            mutex.post();
             reply.addVocab(Vocab::encode("ok"));
             return true;
         }

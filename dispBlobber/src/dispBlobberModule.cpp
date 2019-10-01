@@ -295,7 +295,7 @@ bool DispBlobberPort::setMargin(int mrg)
 
 void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
 {
-    mutex.wait();
+    lock_guard<mutex> lg(mtx);
 
     /* Get the envelope from the input image */
 
@@ -500,8 +500,5 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
     }
 
     imagesMatBuffer.erase(imagesMatBuffer.begin());
-
-    mutex.post();
-
 }
 

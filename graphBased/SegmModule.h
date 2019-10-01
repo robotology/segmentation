@@ -9,13 +9,14 @@
 #ifndef __SEGMMODULE__
 #define __SEGMMODULE__
 
+#include <mutex>
+
 // yarp
 #include <yarp/os/all.h>
 #include <yarp/sig/all.h>
 #include <yarp/os/RFModule.h>
 #include <yarp/os/ResourceFinder.h>
 #include <yarp/os/Stamp.h>
-#include <yarp/os/Semaphore.h>
 
 /**
  *
@@ -40,7 +41,7 @@ private:
     image<rgb> *input;
     image<rgb> *seg;
     
-    yarp::os::Semaphore segMutex;
+    std::mutex segMutex;
     
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >       _imgPort;      //input image
   //  yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >       _rawPort;      //raw image 

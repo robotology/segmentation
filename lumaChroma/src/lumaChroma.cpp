@@ -216,10 +216,9 @@ bool PROCThread::open()
 
 void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img) 
 {
-    mutex.wait();
+    lock_guard<mutex> lg(mtx);
     if(check)
     {
-        mutex.post();
         return;
     }
 
@@ -350,8 +349,6 @@ void PROCThread::onRead(ImageOf<yarp::sig::PixelRgb> &img)
         defaultPortOut.write();
         imageOutPort.write();
     }
-
-    mutex.post();
 }
 
 void PROCThread::allocate( ImageOf<PixelRgb> &img )
@@ -426,7 +423,7 @@ void PROCThread::deallocate( )
 void PROCThread::close() 
 {
     cout << "now closing ports..." << endl;
-    mutex.wait();
+    lock_guard<mutex> lg(mtx);
     imageOutPort.close();
     imageOutPort1.close();
     imageOutPort2.close();
@@ -437,13 +434,12 @@ void PROCThread::close()
     deallocate();
     cout << "deallocated all attempting to close read port..." << endl;
     BufferedPort<ImageOf<PixelRgb> >::close();
-    mutex.post();
     cout << "finished closing the read port..." << endl;
 }
 
 void PROCThread::interrupt()
 {
-    mutex.wait();
+    lock_guard<mutex> lg(mtx);
     check=true;
     cout << "cleaning up..." << endl;
     cout << "attempting to interrupt ports" << endl;
@@ -459,7 +455,6 @@ void PROCThread::interrupt()
     
     BufferedPort<ImageOf<PixelRgb> >::interrupt();
     cout << "finished interrupt ports" << endl;
-    mutex.post();
 }
 
 ImageOf<PixelRgb>* PROCThread::extender(ImageOf<PixelRgb>& inputOrigImage, int maxSize) 

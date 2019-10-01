@@ -20,6 +20,7 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <mutex>
 
 #include <opencv2/opencv.hpp>
 #include <opencv/cv.h>
@@ -54,7 +55,7 @@ protected:
     int downsampling;
     double spatial_distance;
     int color_distance;
-    Mutex mutex;    
+    mutex mtx;    
     bool polygon,flood3d,flood,seg;
     bool seedAuto;
     bool saving;
@@ -80,7 +81,7 @@ protected:
         cout << " Read: " << data.toString() << endl;
         if (data.size()>=2)
         {
-            LockGuard lg(mutex);
+            lock_guard<mutex> lg(mtx);
             cv::Point point(data.get(0).asInt(),data.get(1).asInt());
             contour.push_back(point);
             if (contour.size()>12){
@@ -190,7 +191,7 @@ public:
         if (imgIn==NULL)
             return false;
 
-        LockGuard lg(mutex);
+        lock_guard<mutex> lg(mtx);
         
         ImageOf<PixelRgb> &imgDispOut=portDispOut.prepare();
         imgDispOut.resize(imgDispIn->width(),imgDispIn->height());
@@ -778,7 +779,7 @@ public:
                 reply.addVocab(nack);
             else
             {
-                LockGuard lg(mutex);
+                lock_guard<mutex> lg(mtx);
                 if (cmd=="polygon")
                 {
                     if (contour.size()>2)

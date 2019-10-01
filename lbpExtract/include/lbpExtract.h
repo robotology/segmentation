@@ -24,7 +24,6 @@
 #include <yarp/os/Thread.h>
 #include <yarp/os/PeriodicThread.h>
 #include <yarp/os/Time.h>
-#include <yarp/os/Semaphore.h>
 #include <yarp/os/Stamp.h>
 #include <yarp/os/RpcClient.h>
 #include <yarp/sig/Vector.h>
@@ -35,6 +34,7 @@
 #include <iostream>
 #include <iomanip>
 #include <map>
+#include <mutex>
 
 #include <cstdio>
 #include <cstdlib>
@@ -78,7 +78,7 @@ private:
     cv::Mat segmented;
     yarp::os::Bottle allPoints;
     yarp::os::Bottle& getComponents(cv::Mat &img, int x, int y);
-    yarp::os::Mutex semComp;
+    std::mutex semComp;
     
 public:
     
@@ -90,7 +90,7 @@ public:
     SEGMENTManager( const std::string &moduleName );
     ~SEGMENTManager();
     
-    yarp::os::Semaphore         mutex;
+    std::mutex mtx;
 
     bool    open();
     void    close();

@@ -72,7 +72,7 @@ std::vector< Pixel > GBSegmModule::get_component_around(const Pixel& objCenter)
 {
     vector<Pixel> result;
     result.clear();
-    segMutex.wait();
+    lock_guard<mutex> lg(segMutex);
     rgb componentColor = imRef(seg, objCenter.x, objCenter.y);
     for (int y = 0; y < seg->height(); y++) {
 
@@ -86,10 +86,7 @@ std::vector< Pixel > GBSegmModule::get_component_around(const Pixel& objCenter)
 
         }
 
-    
-    segMutex.post();
     return result;
-
 }
 
 
@@ -224,11 +221,11 @@ bool GBSegmModule::updateModule()
     cout << "converting image of size " << yrpImgIn->width() << yrpImgIn->height() <<" to size" << input->width() << input->height() << endl;
     YarpImageToRGBImage(input, yrpImgIn);
     cout << "converted" << endl;
-    segMutex.wait();
+    segMutex.lock();
     if(seg)
         delete seg;
     seg=segment_image(input, sigma, k, min_size, &num_components);
-    segMutex.post();
+    segMutex.unlock();
     
     cout << "processed" << endl;
     //prepare timestamps

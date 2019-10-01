@@ -21,13 +21,13 @@
 
 #include <iostream>
 #include <string>
+#include <mutex>
 
 #include <yarp/sig/Image.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
-#include <yarp/os/Semaphore.h>
 
 #include <opencv2/opencv.hpp>
 
@@ -67,7 +67,7 @@ private:
     bool allocated;                 // flag to check if the variables have been already allocated
     bool isYUV;                     // flag to check which process to run (YUV or HSV)
 
-    yarp::os::Semaphore   mutex;
+    std::mutex mtx;
     CentSur * centerSurr; 
     cv::Mat orig, uvimg, csTot32f;
 
