@@ -11,7 +11,7 @@ find_package(OpenCV REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 
 set(generated_libs_dir "${CMAKE_CURRENT_SOURCE_DIR}")
-yarp_idl_to_dir(EDISONsegmentation.thrift ${generated_libs_dir})
+yarp_idl_to_dir(INPUT_FILES EDISONsegmentation.thrift OUTPUT_DIR ${generated_libs_dir})
 
 include(ICUBcontribOptions)
 include(ICUBcontribHelpers)

@@ -11,7 +11,7 @@
 // This is an automatically generated file.
 // It could get re-generated if the ALLOW_IDL_GENERATION flag is on.
 
-#include <Pixel.h>
+#include <yarp/sig/Pixel.h>
 
 namespace yarp {
 namespace sig {
