@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.5)
 project(seg2cloud)
 
 find_package(ICUBcontrib REQUIRED)
-find_package(YARP 3.1.100 REQUIRED COMPONENTS OS sig math cv)
+find_package(YARP 3.3.0 REQUIRED COMPONENTS os sig math cv)
 find_package(OpenCV REQUIRED)
 
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})

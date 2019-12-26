@@ -6,7 +6,7 @@ add_subdirectory(edisonlib)
 project(EdisonSegmentation)
 
 find_package(ICUBcontrib REQUIRED)
-find_package(YARP 3.1.100 REQUIRED COMPONENTS OS sig cv)
+find_package(YARP 3.3.0 REQUIRED COMPONENTS os sig cv)
 find_package(OpenCV REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 
