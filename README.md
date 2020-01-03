@@ -1,9 +1,11 @@
-segmentation
+Segmentation
 ============
 
 Components for image segmentation
 
 [![ZenHub](https://img.shields.io/badge/Shipping_faster_with-ZenHub-435198.svg)](https://zenhub.com)
+
+![gh-pages](https://github.com/robotology/segmentation/workflows/GitHub%20Pages/badge.svg)
 
 ## Installation
 
