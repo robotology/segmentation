@@ -62,7 +62,7 @@ private:
     yarp::sig::ImageOf<yarp::sig::PixelMono>  *img_out_UV;     // output image, also reused for hsv
     yarp::sig::ImageOf<yarp::sig::PixelMono>  *img_out_V;      // output image, only used for hsv
 
-    CvSize srcsize, origsize;       // sises used for calculations
+    cv::Size srcsize, origsize;     // sises used for calculations
     int ncsscale;                   // center surround scale
     bool allocated;                 // flag to check if the variables have been already allocated
     bool isYUV;                     // flag to check which process to run (YUV or HSV)

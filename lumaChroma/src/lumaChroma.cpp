@@ -18,9 +18,9 @@
 
 #include <yarp/cv/Cv.h>
 #include "lumaChroma.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 const int KERNSIZEMAX = 9;
 

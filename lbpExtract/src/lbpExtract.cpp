@@ -15,6 +15,7 @@
  * Public License for more details
  */
 
+#include <opencv2/core.hpp>
 #include <yarp/cv/Cv.h>
 #include "lbpExtract.h"
 
@@ -495,7 +496,7 @@ yarp::os::Bottle& SEGMENTManager::getComponents(cv::Mat &img, int x, int y)
     for( size_t i = 0; i< objcnt.size(); i++ )
     {
         if (pointPolygonTest( objcnt[i], cv::Point2f(x, y), 1 ) > 0)
-            cv::drawContours( inside, objcnt, i, cvScalar(255,255,355), CV_FILLED, 8, objhrch, 0, cv::Point() );
+            cv::drawContours( inside, objcnt, i, cvScalar(255,255,355), cv::FILLED, 8, objhrch, 0, cv::Point() );
     }
 
     cv::findNonZero(inside, nonZeroCoordinates);
@@ -730,7 +731,7 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
 
         if (area > minArea)
         {
-            cv::drawContours( extracted, objcnt, i, cvScalar(255,255,255), CV_FILLED, 8, objhrch, 0, cv::Point() );
+            cv::drawContours( extracted, objcnt, i, cvScalar(255,255,255), cv::FILLED, 8, objhrch, 0, cv::Point() );
 
             approxPolyDP( cv::Mat(objcnt[i]), contours_polySeg[i], 3, true );
             boundRectSeg[i] = boundingRect( cv::Mat(contours_polySeg[i]) );

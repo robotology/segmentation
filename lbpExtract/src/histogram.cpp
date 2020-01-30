@@ -19,6 +19,7 @@
  * Public License for more details
  */
 
+#include <opencv2/core/core_c.h>
 #include "histogram.h"
 #include <vector>
 

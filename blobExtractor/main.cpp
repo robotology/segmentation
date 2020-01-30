@@ -112,6 +112,7 @@
 
 #include <yarp/cv/Cv.h>
 
+#include <opencv2/core.hpp>
 #include <opencv2/opencv.hpp>
 
 #include <string>
@@ -469,7 +470,7 @@ public:
                 pt1.y = cvRound(line[3] - line[1] *t );
                 pt2.x = cvRound(line[2] + line[0] *t );
                 pt2.y = cvRound(line[3] + line[1] *t );
-                cv::line(image,pt1,pt2,cv::Scalar(255,255,255),2,CV_AA);
+                cv::line(image,pt1,pt2,cv::Scalar(255,255,255),2,cv::LINE_AA);
                 thetatmp = 0.0;
                 thetatmp = (180.0/M_PI) * atan2( (double)(pt2.y - pt1.y) , (double)(pt2.x - pt1.x) );
                 
