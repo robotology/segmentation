@@ -72,7 +72,6 @@ int main(int argc, char *argv[])
         return 1;
 
     ResourceFinder rf;
-    rf.setVerbose(true);
     rf.setDefaultContext("graphBasedSegm");
     rf.setDefaultConfigFile("config.ini");
     rf.configure(argc,argv);

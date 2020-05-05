@@ -580,7 +580,6 @@ int main(int argc, char *argv[])
         return 1;
 
     ResourceFinder rf;
-    rf.setVerbose(true);
     rf.setDefaultContext("blobExtractor");
     rf.setDefaultConfigFile("config.ini");
     rf.setDefault("name","blobExtractor");

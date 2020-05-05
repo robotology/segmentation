@@ -155,7 +155,6 @@ int main(int argc, char *argv[])
         return 1;
 
     ResourceFinder rf;
-    rf.setVerbose(true);
     rf.setDefaultContext("edisonSegm");
     rf.setDefaultConfigFile("config.ini");
     rf.configure(argc,argv);

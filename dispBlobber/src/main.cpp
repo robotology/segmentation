@@ -26,7 +26,6 @@ int main(int argc, char * argv[])
         return 1;
 
     ResourceFinder rf;
-    rf.setVerbose( true );
     rf.setDefaultContext( "dispBlobber" );
     rf.setDefaultConfigFile( "dispBlobber.ini" );
     rf.setDefault("name","dispBlobber");
