@@ -23,7 +23,6 @@
 #include <mutex>
 
 #include <opencv2/opencv.hpp>
-#include <opencv/cv.h>
 #include <opencv2/highgui/highgui.hpp>
 
 #include <yarp/os/all.h>
@@ -507,7 +506,9 @@ public:
 
         }else if (fileFormat == "none"){
             cout << "Points not saved" << endl;
+            return false;
         }
+        return true;
     }
 
 
