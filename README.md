@@ -17,7 +17,7 @@ Components for image segmentation
 
 ## Documentation
 
-Online documentation is available here: [http://robotology.github.com/segmentation](http://robotology.github.com/segmentation).
+Online documentation is available here: http://robotology.github.io/segmentation.
 
 ## License
 
