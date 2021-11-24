@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.5)
 project(dispBlobber)
 
 find_package(ICUBcontrib REQUIRED)
-find_package(YARP 3.3.0 REQUIRED COMPONENTS os sig cv)
+find_package(YARP 3.5.1 REQUIRED COMPONENTS os sig cv)
 find_package(OpenCV REQUIRED)
 
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})

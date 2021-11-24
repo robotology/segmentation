@@ -122,9 +122,9 @@ bool GBSegmModule::configure (yarp::os::ResourceFinder &rf)
 
 
     //override defaults if specified - TODO: range checking
-    if(rf.check("sigma")) sigma = (float)rf.find("sigma").asDouble();      
-    if(rf.check("k")) k = (float)rf.find("k").asDouble();      
-    if(rf.check("minRegion")) min_size = rf.find("minRegion").asInt();  
+    if(rf.check("sigma")) sigma = (float)rf.find("sigma").asFloat64();      
+    if(rf.check("k")) k = (float)rf.find("k").asFloat64();      
+    if(rf.check("minRegion")) min_size = rf.find("minRegion").asInt32();  
 
     std::string slash="/";
     _imgPort.open(slash + getName("/rawImg:i"));

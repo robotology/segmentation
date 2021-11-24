@@ -43,15 +43,15 @@ bool SEGMENTModule::configure(yarp::os::ResourceFinder &rf){
     /* create the thread and pass pointers to the module parameters */
     segmentManager = new SEGMENTManager( moduleName );
 
-    int rad     = rf.check("radius",yarp::os::Value(5)).asInt();
-    int iter    = rf.check("numIteration",yarp::os::Value(5)).asInt();
-    int neigh   = rf.check("neighbours",yarp::os::Value(8)).asInt();
-    int topB    = rf.check("topBound",yarp::os::Value(40)).asInt();
-    int minL    = rf.check("minArcLength",yarp::os::Value(75)).asInt();
-    int maxL    = rf.check("maxArcLength",yarp::os::Value(1000)).asInt();
-    int minA    = rf.check("minArea",yarp::os::Value(300)).asInt();
-    int maxA    = rf.check("maxArea",yarp::os::Value(6000)).asInt();
-    int minW    = rf.check("minWidth",yarp::os::Value(3)).asInt();
+    int rad     = rf.check("radius",yarp::os::Value(5)).asInt32();
+    int iter    = rf.check("numIteration",yarp::os::Value(5)).asInt32();
+    int neigh   = rf.check("neighbours",yarp::os::Value(8)).asInt32();
+    int topB    = rf.check("topBound",yarp::os::Value(40)).asInt32();
+    int minL    = rf.check("minArcLength",yarp::os::Value(75)).asInt32();
+    int maxL    = rf.check("maxArcLength",yarp::os::Value(1000)).asInt32();
+    int minA    = rf.check("minArea",yarp::os::Value(300)).asInt32();
+    int maxA    = rf.check("maxArea",yarp::os::Value(6000)).asInt32();
+    int minW    = rf.check("minWidth",yarp::os::Value(3)).asInt32();
 
     segmentManager->setDefaultValues(rad, neigh, topB, minL, maxL, iter, minA, maxA, minW);
 
@@ -503,8 +503,8 @@ yarp::os::Bottle& SEGMENTManager::getComponents(cv::Mat &img, int x, int y)
 
     for (size_t i = 0; i < nonZeroCoordinates.total(); i++ ) {
         yarp::os::Bottle &subjList = allPoints.addList();
-        subjList.addInt(nonZeroCoordinates.at<cv::Point>(i).x);
-        subjList.addInt(nonZeroCoordinates.at<cv::Point>(i).y);
+        subjList.addInt32(nonZeroCoordinates.at<cv::Point>(i).x);
+        subjList.addInt32(nonZeroCoordinates.at<cv::Point>(i).y);
     }
 
     return allPoints;
@@ -644,10 +644,10 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
             boundRect[i] = boundingRect( cv::Mat(contours_poly[i]) );
 
             /*yarp::os::Bottle &t=b.addList();
-            t.addDouble(boundRect[i].tl().x);
-            t.addDouble(boundRect[i].tl().y);
-            t.addDouble(boundRect[i].br().x);
-            t.addDouble(boundRect[i].br().y);*/
+            t.addFloat64(boundRect[i].tl().x);
+            t.addFloat64(boundRect[i].tl().y);
+            t.addFloat64(boundRect[i].br().x);
+            t.addFloat64(boundRect[i].br().y);*/
 
             double topLeftX = boundRect[i].tl().x;
             double topLeftY = boundRect[i].tl().y;
@@ -762,10 +762,10 @@ void SEGMENTManager::onRead(ImageOf<yarp::sig::PixelRgb> &img){
             if (bottomRightY > img.height()-3)
                 bottomRightY = img.height()-3;
 
-            t.addDouble(topLeftX);
-            t.addDouble(topLeftY);
-            t.addDouble(bottomRightX);
-            t.addDouble(bottomRightY);
+            t.addFloat64(topLeftX);
+            t.addFloat64(topLeftY);
+            t.addFloat64(bottomRightX);
+            t.addFloat64(bottomRightY);
 
             /*cv::Point tl = cv::Point( (topLeftX), (topLeftY) );
             cv::Point br = cv::Point( (bottomRightX), (bottomRightY) );

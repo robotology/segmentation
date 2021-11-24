@@ -93,34 +93,34 @@ bool DispBlobberModule::respond(const Bottle &command, Bottle &reply)
 
     if (receivedCmd == "margin")
     {
-        bool ok = blobPort->setMargin(command.get(1).asInt());
+        bool ok = blobPort->setMargin(command.get(1).asInt32());
         if (ok)
-            responseCode = Vocab::encode("ack");
+            responseCode = Vocab32::encode("ack");
             else
             {
                 fprintf(stdout,"Margin for ROI cannot be set. \n");
-                responseCode = Vocab::encode("nack");
+                responseCode = Vocab32::encode("nack");
             }
-        reply.addVocab(responseCode);
+        reply.addVocab32(responseCode);
         return true;
     }
     if (receivedCmd == "thresh")
     {
-        bool ok = blobPort->setThresh(command.get(1).asInt());
+        bool ok = blobPort->setThresh(command.get(1).asInt32());
         if (ok)
-            responseCode = Vocab::encode("ack");
+            responseCode = Vocab32::encode("ack");
         else {
             fprintf(stdout,"Threshold cannot be set. \n");
-            responseCode = Vocab::encode("nack");
+            responseCode = Vocab32::encode("nack");
         }
-        reply.addVocab(responseCode);
+        reply.addVocab32(responseCode);
         return true;
     }
     else if (receivedCmd == "help")
     {
-        reply.addVocab(Vocab::encode("many"));
+        reply.addVocab32("many");
 
-        responseCode = Vocab::encode("ack");
+        responseCode = Vocab32::encode("ack");
 
         reply.addString("Available commands are:");
         reply.addString("margin (int) - sets the margin (in pixels) that the ROI keeps around the closest blob.");
@@ -128,14 +128,14 @@ bool DispBlobberModule::respond(const Bottle &command, Bottle &reply)
         reply.addString("help - produces this help.");
         reply.addString("quit - closes the module.");
         
-        reply.addVocab(responseCode);
+        reply.addVocab32(responseCode);
         return true;
     }
     else if (receivedCmd == "quit")
     {
-        responseCode = Vocab::encode("ack");
+        responseCode = Vocab32::encode("ack");
 
-        reply.addVocab(responseCode);
+        reply.addVocab32(responseCode);
 
         closing = true;
         return true;
@@ -160,12 +160,12 @@ DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
 
     fprintf(stdout,"Parsing parameters...\n");
 
-    int imH = moduleRF->check("imH", Value(240)).asInt();
-    int imW = moduleRF->check("imW", Value(320)).asInt();
+    int imH = moduleRF->check("imH", Value(240)).asInt32();
+    int imW = moduleRF->check("imW", Value(320)).asInt32();
 
-    int bufferSize = moduleRF->check("bufferSize", Value(1)).asInt();
+    int bufferSize = moduleRF->check("bufferSize", Value(1)).asInt32();
 
-    int margin = moduleRF->check("margin", Value(20)).asInt();
+    int margin = moduleRF->check("margin", Value(20)).asInt32();
     cropSize = 0;
 
     if (rf.check("cropSize"))
@@ -174,21 +174,21 @@ DispBlobberPort::DispBlobberPort( const string &_moduleName, ResourceFinder &rf)
 
         if (!vCropSize.isString())
         {
-            cropSize = vCropSize.asInt();
+            cropSize = vCropSize.asInt32();
             margin = 0; // not used in this case
         }
     }
 
     // threshold of intensity of the image under which info is ignored
-    int backgroundThresh = moduleRF->check("backgroundThresh", Value(30)).asInt();
+    int backgroundThresh = moduleRF->check("backgroundThresh", Value(30)).asInt32();
    
-    int minBlobSize = moduleRF->check("minBlobSize", Value(300)).asInt();
-    int maxBlobSize = moduleRF->check("maxBlobSize", Value(2000)).asInt();
+    int minBlobSize = moduleRF->check("minBlobSize", Value(300)).asInt32();
+    int maxBlobSize = moduleRF->check("maxBlobSize", Value(2000)).asInt32();
 
-    int gaussSize = moduleRF->check("gaussSize", Value(5)).asInt();
+    int gaussSize = moduleRF->check("gaussSize", Value(5)).asInt32();
 
-    int imageThreshRatioLow = moduleRF->check("imageThreshRatioLow", Value(10)).asInt();
-    int imageThreshRatioHigh = moduleRF->check("imageThreshRatioHigh", Value(20)).asInt();
+    int imageThreshRatioLow = moduleRF->check("imageThreshRatioLow", Value(10)).asInt32();
+    int imageThreshRatioHigh = moduleRF->check("imageThreshRatioHigh", Value(20)).asInt32();
 
     blobExtractor = NULL;
 
@@ -363,10 +363,10 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
             Bottle roisBottle;
 
             Bottle &roiBottle = roisBottle.addList();
-            roiBottle.addInt(tlx);
-            roiBottle.addInt(tly);
-            roiBottle.addInt(brx);
-            roiBottle.addInt(bry);
+            roiBottle.addInt32(tlx);
+            roiBottle.addInt32(tly);
+            roiBottle.addInt32(brx);
+            roiBottle.addInt32(bry);
 
             roiOutPort.prepare() = roisBottle;
 
@@ -379,9 +379,9 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
             Bottle blobsBottle;
 
             Bottle &blobBottle = blobsBottle.addList();
-            blobBottle.addInt(centroid[0]);
-            blobBottle.addInt(centroid[1]);
-            blobBottle.addInt((int)(blobSize+0.5f));
+            blobBottle.addInt32(centroid[0]);
+            blobBottle.addInt32(centroid[1]);
+            blobBottle.addInt32((int)(blobSize+0.5f));
 
             blobsOutPort.prepare() = blobsBottle;
 
@@ -393,8 +393,8 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
         {
             Bottle cmd_sfm, reply_sfm;
 
-            cmd_sfm.addInt(tlx);
-            cmd_sfm.addInt(tly);
+            cmd_sfm.addInt32(tlx);
+            cmd_sfm.addInt32(tly);
             sfmRpcPort.write(cmd_sfm,reply_sfm);
 
             Bottle roisBottle;
@@ -402,40 +402,40 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
 
             if (reply_sfm.size()>0)
             {
-                double tlX = reply_sfm.get(0).asDouble();
-                double tlY = reply_sfm.get(1).asDouble();
-                double tlZ = reply_sfm.get(2).asDouble();
+                double tlX = reply_sfm.get(0).asFloat64();
+                double tlY = reply_sfm.get(1).asFloat64();
+                double tlZ = reply_sfm.get(2).asFloat64();
 
                 if (!(tlX==0 && tlY==0 && tlZ==0))
                 {
-                    int tlur = reply_sfm.get(3).asInt();
-                    int tlvr = reply_sfm.get(4).asInt();
+                    int tlur = reply_sfm.get(3).asInt32();
+                    int tlvr = reply_sfm.get(4).asInt32();
 
-                    roiBottle.addInt(tlur);
-                    roiBottle.addInt(tlvr);
+                    roiBottle.addInt32(tlur);
+                    roiBottle.addInt32(tlvr);
                 }
             }
 
             cmd_sfm.clear();
             reply_sfm.clear();
 
-            cmd_sfm.addInt(brx);
-            cmd_sfm.addInt(bry);
+            cmd_sfm.addInt32(brx);
+            cmd_sfm.addInt32(bry);
             sfmRpcPort.write(cmd_sfm,reply_sfm);
 
             if (reply_sfm.size()>0)
             {
-                double brX = reply_sfm.get(0).asDouble();
-                double brY = reply_sfm.get(1).asDouble();
-                double brZ = reply_sfm.get(2).asDouble();
+                double brX = reply_sfm.get(0).asFloat64();
+                double brY = reply_sfm.get(1).asFloat64();
+                double brZ = reply_sfm.get(2).asFloat64();
 
                 if (!(brX==0 && brY==0 && brZ==0))
                 {
-                    int brur = reply_sfm.get(3).asInt();
-                    int brvr = reply_sfm.get(4).asInt();
+                    int brur = reply_sfm.get(3).asInt32();
+                    int brvr = reply_sfm.get(4).asInt32();
 
-                    roiBottle.addInt(brur);
-                    roiBottle.addInt(brvr);
+                    roiBottle.addInt32(brur);
+                    roiBottle.addInt32(brvr);
                 }
             }
 
@@ -452,24 +452,24 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
         {
             Bottle cmd_sfm, reply_sfm;
 
-            cmd_sfm.addInt(centroid[0]);
-            cmd_sfm.addInt(centroid[1]);
+            cmd_sfm.addInt32(centroid[0]);
+            cmd_sfm.addInt32(centroid[1]);
             sfmRpcPort.write(cmd_sfm,reply_sfm);
 
             if (reply_sfm.size()>0)
             {
-                double X = reply_sfm.get(0).asDouble();
-                double Y = reply_sfm.get(1).asDouble();
-                double Z = reply_sfm.get(2).asDouble();
+                double X = reply_sfm.get(0).asFloat64();
+                double Y = reply_sfm.get(1).asFloat64();
+                double Z = reply_sfm.get(2).asFloat64();
 
                 if (points3dOutPort.getOutputCount()>0)
                 {
                     Bottle points3dBottle;
                     Bottle &point3dBottle = points3dBottle.addList();
 
-                    point3dBottle.addDouble(X);
-                    point3dBottle.addDouble(Y);
-                    point3dBottle.addDouble(Z);
+                    point3dBottle.addFloat64(X);
+                    point3dBottle.addFloat64(Y);
+                    point3dBottle.addFloat64(Z);
 
                     points3dOutPort.prepare() = points3dBottle;
                     points3dOutPort.setEnvelope(stamp);
@@ -480,14 +480,14 @@ void DispBlobberPort::onRead(ImageOf<PixelBgr> &input)
                 {
                     if (!(X==0.0 && Y==0.0 && Z==0.0))
                     {
-                        int ur = reply_sfm.get(3).asInt();
-                        int vr = reply_sfm.get(4).asInt();
+                        int ur = reply_sfm.get(3).asInt32();
+                        int vr = reply_sfm.get(4).asInt32();
 
                         Bottle blobsBottle;
                         Bottle &blobBottle = blobsBottle.addList();
 
-                        blobBottle.addInt(ur);
-                        blobBottle.addInt(vr);
+                        blobBottle.addInt32(ur);
+                        blobBottle.addInt32(vr);
 
                         blobsOutPortRight.prepare() = blobsBottle;
                         blobsOutPortRight.setEnvelope(stamp);

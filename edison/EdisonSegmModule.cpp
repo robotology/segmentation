@@ -95,18 +95,18 @@ bool EdisonSegmModule::configure (yarp::os::ResourceFinder &rf)
     mixture = 0.2F;  
     speedup = MED_SPEEDUP; 
     //override defaults if specified - TODO: range checking
-    if(rf.check("height")) height_ = rf.find("height").asInt();
-    if(rf.check("width")) width_ = rf.find("width").asInt();
-    //if(rf.check("dim")) dim_ = rf.find("dim").asInt(); // not required - should always be 3
-    if(rf.check("sigmaS")) sigmaS = rf.find("sigmaS").asInt();      
-    if(rf.check("sigmaR")) sigmaR = (float)rf.find("sigmaR").asDouble();       
-    if(rf.check("minRegion")) minRegion = rf.find("minRegion").asInt();  
-    if(rf.check("gradWinRad")) gradWindRad = (int)rf.find("gradWinRad").asDouble(); 
-    if(rf.check("threshold")) threshold = (float)rf.find("threshold").asDouble(); 
-    if(rf.check("mixture")) mixture = (float)rf.find("mixture").asDouble();  
+    if(rf.check("height")) height_ = rf.find("height").asInt32();
+    if(rf.check("width")) width_ = rf.find("width").asInt32();
+    //if(rf.check("dim")) dim_ = rf.find("dim").asInt32(); // not required - should always be 3
+    if(rf.check("sigmaS")) sigmaS = rf.find("sigmaS").asInt32();      
+    if(rf.check("sigmaR")) sigmaR = (float)rf.find("sigmaR").asFloat64();       
+    if(rf.check("minRegion")) minRegion = rf.find("minRegion").asInt32();  
+    if(rf.check("gradWinRad")) gradWindRad = (int)rf.find("gradWinRad").asFloat64(); 
+    if(rf.check("threshold")) threshold = (float)rf.find("threshold").asFloat64(); 
+    if(rf.check("mixture")) mixture = (float)rf.find("mixture").asFloat64();  
     if(rf.check("speedup")) 
     {
-        int spdp = rf.find("speedup").asInt(); 
+        int spdp = rf.find("speedup").asInt32(); 
         setSpeedUpValue(spdp);
     }
 

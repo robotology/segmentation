@@ -50,10 +50,10 @@ int main(int argc, char *argv[]) {
 
         if (fixIn.size()>1)
         {
-            double fix_x = fixIn.get(0).asDouble();
-            double fix_y = fixIn.get(1).asDouble();
-//             double cropSizeWidth = fixIn.get(2).asInt();
-//             double cropSizeHeight = fixIn.get(3).asInt();
+            double fix_x = fixIn.get(0).asFloat64();
+            double fix_y = fixIn.get(1).asFloat64();
+//             double cropSizeWidth = fixIn.get(2).asInt32();
+//             double cropSizeHeight = fixIn.get(3).asInt32();
             std::vector<Pixel> pixelList=segmIf.get_component_around(Pixel(fix_x, fix_y));
             std::cout<<"asked server"<<std::endl;
             yarp::sig::ImageOf< yarp::sig::PixelRgb > &img=maskPort.prepare();

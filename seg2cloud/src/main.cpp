@@ -81,7 +81,7 @@ protected:
         if (data.size()>=2)
         {
             lock_guard<mutex> lg(mtx);
-            cv::Point point(data.get(0).asInt(),data.get(1).asInt());
+            cv::Point point(data.get(0).asInt32(),data.get(1).asInt32());
             contour.push_back(point);
             if (contour.size()>12){
                 contour.pop_back();               
@@ -108,9 +108,9 @@ public:
         cout << "Files will be saved in "<< homeContextPath << " folder, as " << savename <<"N." << fileFormat <<", with increasing numeration N"  << endl;
         fileCount = 0;
 
-        downsampling=std::max(1,rf.check("downsampling",Value(1)).asInt());
-        spatial_distance=rf.check("spatial_distance",Value(0.005)).asDouble();
-        color_distance=rf.check("color_distance",Value(6)).asInt();
+        downsampling=std::max(1,rf.check("downsampling",Value(1)).asInt32());
+        spatial_distance=rf.check("spatial_distance",Value(0.005)).asFloat64();
+        color_distance=rf.check("color_distance",Value(6)).asInt32();
 
 
         printf("Opening ports\n" );
@@ -262,22 +262,22 @@ public:
                 // Use the seed point to get points from SFM with the Flood3D command, and spatial_distance given
                 Bottle cmdSFM,replySFM;
                 cmdSFM.addString("Flood3D");
-                cmdSFM.addInt(seed.x);
-                cmdSFM.addInt(seed.y);
-                cmdSFM.addDouble(spatial_distance);                
+                cmdSFM.addInt32(seed.x);
+                cmdSFM.addInt32(seed.y);
+                cmdSFM.addFloat64(spatial_distance);                
                 bool ok = portSFM.write(cmdSFM,replySFM);                
                 if (ok)
                 {
                     for (int i=0; i<replySFM.size(); i+=5)
                     {
-                        int x=replySFM.get(i+0).asInt();
-                        int y=replySFM.get(i+1).asInt();
+                        int x=replySFM.get(i+0).asInt32();
+                        int y=replySFM.get(i+1).asInt32();
                         PixelRgb px=imgIn->pixel(x,y);
 
                         Vector point(6,0.0);
-                        point[0]=replySFM.get(i+2).asDouble();
-                        point[1]=replySFM.get(i+3).asDouble();
-                        point[2]=replySFM.get(i+4).asDouble();
+                        point[0]=replySFM.get(i+2).asFloat64();
+                        point[1]=replySFM.get(i+3).asFloat64();
+                        point[2]=replySFM.get(i+4).asFloat64();
                         point[3]=px.r;
                         point[4]=px.g;
                         point[5]=px.b;
@@ -286,9 +286,9 @@ public:
                         floodPoints.push_back(cv::Point(x,y));
 
                         Bottle &bpoint = bpoints.addList();
-                        bpoint.addDouble(point[0]);
-                        bpoint.addDouble(point[1]);
-                        bpoint.addDouble(point[2]);
+                        bpoint.addFloat64(point[0]);
+                        bpoint.addFloat64(point[1]);
+                        bpoint.addFloat64(point[2]);
                     }
                     cout << "Retrieved " << points.size() << " 3D points"  <<endl;
                 }else{
@@ -347,8 +347,8 @@ public:
                 // Get segmented region from external segmentation module
                 Bottle cmdSeg, replySeg;
                 cmdSeg.addString("get_component_around");
-                cmdSeg.addInt(seed.x);
-                cmdSeg.addInt(seed.y);
+                cmdSeg.addInt32(seed.x);
+                cmdSeg.addInt32(seed.y);
                 if (portSeg.write(cmdSeg,replySeg))
                 {
                     Bottle* pixelList=replySeg.get(0).asList();
@@ -368,8 +368,8 @@ public:
                     for (int i=0; i<pixelList->size(); i++)
                     {
                         Bottle* point=pixelList->get(i).asList();
-                        int x = point->get(0).asDouble();
-                        int y = point->get(1).asDouble();
+                        int x = point->get(0).asFloat64();
+                        int y = point->get(1).asFloat64();
                         binImg.at<uchar>(y,x) = 255;
                     }
 
@@ -422,8 +422,8 @@ public:
                 imgDispOut.pixel(floodPoints[i].x,floodPoints[i].y)=color;
                 Bottle &bpoint2D = bpoints2D.addList();
                 // Remember that cv::Points are (x =column, y = row) and YARP coords are (u = row, v = column)
-                bpoint2D.addInt(floodPoints[i].x);
-                bpoint2D.addInt(floodPoints[i].y);
+                bpoint2D.addInt32(floodPoints[i].x);
+                bpoint2D.addInt32(floodPoints[i].y);
 
             }
             // Send images and 2D points for a second
@@ -519,9 +519,9 @@ public:
 
         Bottle cmd,reply;
         cmd.addString("Rect");
-        cmd.addInt(boundBox.x);     cmd.addInt(boundBox.y);
-        cmd.addInt(boundBox.width); cmd.addInt(boundBox.height);
-        cmd.addInt(downsampling);
+        cmd.addInt32(boundBox.x);     cmd.addInt32(boundBox.y);
+        cmd.addInt32(boundBox.width); cmd.addInt32(boundBox.height);
+        cmd.addInt32(downsampling);
         if (portSFM.write(cmd,reply))
         {
             int idx=0;
@@ -534,14 +534,14 @@ public:
                         floodPoints.push_back(cv::Point(x,y));
 
                         Vector point(6,0.0);
-                        point[0]=reply.get(idx+0).asDouble();
-                        point[1]=reply.get(idx+1).asDouble();
-                        point[2]=reply.get(idx+2).asDouble();
+                        point[0]=reply.get(idx+0).asFloat64();
+                        point[1]=reply.get(idx+1).asFloat64();
+                        point[2]=reply.get(idx+2).asFloat64();
 
                         Bottle &bpoint = bpoints.addList();
-                        bpoint.addDouble(point[0]);
-                        bpoint.addDouble(point[1]);
-                        bpoint.addDouble(point[2]);
+                        bpoint.addFloat64(point[0]);
+                        bpoint.addFloat64(point[1]);
+                        bpoint.addFloat64(point[2]);
 
                         if (norm(point)>0.0)
                         {
@@ -550,9 +550,9 @@ public:
                             point[4]=px.g;
                             point[5]=px.b;
 
-                            bpoint.addDouble(point[3]);
-                            bpoint.addDouble(point[4]);
-                            bpoint.addDouble(point[5]);
+                            bpoint.addFloat64(point[3]);
+                            bpoint.addFloat64(point[4]);
+                            bpoint.addFloat64(point[5]);
 
                             pointsInContour.push_back(point);
                         }
@@ -708,27 +708,27 @@ public:
     bool respond(const Bottle &command, Bottle &reply)
     {
         string cmd=command.get(0).asString();
-        int ack=Vocab::encode("ack");
-        int nack=Vocab::encode("nack");
+        int ack=Vocab32::encode("ack");
+        int nack=Vocab32::encode("nack");
 
         if (cmd=="clear")
         {
             clearRec();
-            reply.addVocab(ack);
+            reply.addVocab32(ack);
             return true;
         }
 
         else if (cmd=="seedAuto"){
             seedAuto = command.get(1).asBool();
             cout << "Automatic seeding is " << seedAuto << endl;
-            reply.addVocab(ack);
+            reply.addVocab32(ack);
             return true;
         }
 
         else if (cmd=="saving"){
             saving = command.get(1).asBool();
             cout << "Saving clouds as files is " << saving << endl;
-            reply.addVocab(ack);
+            reply.addVocab32(ack);
             return true;
         }
 
@@ -738,10 +738,10 @@ public:
                 string format = command.get(1).asString();
                 if ((format=="ply")||(format=="off")||(format=="none")){
                     fileFormat = format;
-                    reply.addVocab(ack);
+                    reply.addVocab32(ack);
                     reply.addString("Format set correctly");
                 } else {
-                    reply.addVocab(nack);
+                    reply.addVocab32(nack);
                     reply.addString("No valid format chosen. Choose ply/off/none");
                 }
             }
@@ -751,14 +751,14 @@ public:
         {
             if (command.size()>=2){
                 savename = command.get(1).asString();
-                reply.addVocab(ack);
+                reply.addVocab32(ack);
                 reply.addString("File Name set correctly");
             }
         }
 
         else if (cmd=="help")
         {
-            reply.addVocab(Vocab::encode("many"));
+            reply.addVocab32("many");
             reply.addString("Available commands are:");
             reply.addString("help - produces this help");
             reply.addString("clear - Clears displays and saved points");
@@ -777,7 +777,7 @@ public:
         else if ((cmd=="polygon") || (cmd=="flood3d")|| (cmd=="flood")|| (cmd=="seg"))
         {
             if (portSFM.getOutputCount()==0)
-                reply.addVocab(nack);
+                reply.addVocab32(nack);
             else
             {
                 lock_guard<mutex> lg(mtx);
@@ -786,10 +786,10 @@ public:
                     if (contour.size()>2)
                     {
                         polygon=true;
-                        reply.addVocab(ack);
+                        reply.addVocab32(ack);
                     }
                     else
-                        reply.addVocab(nack);
+                        reply.addVocab32(nack);
                 }
                 else if (cmd=="flood3d")
                 {
@@ -797,7 +797,7 @@ public:
                     contour.clear();
                     floodPoints.clear();
                     if (command.size()>=2){
-                        spatial_distance=command.get(1).asDouble();                        
+                        spatial_distance=command.get(1).asFloat64();                        
                     }
 
 
@@ -809,36 +809,36 @@ public:
                         }
 
                     }else if (command.size()>=4){
-                        seed.x=command.get(2).asInt();
-                        seed.y=command.get(3).asInt();
+                        seed.x=command.get(2).asInt32();
+                        seed.y=command.get(3).asInt32();
 
                     }else if ((seed.x <0) && (seed.y<0)){
                         cout << "seed needs to be clicked" << endl;
                     }
 
-                    reply.addVocab(ack);
+                    reply.addVocab32(ack);
                     // Remember that cv::Points are (x =column, y = row) and YARP coords are (u = row, v = column)
-                    reply.addInt(seed.x);
-                    reply.addInt(seed.y);
-                    reply.addDouble(spatial_distance);
+                    reply.addInt32(seed.x);
+                    reply.addInt32(seed.y);
+                    reply.addFloat64(spatial_distance);
                     flood3d=true;
 
                 }
                 else if (cmd=="flood")
                 {
-                    reply.addVocab(ack);
+                    reply.addVocab32(ack);
                     contour.clear();
                     floodPoints.clear();
                     if (command.size()>=2){
-                        color_distance=command.get(1).asInt();
-                        reply.addInt(color_distance);
+                        color_distance=command.get(1).asInt32();
+                        reply.addInt32(color_distance);
                     }
 
                     if (command.size()>=4){
-                        seed.x=command.get(2).asInt();
-                        seed.y=command.get(3).asInt();
-                        reply.addInt(seed.x);
-                        reply.addInt(seed.y);
+                        seed.x=command.get(2).asInt32();
+                        seed.y=command.get(3).asInt32();
+                        reply.addInt32(seed.x);
+                        reply.addInt32(seed.y);
                     }
                     flood=true;
 
@@ -846,12 +846,12 @@ public:
                 else if (cmd=="seg")
                 {
                     contour.clear();
-                    reply.addVocab(ack);
+                    reply.addVocab32(ack);
                     if (command.size()>=3){
-                        seed.x=command.get(1).asInt();
-                        seed.y=command.get(2).asInt();
-                        reply.addInt(seed.x);
-                        reply.addInt(seed.y);
+                        seed.x=command.get(1).asInt32();
+                        seed.y=command.get(2).asInt32();
+                        reply.addInt32(seed.x);
+                        reply.addInt32(seed.y);
                     }                   
                     seg=true;
                     

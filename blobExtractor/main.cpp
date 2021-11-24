@@ -181,19 +181,19 @@ public:
         port_o_blobs.open("/"+name+"/blobs:o");
         port_o_clean.open("/"+name+"/binary:o");
 
-        gaussian_winsize=rf.check("gaussian_winsize",Value(9)).asInt();
+        gaussian_winsize=rf.check("gaussian_winsize",Value(9)).asInt32();
 
-        thresh=rf.check("thresh",Value(10.0)).asDouble();
-        erode_itr=rf.check("erode_itr",Value(8)).asInt();
-        dilate_itr=rf.check("dilate_itr",Value(3)).asInt();
-        window_ratio=rf.check("window_ratio",Value(0.6)).asDouble();
+        thresh=rf.check("thresh",Value(10.0)).asFloat64();
+        erode_itr=rf.check("erode_itr",Value(8)).asInt32();
+        dilate_itr=rf.check("dilate_itr",Value(3)).asInt32();
+        window_ratio=rf.check("window_ratio",Value(0.6)).asFloat64();
 
-        maxHeight = rf.check("maxHeight",Value(150)).asInt();
-        maxWidth  = rf.check("maxWidth",Value(150)).asInt();
+        maxHeight = rf.check("maxHeight",Value(150)).asInt32();
+        maxWidth  = rf.check("maxWidth",Value(150)).asInt32();
         
         details=rf.check("details",Value("off")).asString();
 
-        offset=rf.check("offset",Value(0)).asInt();
+        offset=rf.check("offset",Value(0)).asInt32();
         //details = false;
         numBlobs = 0;
         orientation.clear();
@@ -250,17 +250,17 @@ public:
                         if (5<comp.width && comp.width<maxWidth && 5<comp.height && comp.height<maxHeight)
                         {
                             Bottle &b=blobs.addList();
-                            b.addDouble(comp.x-offset);
-                            b.addDouble(comp.y-offset);
-                            b.addDouble(comp.x+comp.width+offset);
-                            b.addDouble(comp.y+comp.height+offset);
+                            b.addFloat64(comp.x-offset);
+                            b.addFloat64(comp.y-offset);
+                            b.addFloat64(comp.x+comp.width+offset);
+                            b.addFloat64(comp.y+comp.height+offset);
                             if (details=="on")
                             {
                                 if (orientation.size() > 0 )
                                 {
-                                    b.addDouble(orientation[itr+1]);
-                                    b.addInt((int)axe2[itr+1]);
-                                    b.addInt((int)axe1[itr+1]);
+                                    b.addFloat64(orientation[itr+1]);
+                                    b.addInt32((int)axe2[itr+1]);
+                                    b.addInt32((int)axe1[itr+1]);
                                 }                         
                             }
                             itr++;
@@ -268,17 +268,17 @@ public:
                         else
                         {
                             Bottle &n=non_blobs.addList();
-                            n.addDouble(comp.x-offset);
-                            n.addDouble(comp.y-offset);
-                            n.addDouble(comp.x+comp.width+offset);
-                            n.addDouble(comp.y+comp.height+offset);
+                            n.addFloat64(comp.x-offset);
+                            n.addFloat64(comp.y-offset);
+                            n.addFloat64(comp.x+comp.width+offset);
+                            n.addFloat64(comp.y+comp.height+offset);
                             if (details=="on")
                             {
                                 if (orientation.size() > 0 )
                                 {
-                                    n.addDouble(orientation[itr+1]);
-                                    n.addInt((int)axe2[itr+1]);
-                                    n.addInt((int)axe1[itr+1]);
+                                    n.addFloat64(orientation[itr+1]);
+                                    n.addInt32((int)axe2[itr+1]);
+                                    n.addInt32((int)axe1[itr+1]);
                                 }                         
                             }
                             itr++;
@@ -331,25 +331,25 @@ public:
 
     bool execReq(const Bottle &command, Bottle &reply)
     {
-        if(command.get(0).asVocab()==Vocab::encode("thresh"))
+        if(command.get(0).asVocab32()==Vocab32::encode("thresh"))
         {
             lock_guard<mutex> lg(mtx);
-            thresh = command.get(1).asDouble();
-            reply.addVocab(Vocab::encode("ok"));
+            thresh = command.get(1).asFloat64();
+            reply.addVocab32("ok");
             return true;
         }
-        if(command.get(0).asVocab()==Vocab::encode("erode"))
+        if(command.get(0).asVocab32()==Vocab32::encode("erode"))
         {
             lock_guard<mutex> lg(mtx);
-            erode_itr = command.get(1).asInt();
-            reply.addVocab(Vocab::encode("ok"));
+            erode_itr = command.get(1).asInt32();
+            reply.addVocab32("ok");
             return true;
         }
-        if(command.get(0).asVocab()==Vocab::encode("dilate"))
+        if(command.get(0).asVocab32()==Vocab32::encode("dilate"))
         {
             lock_guard<mutex> lg(mtx);
-            dilate_itr = command.get(1).asInt();
-            reply.addVocab(Vocab::encode("ok"));
+            dilate_itr = command.get(1).asInt32();
+            reply.addVocab32("ok");
             return true;
         }
 
@@ -368,10 +368,10 @@ public:
                 if (item==NULL)
                     cout << "ITEM IS NULL" << cog.x << cog.y <<endl;
 
-                tl.x=(int)item->get(0).asDouble() - 2;
-                tl.y=(int)item->get(1).asDouble() - 2;
-                br.x=(int)item->get(2).asDouble() + 2;
-                br.y=(int)item->get(3).asDouble() + 2;
+                tl.x=(int)item->get(0).asFloat64() - 2;
+                tl.y=(int)item->get(1).asFloat64() - 2;
+                br.x=(int)item->get(2).asFloat64() + 2;
+                br.y=(int)item->get(3).asFloat64() + 2;
             
                 image(cv::Rect(tl.x,tl.y,br.x-tl.x,br.y-tl.y)).copyTo(imgProp(cv::Rect(tl.x,tl.y,br.x-tl.x,br.y-tl.y)));
             }
@@ -390,10 +390,10 @@ public:
                 if (item==NULL)
                     cout << "ITEM IS NULL" << cog.x << cog.y <<endl;
 
-                tl.x=(int)item->get(0).asDouble() - 10;
-                tl.y=(int)item->get(1).asDouble() - 10;
-                br.x=(int)item->get(2).asDouble() + 10;
-                br.y=(int)item->get(3).asDouble() + 10;
+                tl.x=(int)item->get(0).asFloat64() - 10;
+                tl.y=(int)item->get(1).asFloat64() - 10;
+                br.x=(int)item->get(2).asFloat64() + 10;
+                br.y=(int)item->get(3).asFloat64() + 10;
 
                 cog.x=(tl.x + br.x)>>1;
                 cog.y=(tl.y + br.y)>>1;     
@@ -554,7 +554,7 @@ public:
             return false;     
         } else if (command.get(0).asString()=="thresh") 
         {
-            double newThresh = command.get(1).asDouble();
+            double newThresh = command.get(1).asFloat64();
             if (newThresh<0 || newThresh>255.0)
             {
                 reply.addString("Invalid threshold (expecting a value between 0 and 255)");
