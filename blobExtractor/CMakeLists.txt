@@ -21,7 +21,7 @@ source_group("Source Files" FILES ${folder_source})
 
 add_executable(${PROJECT_NAME} ${folder_source})
 target_compile_definitions(${PROJECT_NAME} PRIVATE _USE_MATH_DEFINES)
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBRARIES} ${YARP_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} ${YARP_LIBRARIES})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 add_subdirectory(app)
