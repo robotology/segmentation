@@ -18,5 +18,5 @@ set(edisonlib_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "")
 
 include_directories(${edisonlib_INCLUDE_DIR})
 add_library(${PROJECT_NAME} ${folder_source} ${folder_header})
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
