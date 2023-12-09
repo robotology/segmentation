@@ -23,7 +23,7 @@ file(GLOB folder_header include/*.h)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 add_executable(${PROJECT_NAME} ${folder_header} ${folder_source})
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBRARIES} ${YARP_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} ${YARP_LIBRARIES})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 yarp_install(FILES ${doc_files} DESTINATION ${ICUBCONTRIB_MODULES_INSTALL_DIR})
