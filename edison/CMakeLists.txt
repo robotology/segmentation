@@ -31,7 +31,7 @@ include_directories(${edisonlib_INCLUDE_DIR}
                     ${generated_libs_dir}/include)
 
 add_executable(${PROJECT_NAME} ${module_source} ${module_header} ${sources} ${headers})
-target_link_libraries(${PROJECT_NAME} edisonlib ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} edisonlib ${YARP_LIBRARIES} ${OpenCV_LIBS})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 add_subdirectory(app)
